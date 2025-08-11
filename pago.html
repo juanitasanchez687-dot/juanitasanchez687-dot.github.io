@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página de Pago</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #fdf6f9;
+      color: #333;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label, select, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    button {
+      background-color: #ff85b3;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mensaje-pago {
+      display: none;
+      background: #d6f0ff;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+    #qr-nequi {
+      margin-top: 15px;
+    }
+    button {
+  margin-top: 20px; 
+  padding: 10px 20px; 
+  background-color: #dda0dd; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+   cursor: pointer;
+}
+  </style>
+</head>
+<body>
+
+  <h2>Selecciona método de pago</h2>
+
+  <form id="formulario-pago">
+    <label for="metodo-pago">Método de pago:</label>
+    <select id="metodo-pago" required>
+      <option value="" disabled selected>Selecciona una opción</option>
+      <option value="tarjeta">Tarjeta (Stripe)</option>
+      <option value="transferencia">Transferencia (Nequi)</option>
+      <option value="contraentrega">Contraentrega</option>
+    </select>
+    <button style="color: black; type="submit">Pagar</button>
+  </form>
+
+  <div id="mensaje-pago"></div>
+  <canvas id="qr-nequi" style="display: none; margin: auto;"></canvas>
+  <script>
+    const formulario = document.getElementById("formulario-pago");
+    const metodoPago = document.getElementById("metodo-pago");
+    const mensajePago = document.getElementById("mensaje-pago");
+    const qrCanvas = document.getElementById("qr-nequi");
+
+    formulario.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const metodo = metodoPago.value;
+
+      if (metodo === "tarjeta") {
+        // Redirigir a Stripe
+        window.location.href = "https://buy.stripe.com/test_6oU4gBb2d42u63R2le1wY00";
+      } 
+      else if (metodo === "transferencia") {
+        mensajePago.style.display = "block";
+        mensajePago.innerHTML = `
+          <strong>Transferencia vía Nequi</strong><br>
+          Número: <strong>3053577410<br>
+          Nombre: <strong>Empresa Moshia</strong><br>
+          Escanea el siguiente código QR para pagar:
+          <img src="mi_codigo_qr.jpg" alt="Código QR" width="200" height="200">
+        `;
+        qrCanvas.style.display = "block";
+        const textoQR = "Pago a Nequi: Empresa Moshia - 3053577410";
+        QRCode.toCanvas(qrCanvas, textoQR, function (error) {
+          if (error) console.error(error);
+        });
+      }
+      else if (metodo === "contraentrega") {
+        // Mostrar mensaje
+        mensajePago.style.display = "block";
+        mensajePago.innerHTML = "<strong>Tu pedido ha sido registrado.</strong><br>Pagarás en efectivo al recibir el producto.";
+      }
+    });
+  </script>
+</body>
+</html>
