@@ -407,6 +407,60 @@
       `;
       confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     });
-  </script>
+    function guardarPedido(codigo, metodo) {
+      const horaInicio = Date.now();
+      localStorage.setItem("pedidoCodigo", codigo);
+      localStorage.setItem("pedidoHora", horaInicio);
+      localStorage.setItem("pedidoMetodo", metodo);
+    }
+
+    btnProcesarPagoTarjeta.addEventListener("click", function(e) {
+      e.preventDefault();
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      guardarPedido(codigo, "tarjeta"); // <<--- NUEVO
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pago con Tarjeta Exitoso!</h3>
+        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+    });
+
+    btnPagoRealizadoNequi.addEventListener("click", () => {
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      guardarPedido(codigo, "nequi"); // <<--- NUEVO
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pago en Proceso!</h3>
+        <p>Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.</p>
+        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+    });
+
+    btnVerProcesoContraentrega.addEventListener("click", () => {
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      guardarPedido(codigo, "contraentrega"); // <<--- NUEVO
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pedido Registrado!</h3>
+        <p>Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.</p>
+        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+    });
+</script>
 </body>
 </html>
