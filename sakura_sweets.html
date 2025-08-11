@@ -1,0 +1,1177 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moshia</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
+
+    <style>
+        /* Variables de colores */
+        :root {
+            --rojo-intenso: #d91e18;
+            --blanco-puro: #ffffff;
+            --negro-elegante: #222222;
+            --azul-pastel: #7ec8e3;
+            --azul-fuerte: #176ea6;
+            --fondo-sakura: #fff0f5;
+        }
+
+        /* Reset básico */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to bottom right, #fb7070, #70b4fb);
+            color: var(--negro-elegante);
+            overflow-x: hidden;
+        }
+
+        /* Scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Cabecera */
+        header {
+            background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header img {
+            height: 90px;
+            cursor: pointer;
+        }
+        nav a {
+            font-family: 'Sawarabi Mincho', serif;
+            color: var(--blanco-puro);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin: 0 14px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover, nav a:focus {
+            background: var(--azul-pastel);
+            color: var(--rojo-intenso);
+            outline: none;
+        }
+
+        /* Banner principal con animación sakura */
+        .banner {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 470px; /* ajusta según necesites */
+        }
+
+        .banner-title {
+            position: absolute;
+            top: -25px;
+            left: 350px;
+            transform: none;
+
+            font-family: 'Sawarabi Mincho', serif;
+            font-size: 6rem;
+            background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 0.8px black;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-align: left;
+            z-index: 60;
+        }
+
+        /* NUEVOS ESTILOS PARA LA FRASE */
+        .banner-phrase {
+            position: absolute;
+            top: 160px;
+            left: 245px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000000;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+            text-align: left;
+            z-index: 50;
+            max-width: 50%;
+            line-height: 1.3;
+        }
+
+        /* Mascota simplificada */
+        #sakurai-img {
+            position: fixed;
+            bottom: 0px;
+            left: 20px;
+            width: 300px;
+            height: 350px;
+            cursor: pointer;
+            z-index: 1000;
+            user-select: none;
+            transition: transform 0.3s ease;
+        }
+
+        #volver-arriba:hover {
+            opacity: 1;
+        }
+
+        /* Secciones */
+        section {
+            padding: 60px 20px;
+            max-width: 900px;
+            margin: 50px auto; /* Ajuste margen superior/inferior para espaciado */
+            background: var(--blanco-puro);
+            border-radius: 20px;
+            box-shadow: 0 6px 18px rgba(217,30,24,0.1);
+            position: relative;
+        }
+
+        section h2 {
+            font-family: 'Sawarabi Mincho', serif;
+            font-size: 3rem;
+            color: var(--rojo-intenso);
+            margin-bottom: 30px;
+            text-align: center; /* Centrado de títulos */
+        }
+
+        /* Contenedor de botones para centrar */
+        .section-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centra los botones horizontalmente */
+            align-items: center; /* Centra los botones verticalmente si ocupan varias líneas */
+            margin-bottom: 20px; /* Espacio debajo de los botones */
+        }
+
+
+        /* Subcontenidos ocultos */
+        .subcontenido {
+            display: none;
+            background: #fff0f5cc;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--negro-elegante);
+            line-height: 1.5;
+            transition: box-shadow 0.5s ease-in-out, border-color 0.5s ease-in-out;
+            border: 1px solid transparent; /* Base para el efecto neón */
+            box-shadow: none;
+        }
+        .subcontenido.activo {
+            display: block;
+        }
+
+        /* Botones kawaii */
+        button {
+            font-family: 'Sawarabi Mincho', serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 25px;
+            padding: 12px 26px;
+            margin: 0 8px 12px 8px; /* Mantiene un margen para separarlos */
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
+            color: var(--blanco-puro);
+            box-shadow: 0 5px 15px rgba(217,30,24,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            user-select: none;
+        }
+        button:hover, button:focus {
+            transform: scale(1.08);
+            box-shadow: 0 7px 20px rgba(217,30,24,0.6);
+            outline: none;
+        }
+
+        /* Contenido de botones del plan estratégico */
+        .plan-texto p {
+            margin-top: 0;
+        }
+
+        /* Grid para productos con botones */
+        .productos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .producto-btn {
+            background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
+            border: none;
+            border-radius: 20px;
+            color: var(--blanco-puro);
+            padding: 1rem 2rem;
+            font-family: 'Sawarabi Mincho', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(217,30,24,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            user-select: none;
+            min-width: 150px;
+            display: flex; /* Asegura que la imagen y el texto estén en columna */
+            flex-direction: column; /* Organiza la imagen y el texto en columna */
+            align-items: center; /* Centra el contenido (imagen y texto) */
+            text-align: center; /* Centra el texto */
+        }
+        .producto-btn:hover,
+        .producto-btn:focus {
+            transform: scale(1.1);
+            box-shadow: 0 7px 20px rgba(217,30,24,0.5);
+            outline: none;
+        }
+        .producto-btn img {
+            margin-bottom: 10px; /* Espacio entre la imagen y el texto del botón */
+        }
+
+        /* Galería cartas kawaii (con neón) */
+        .galeria-cartas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+        .carta {
+            width: 100%;
+            aspect-ratio: 1 / 1.4;
+            border-radius: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            font-family: 'Sawarabi Mincho', serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-decoration: none; /* Asegura que el enlace no tenga subrayado */
+        }
+        .carta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(217,30,24,0.4);
+        }
+        .carta img {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .carta h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0 5px;
+            text-decoration: none; /* Quita el subrayado del texto */
+        }
+        /* Definición de colores de neón para cada carta */
+        .carta.classic {
+            background: #fff0f5; /* Un fondo suave para el contraste */
+            border: 2px solid #ff007f; /* Rosa */
+            box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f inset;
+        }
+        .carta.classic h4 {
+            color: #ff007f;
+        }
+        .carta.mystery {
+            background: #f6d1e4;
+            border: 2px solid #800080; /* Morado */
+            box-shadow: 0 0 10px #800080, 0 0 20px #800080 inset;
+        }
+        .carta.mystery h4 {
+            color: #800080;
+        }
+        .carta.sour {
+            background: #ffe5f0;
+            border: 2px solid #0000ff; /* Azul */
+            box-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff inset;
+        }
+        .carta.sour h4 {
+            color: #0000ff;
+        }
+        .carta.symphony {
+            background: #f6d1e4;
+            border: 2px solid #ff7f50; /* Salmón */
+            box-shadow: 0 0 10px #ff7f50, 0 0 20px #ff7f50 inset;
+        }
+        .carta.symphony h4 {
+            color: #ff7f50;
+        }
+
+        /* Popup carta detalle */
+        #popup-carta {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        #popup-carta.active {
+            display: flex;
+        }
+        #popup-content {
+            background: var(--blanco-puro);
+            border-radius: 20px;
+            max-width: 400px;
+            padding: 25px 30px;
+            box-shadow: 0 10px 30px rgba(217,30,24,0.3);
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--negro-elegante);
+        }
+        #popup-content h3 {
+            margin-top: 0;
+            color: var(--rojo-intenso);
+            font-family: 'Sawarabi Mincho', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        #popup-close {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.6rem;
+            color: var(--rojo-intenso);
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
+            color: var(--blanco-puro);
+            text-align: center;
+            padding: 20px 12px;
+            font-family: 'Sawarabi Mincho', serif;
+            font-weight: 600;
+        }
+
+        /* Redes sociales kawaii */
+        .botones-flotantes {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            z-index: 9999;
+        }
+
+        .botones-flotantes img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .botones-flotantes img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            nav a {
+                font-size: 0.8rem; /* Un poco más pequeño para tabletas */
+                margin: 0 6px;
+                padding: 5px 10px;
+            }
+            header {
+                padding: 10px 15px;
+            }
+            header img {
+                height: 70px; /* Logo un poco más pequeño */
+            }
+            section {
+                margin: 40px 15px; /* Ajuste margen */
+                padding: 30px 15px; /* Ajuste padding */
+            }
+            section h2 {
+                font-size: 2.5rem; /* Títulos de sección más pequeños */
+            }
+            .banner-title {
+                font-size: 3.5rem; /* Tamaño del título principal en pantallas medianas */
+                top: 20px;
+                left: 50px;
+                -webkit-text-stroke: 0.6px black;
+            }
+            .banner-phrase {
+                font-size: 1.2rem; /* Tamaño de la frase en pantallas medianas */
+                top: 120px; /* Ajuste para que sea visible */
+                left: 50px;
+                max-width: 60%;
+            }
+            button {
+                font-size: 0.8rem;
+                padding: 10px 20px;
+                margin: 0 6px 10px 6px;
+            }
+            .producto-btn {
+                min-width: 100px;
+                padding: 0.8rem 1.2rem;
+                font-size: 1rem;
+            }
+            #sakurai-img {
+                width: 200px;
+                height: 250px;
+                left: 10px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            header img {
+                height: 60px;
+            }
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px; /* Espacio entre los elementos de navegación */
+            }
+            nav a {
+                font-size: 0.75rem; /* Fuentes más pequeñas */
+                margin: 0 4px;
+                padding: 4px 8px;
+            }
+            section {
+                margin: 30px 10px;
+                padding: 20px 10px;
+            }
+            section h2 {
+                font-size: 2rem; /* Títulos de sección aún más pequeños */
+            }
+            .banner-title {
+                font-size: 2.5rem; /* Tamaño del título principal en pantallas pequeñas */
+                top: 15px;
+                left: 20px;
+                -webkit-text-stroke: 0.4px black;
+            }
+            .banner-phrase {
+                font-size: 1rem; /* Tamaño de la frase en pantallas pequeñas */
+                top: 80px;
+                left: 20px;
+                max-width: 85%;
+            }
+            button {
+                font-size: 0.75rem;
+                padding: 8px 18px;
+                margin: 0 5px 8px 5px;
+            }
+            .producto-btn {
+                min-width: 90px;
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+            .galeria-cartas {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Cartas un poco más pequeñas */
+                gap: 15px;
+            }
+            .carta img {
+                max-width: 70%; /* Imagen más pequeña en la carta */
+            }
+            #sakurai-img {
+                width: 150px;
+                height: 180px;
+                left: 5px;
+                bottom: 5px;
+            }
+            .botones-flotantes {
+                bottom: 10px;
+                right: 10px;
+                gap: 8px;
+            }
+            .botones-flotantes img {
+                width: 40px;
+                height: 40px;
+            }
+            #popup-content {
+                max-width: 90%; /* Ajuste el ancho máximo del popup */
+                padding: 20px;
+            }
+            #popup-content h3 {
+                font-size: 1.5rem;
+            }
+            #popup-content p {
+                font-size: 0.9rem;
+            }
+        }
+        .subcontenido {
+            display: none;
+        }
+        .subcontenido.activo {
+            display: block;
+        }
+
+        /* Estilos del acordeón para Preguntas Frecuentes */
+        .faq-container {
+            padding: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .faq-container h3 {
+            color: #ff00ff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            margin: 0 0 15px 0;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .faq-item .question-wrapper {
+            border-left: 3px solid transparent;
+            padding-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item .question-wrapper:hover {
+            opacity: 0.8;
+        }
+
+        .faq-item .question {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            display: block;
+        }
+
+        .faq-item .answer {
+            font-size: 16px;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Definición de colores para cada pregunta */
+        .faq-item:nth-child(1) { --color-pregunta: #ff00ff; }
+        .faq-item:nth-child(2) { --color-pregunta: #ff1493; }
+        .faq-item:nth-child(3) { --color-pregunta: #008bff; }
+        .faq-item:nth-child(4) { --color-pregunta: #0000cd; }
+        .faq-item:nth-child(5) { --color-pregunta: #800080; }
+        .faq-item:nth-child(6) { --color-pregunta: #008b8b; }
+        .faq-item:nth-child(7) { --color-pregunta: #b81466; }
+        .faq-item:nth-child(8) { --color-pregunta: #4169e1; }
+        .faq-item:nth-child(9) { --color-pregunta: #c71585; }
+
+        /* Estilos de neón SIEMPRE para el recuadro de la pregunta */
+        .faq-item {
+            box-shadow: 0 0 15px var(--color-pregunta), 0 0 25px var(--color-pregunta) inset, 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* Color de la pregunta se mantiene normal */
+        .faq-item .question {
+            color: var(--negro-elegante) !important;
+        }
+        /* Estilos para la respuesta, solo visible cuando está activa */
+        .faq-item.active .answer {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="logo.jpg" alt="Logo Sakura Sweets" title="Sakura Sweets - Logo" />
+    <nav>
+        <a href="#nosotros">Sobre Nosotros</a>
+        <a href="#plan">Plan Estratégico</a>
+        <a href="#logistica">Procesos Logísticos</a>
+        <a href="#productos">Productos</a>
+        <a href="#carrito">Carrito</a>
+        <a href="#layout">Tienda Física</a>
+        <a href="#contacto">Contáctanos</a>
+    </nav>
+</header>
+
+<div class="banner">
+    <img src="banner.jpeg" alt="Banner de Sakura Sweets" class="banner-img">
+    <h1 class="banner-title">Moshia</h1>
+    <h2 class="banner-phrase">¡¡De Chía el sabor, de Japón la inspiración!!</h2>
+</div>
+
+<div id="mascota" tabindex="0" role="img" aria-label="Mascota Sakurai, un oso kawaii."></div>
+
+<div id="volver-arriba" tabindex="0" role="button" aria-label="Volver arriba"></div>
+
+<section id="nosotros">
+    <h2>Sobre Nosotros</h2>
+    <div class="section-buttons">
+        <button onclick="mostrarSub('linea-tiempo', ['linea-tiempo', 'razon-nombre'])">Nuestra Historia</button>
+        <button onclick="mostrarSub('razon-nombre', ['linea-tiempo', 'razon-nombre'])">Razón del Nombre</button>
+    </div>
+
+    <div id="linea-tiempo" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #c71585;">Línea del Tiempo ⏳</h3>
+
+  <div style="margin-bottom: 25px; border-left: 3px solid #ff1493; padding-left: 15px;">
+    <h4 style="color: #ff1493;">🗓️ 2024: Nacimiento de Moshia</h4>
+    <ul style="font-size: 16px; color: #333;">
+      <li>
+        <strong style="color: #ff0080;">🎓 Proyecto de Grado:</strong> El emprendimiento inicia como <strong style="color: #b81466;">Moshia</strong>, un <em>proyecto académico</em> enfocado en <strong style="color: #e30052;">postres japoneses </strong>.
+      </li>
+      <li>
+        <strong style="color: #ec53a0;">🌱 Fundación Inicial:</strong> Se constituye con <strong style="color: #ff00ff;">tres socios fundadores 🤝</strong>.
+      </li>
+      <li>
+        <strong style="color: #9932cc;">🚶‍♂️ Mediados de Año:</strong> Uno de los <strong style="color: #4b0082;">tres fundadores iniciales</strong> se retira de la empresa.
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 25px; border-left: 3px solid #1e90ff; padding-left: 15px;">
+    <h4 style="color: #1e90ff;">Enero - Junio 2025: Reestructuración y Continuidad 🔄</h4>
+    <ul style="font-size: 16px; color: #333;">
+      <li>
+        <strong style="color: #00008b;">👥 Cambio de Socios:</strong> La mayoría de los <strong style="color: #008bff;">socios iniciales</strong> son reemplazados por <strong style="color: #4169e1;">nuevos integrantes ✨</strong>.
+      </li>
+      <li>
+        <strong style="color: #0000cd;">🤝 Nueva Alianza:</strong> Un <strong style="color: #000080;">socio fundador 🌟</strong> y dos <strong style="color: #8b008b;">socios recién incorporados 🎉</strong> deciden continuar y desarrollar la idea original de los <strong style="color: #800080;">mochis 🍡</strong>.
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 25px; border-left: 3px solid #9400d3; padding-left: 15px;">
+    <h4 style="color: #9400d3;'>🤝 Julio 2025: Fusión Estratégica</h4>
+    <ul style="font-size: 16px; color: #333;">
+      <li>
+        <strong style="color: #e30052;">🏢 Fusión con Marca de Cartas:</strong> <strong style="color: #ff0080;">Moshia</strong> se fusiona con una pequeña empresa de <strong style="color: #b81466;">cartas coleccionables 🃏</strong>, buscando una propuesta combinada de <em>postres + coleccionables</em>.
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 25px; border-left: 3 de mayo de 2024; padding-left: 15px;">
+    <h4 style="color: #20214f;'>Agosto 2025: Definición de Marca y Nuevo Socio 🎯</h4>
+    <ul style="font-size: 16px; color: #333;">
+      <li>
+        <strong style="color: #ff1493;">🚫 Descontinuación de Cartas:</strong> Se decide cerrar la línea de <strong style="color: #ff00ff;">cartas coleccionables 🗑️</strong> y concentrar todos los esfuerzos en el crecimiento de <strong style="color: #ec53a0;">Moshia 🌱</strong>.
+      </li>
+      <li>
+        <strong style="color: #00008b;">🧑‍🎓 Nuevo Socio Igualitario:</strong> El <strong style="color: #008bff;">fundador de la empresa de cartas 💼</strong> se incorpora como <strong style="color: #4169e1;">socio igualitario 🌟</strong>, aportando su visión y compromiso al equipo.
+      </li>
+    </ul>
+  </div>
+</div>
+
+    <div id="razon-nombre" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #9400d3;">Razón del Nombre 📝</h3>
+  <p style="font-size: 16px; color: #333; font-family: Arial, sans-serif;">
+    El nombre <strong style="color: #ff0080;"><u>Moshia</u></strong> nace de la unión de dos conceptos clave para nuestro emprendimiento.
+    <br><br>
+    Por un lado, <strong style="color: #4b0082;"><u>"Mochi"</u></strong> 🍡, que representa el <em>producto principal</em> que elaboramos:
+    un <strong style="color: #00008b;">postre artesanal japonés </strong> relleno de helado.
+    Y por otro lado, <strong style="color: #1e90ff;"><u>"Chía"</u></strong> 🏡, el municipio de Cundinamarca donde nació nuestra idea y se constituyó legalmente la empresa.
+    <br><br>
+    Así, <strong style="color: #ff1493;"><u>Moshia</u></strong> es mucho más que un nombre: es una fusión de
+    <strong style="color: #8b008b;">sabor</strong>, <strong style="color: #e30052;">raíces locales</strong> y
+    <strong style="color: #4169e1;">cultura</strong> que nos representa en cada bocado.
+  </p>
+</div>
+</section>
+
+<section id="plan">
+    <h2>Plan Estratégico</h2>
+    <div class="section-buttons">
+        <button onclick="mostrarSub('mision-plan', ['mision-plan','vision-plan','objetivo-plan','objetivos-plan'])">Misión</button>
+        <button onclick="mostrarSub('vision-plan', ['mision-plan','vision-plan','objetivo-plan','objetivos-plan'])">Visión</button>
+        <button onclick="mostrarSub('objetivo-plan', ['mision-plan','vision-plan','objetivo-plan','objetivos-plan'])">Objetivo Principal</button>
+        <button onclick="mostrarSub('objetivos-plan', ['mision-plan','vision-plan','objetivo-plan','objetivos-plan'])">Objetivos Específicos</button>
+    </div>
+
+<div id="mision-plan" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #ff0080;">Misión 🎯</h3>
+
+  <p style="font-size: 16px; color: #000;">
+    Desarrollamos de modo <strong style="color: #b81466;">artesanal</strong> deliciosos y sorprendentes <strong style="color: #8b008b;">mochis 🍡</strong>, un típico postre asiático propio de Japón, inspirándonos en sus <strong style="color: #00008b;">sabores y texturas</strong>, y renovándolos con <strong style="color: #ff1493;">productos de origen colombiano </strong> y/o reconocidos en el país.
+  </p>
+
+  <p style="font-size: 16px; color: #000;">
+    Nuestra labor está orientada a <strong style="color: #e30052;">satisfacer necesidades y gustos</strong> de los pobladores de <strong style="color: #9932cc;">Chía 🏡</strong> y de quienes buscan <strong style="color: #ec53a0;">experiencias gastronómicas</strong> <em>novedosas, originales, exóticas y de calidad</em>. Ofrecemos un producto adaptable para <strong style="color: #ff00ff;">momentos personales, encuentros y ocasiones especiales ✨</strong>, ideal como <strong style="color: #c71585;">capricho diario</strong> o <strong style="color: #1e90ff;">detalle original 🎁</strong>.
+  </p>
+
+  <p style="font-size: 16px; color: #000;">
+    <strong style="color: #0000cd;">Moshia</strong> se distingue por brindar una <strong style="color: #ff0080;">experiencia única</strong> mediante una <strong style="color: #8b008b;">elaboración artesanal cuidada</strong>, <strong style="color: #008bff;">innovación en sabores</strong> con <em>fusión de productos locales</em>, y modelos <strong style="color: #4b0082;">atractivos a la vista 👀</strong>.
+  </p>
+
+  <p style="font-size: 16px; color: #000;">
+    Entregamos un producto que <strong style="color: #ff1493;">sorprende y satisface</strong>, <u>enlazando culturas totalmente opuestas</u>: la <strong style="color: #b81466;">colombiana</strong> y la <strong style="color: #00008b;">japonesa</strong>, a través de un <strong style="color: #800080;">bocado exquisito e inolvidable 😋</strong>.
+  </p>
+</div>
+
+   <div id="vision-plan" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #008bff;">Visión 👀</h3>
+  
+  <p style="font-size: 16px; color: #333;">
+    Nuestra visión en <strong style="color: #ff0080;">Moshia</strong> es ser la <strong style="color: #00008b;">marca líder e icónica</strong> de mochis artesanales en <strong style="color: #e30052;">Chía</strong> y expandirnos <strong style="color: #c71585;">regionalmente</strong>.
+    Buscamos ofrecer una <strong style="color: #8b008b;">experiencia culinaria única 🌟</strong>, fusionando la <strong style="color: #ff1493;">tradición japonesa 🇯🇵</strong> con la <strong style="color: #0000cd;">gastronomía local colombiana 🇨🇴</strong>, y destacarnos por nuestra <strong style="color: #4b0082;">excelencia e innovación en sabores</strong>.
+  </p>
+  
+  <p style="font-size: 16px; color: #333;">
+    Queremos construir una <strong style="color: #ff0080;">marca sólida 💪</strong> basada en la <strong style="color: #b81466;">dedicación</strong>, la <strong style="color: #9932cc;">atención al cliente 🥰</strong> y la <strong style="color: #ec53a0;">promesa de calidad e innovación</strong>.
+    A largo plazo, <strong style="color: #ff1493;">Moshia</strong> aspira a ir más allá de los postres, convirtiéndose en un <strong style="color: #008bff;">referente de la fusión gastronómica</strong> <em>japonés-colombiana</em>.
+  </p>
+  
+  <p style="font-size: 16px; color: #333;">
+    Deseamos <strong style="color: #e30052;">generar valor</strong> para nuestros <strong style="color: #ff00ff;">clientes</strong>, nuestro <strong style="color: #4169e1;">equipo</strong> y la <strong style="color: #00008b;">comunidad de Chía 🏘️</strong>, dejando una <strong style="color: #ff1493;">impresión memorable</strong> con cada mochi que entregamos. 🍡✨
+  </p>
+</div>
+
+    <div id="objetivo-plan" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #9932cc;">Objetivo Principal 🎯</h3>
+  <p style="font-size: 16px; color: #000;">
+    El objetivo primordial de este emprendimiento consiste en consolidarse como la <strong style="color: #ff00ff;">marca líder 👑</strong> en la <strong style="color: #ff0080;">elaboración artesanal de mochis</strong> en <strong style="color: #4169e1;">Chía, Cundinamarca 🏘️</strong>.
+    Ser reconocidos como un <strong style="color: #1e90ff;">referente de iniciativa empresarial</strong>, ofreciendo <strong style="color: #ff1493;">productos innovadores ✨</strong>, <strong style="color: #b81466;">originales</strong> y de la <strong style="color: #00008b;">más alta calidad ✅</strong> con el propósito de <strong style="color: #e30052;">satisfacer las necesidades</strong> de nuestros consumidores.
+  </p>
+  <p style="font-size: 16px; color: #000;">
+    Generar una <strong style="color: #9932cc;">experiencia integral 🤝</strong>, mediante la <strong style="color: #ff0080;">mejora continua</strong> de nuestras <strong style="color: #8b008b;">técnicas de producción artesanal</strong>, la <strong style="color: #0000cd;">exploración de sabores locales</strong> y la <strong style="color: #ec53a0;">implementación de estrategias de marketing efectivas 📈</strong>.
+  </p>
+</div>
+
+    <div id="objetivos-plan" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #ff00ff;">Objetivos Específicos ✨</h3>
+  <ul style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    <li>
+      <strong style="color: #ff0080;">💻 Optimización Digital:</strong> Aumentaremos la visibilidad en <strong style="color: #4169e1;">Chía y sus alrededores</strong> con una <strong style="color: #00008b;">sólida estrategia en redes sociales</strong>, especialmente <strong style="color: #8b008b;">Instagram 📱</strong>.
+    </li>
+    <li>
+      <strong style="color: #e30052;">🤝 Alianzas Estratégicas:</strong> Estableceremos acuerdos con <strong style="color: #9932cc;">tiendas, restaurantes y universidades en Chía 🏢</strong> para distribuir nuestros <strong style="color: #ff1493;">mochis 🍡</strong>.
+    </li>
+    <li>
+      <strong style="color: #20214f;">🧑‍🎓 Desarrollo del Talento:</strong> Capacitaremos continuamente al equipo en <strong style="color: #0000cd;">elaboración de mochi</strong> para mejorar la <strong style="color: #b81466;">eficiencia y calidad ✅</strong>.
+    </li>
+    <li>
+      <strong style="color: #008bff;">📊 Control Financiero y de Calidad:</strong> Implementaremos <strong style="color: #4b0082;">sistemas rigurosos</strong> para <strong style="color: #ec53a0;">optimizar gastos/ingresos 💰</strong> y asegurar la <strong style="color: #1e90ff;">excelencia de los productos 💯</strong>.
+    </li>
+    <li>
+      <strong style="color: #800080;">🎁 Empaque Estratégico:</strong> Diseñaremos un <strong style="color: #c71585;">packaging atractivo y funcional</strong> que <strong style="color: #ff1493;">proteja y destaque nuestros mochis</strong>, mejorando la <strong style="color: #ff00ff;">experiencia del cliente 😊</strong>.
+    </li>
+  </ul>
+</div>
+</section>
+
+<section id="logistica" tabindex="0" aria-labelledby="logistica-titulo">
+    <h2 id="logistica-titulo">Procesos Logísticos</h2>
+    <div class="section-buttons">
+        <button onclick="mostrarSub('envios-log', ['envios-log','tiempos-log','politicas-log','faq-log','punto-equilibrio'])">Tipos de Envío</button>
+        <button onclick="mostrarSub('tiempos-log', ['envios-log','tiempos-log','politicas-log','faq-log','punto-equilibrio'])">Tiempos de Entrega</button>
+        <button onclick="mostrarSub('politicas-log', ['envios-log','tiempos-log','politicas-log','faq-log','punto-equilibrio'])">Política de Devoluciones y Rembolso</button>
+        <button onclick="mostrarSub('punto-equilibrio', ['envios-log','tiempos-log','politicas-log','faq-log','punto-equilibrio'])">Punto de Equilibrio</button>
+        <button onclick="mostrarSub('faq-log', ['envios-log','tiempos-log','politicas-log','faq-log','punto-equilibrio'])">Preguntas Frecuentes</button>
+    </div>
+
+    <div id="envios-log" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #ff1493;">Tipos de Envío 🚚</h3>
+  <ul style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    <li>
+      <strong style="color: #ff0080;">🛵 Entrega a Domicilio Propia:</strong> Nuestro equipo especializado lleva tus dulces directamente a tu puerta en <strong style="color: #9400d3;">Chía</strong>, asegurando <strong style="color: #1e90ff;">frescura y cuidado en el transporte ✨</strong>.
+    </li>
+    <li>
+      <strong style="color: #b81466;">📱 Servicios de Mensajería Locales:</strong> Puedes pedir nuestros dulces a través de apps como <strong style="color: #ff1493;">Rappi</strong> o <strong style="color: #ec53a0;">Domicilios.com</strong> para una <strong style="color: #e30052;">entrega rápida</strong> por sus repartidores en <strong style="color: #8b008b;">Chía</strong>.
+    </li>
+    <li>
+      <strong style="color: #00008b;">📍 Puntos de Recogida (Pick-up en Local):</strong> Haz tu pedido online o por teléfono y <strong style="color: #008bff;">recógelo cómodamente</strong> en nuestro <strong style="color: #4b0082;">establecimiento en Chía</strong> cuando te convenga.
+    </li>
+    <li>
+      <strong style="color: #0000cd;">🗺️ Envío Programado por Rutas:</strong> Ideal para grandes pedidos o eventos, programamos la entrega en <strong style="color: #9932cc;">rutas optimizadas</strong> para garantizar <strong style="color: #4169e1;">puntualidad en Chía ⏰</strong>.
+    </li>
+  </ul>
+</div>
+
+    <div id="tiempos-log" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #e30052;">Tiempos de Entrega ⏰</h3>
+  <p style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    En <strong style="color: #ff0080;">Sakura Sweets</strong>, nos adaptamos a la agilidad de <strong style="color: #4169e1;">Chía</strong> para que disfrutes de tus dulces sin demoras:
+  </p>
+  <ul style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    <li>
+      <strong style="color: #b81466;">🛵 Entrega a Domicilio Propia:</strong> Tus dulces llegan a tu puerta en <strong style="color: #e30052;">20 a 45 minutos</strong>. En momentos de alta demanda, podría extenderse un poco.
+    </li>
+    <li>
+      <strong style="color: #9932cc;">📱 Servicios de Mensajería Locales (Rappi, Domicilios.com):</strong> La entrega se realiza en <strong style="color: #8b008b;">30 a 60 minutos</strong> según la plataforma. Espera un poco más en horas pico o mal tiempo.
+    </li>
+    <li>
+      <strong style="color: #ff1493;">📍 Puntos de Recogida (Pick-up en Local):</strong> Tu pedido estará listo para recoger en nuestro local en solo <strong style="color: #1e90ff;">15 a 25 minutos</strong>. Te avisamos si pedidos grandes requieren más tiempo.
+    </li>
+    <li>
+      <strong style="color: #00008b;">📦 Envío Programado por Rutas:</strong> Las entregas se cumplen en el <strong style="color: #ec53a0;">horario y fecha exactos acordados</strong>, perfecto para grandes pedidos o eventos programados.
+    </li>
+  </ul>
+</div>
+
+   <div id="politicas-log" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #00008b;">Política de Devoluciones 🛡️</h3>
+  <p style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    En <strong style="color: #ff0080;">Sakura Sweets</strong>, buscamos tu <strong style="color: #9400d3;">satisfacción total</strong>, por eso nuestras políticas son <strong style="color: #00008b;">claras y justas ✅</strong>:
+  </p>
+  <ul style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    <li>
+      <strong style="color: #b81466;">💔 Productos Dañados o Incorrectos:</strong> Si recibes un pedido dañado o incorrecto, <strong style="color: #ff1493;">contáctanos inmediatamente 📞</strong> (máximo 2 horas tras la entrega) con una foto. Te ofreceremos un <strong style="color: #1e90ff;">reemplazo o reembolso total 💸</strong>.
+    </li>
+    <li>
+      <strong style="color: #e30052;">😞 Insatisfacción con Calidad o Sabor:</strong> Si no cumple tus expectativas, avísanos en <strong style="color: #ec53a0;">24 horas ⏳</strong>. Evaluaremos el caso y podríamos ofrecerte un <strong style="color: #ff00ff;">crédito en tienda o reembolso parcial</strong> tras verificarlo.
+    </li>
+    <li>
+      <strong style="color: #c71585;">🚫 Cancelaciones de Pedidos:</strong> Cancela <strong style="color: #9932cc;">sin costo con 2 horas de anticipación</strong> a la entrega. Cancelaciones tardías podrían tener un cargo por costos incurridos.
+    </li>
+    <li>
+      <strong style="color: #20214f;">✍️ Errores del Cliente:</strong> No hay reembolso por errores de tu parte (ej. dirección o producto equivocado). <strong style="color: #0000cd;">Revisa bien tu pedido</strong>, pero intentaremos ayudar si nos avisas a tiempo antes del envío.
+    </li>
+  </ul>
+</div>
+
+    <div id="punto-equilibrio" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #1e90ff;">Punto de Equilibrio 📈</h3>
+
+  <p style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    En <strong style="color: #ff1493;">Moshia</strong>, aplicamos el <strong style="color: #9400d3;">punto de equilibrio</strong> como una herramienta clave para entender <strong style="color: #00008b;">cuántos mochis debemos vender para cubrir todos nuestros costos</strong> y comenzar a <strong style="color: #4169e1;">generar ganancias reales 💰</strong>.
+  </p>
+
+  <img src="equilibrio.png" alt="Gráfica del Punto de Equilibrio - Moshia" style="max-width: 100%; height: auto; display: block; margin: 20px auto; border: 1px solid #ff0080; border-radius: 8px;">
+
+  <p style="font-size: 16px; color: #000; font-family: Arial, sans-serif;">
+    Según nuestra gráfica, el <strong style="color: #0000cd;">punto de equilibrio</strong> se alcanza al vender <strong style="color: #b81466;">1.933 mochis al mes</strong>, lo que equivale a <strong style="color: #e30052;">64 unidades diarias</strong>. Esto nos permite cubrir nuestros <strong style="color: #ff0080;">gastos fijos</strong> de <span style="color:#008bff;"><strong>$7.295.500</strong></span> y <strong style="color: #ff0080;">gastos variables</strong> de <span style="color:#008b8b;"><strong>$195.216</strong></span>. A partir de esa cantidad, ¡cada mochi vendido se convierte en <strong style="color: #ec53a0;">ganancia para seguir creciendo y endulzando momentos especiales 🥰</strong>!
+  </p>
+
+  <img src="valores.png" alt="Tabla de Cálculos del Punto de Equilibrio - Moshia" style="max-width: 100%; height: auto; display: block; margin: 20px auto; border: 1px solid #ff0080; border-radius: 8px;">
+</div>
+
+<div id="faq-log" class="subcontenido" aria-hidden="true">
+    <h3 style="color: #800080; text-align: center;">Preguntas Frecuentes ❓</h3>
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #ff00ff;">¿Tienen puntos de venta físicos?</p>
+                <div class="answer">
+                    <p style="margin: 0;">Sí. Contamos con <strong style="color: #9400d3;">tienda física 📍🏬</strong> y también <strong style="color: #1e90ff;">vendemos en línea 💻</strong> a través de nuestras redes y canales digitales.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #ff1493;">¿Qué es un mochi y por qué es tan especial?</p>
+                <div class="answer">
+                    <p style="margin: 0;">El <strong style="color: #4b0082;">mochi</strong> es un postre japonés 🇯🇵 elaborado con <strong style="color: #8b008b;">masa de arroz glutinoso</strong> y relleno de helado 🍦. En <strong style="color: #e30052;">Moshia</strong> lo transformamos al combinarlo con <strong style="color: #00008b;">sabores colombianos 🇨🇴</strong> como <em>fresa, guanábana y granadilla</em>, haciéndolo <strong style="color: #ec53a0;">único y especial ✨</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #008bff;">¿Dónde están ubicados?</p>
+                <div class="answer">
+                    <p style="margin: 0;">Nuestra producción se encuentra en <strong style="color: #b81466;">Cundinamarca</strong>. Desde aquí gestionamos <strong style="color: #9932cc;">pedidos en la zona 📦</strong> y atendemos en nuestra <strong style="color: #ff00ff;">tienda física 🏪</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #0000cd;">¿Tienen servicio a domicilio?</p>
+                <div class="answer">
+                    <p style="margin: 0;">¡Claro! Entregamos con <strong style="color: #4169e1;">reparto propio 🛵</strong> y también por medio de <strong style="color: #c71585;">Rappi</strong> y <strong style="color: #20214f;">Domicilios.com</strong> para una entrega <strong style="color: #ff1493;">rápida y segura 🚀</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #800080;">¿Puedo hacer un pedido grande para un evento?</p>
+                <div class="answer">
+                    <p style="margin: 0;">¡Por supuesto! Tomamos pedidos especiales para <strong style="color: #ff0080;">eventos, celebraciones o fechas especiales 🎉</strong>. Escríbenos con al menos <strong style="color: #9400d3;">20 días</strong> o <strong style="color: #00008b;">1 mes</strong> de anticipación para organizarlo todo 🗓️.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #008b8b;">¿Tienen sabores sorpresa o únicos?</p>
+                <div class="answer">
+                    <p style="margin: 0;">Sí. Tenemos una categoría llamada <strong style="color: #e30052;">Gloom Mystery</strong>, con <strong style="color: #ec53a0;">sabores sorpresa</strong> que cambian constantemente 😲. ¡Solo sabrás cuál es cuando lo pruebes! 😋</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #b81466;">¿Cuánto tiempo duran los mochis?</p>
+                <div class="answer">
+                    <p style="margin: 0;">Deben mantenerse <strong style="color: #9932cc;">congelados o refrigerados ❄️</strong>. Duran hasta <strong style="color: #ff00ff;">2 semanas</strong>, pero lo ideal es consumirlos en los <strong style="color: #4b0082;">primeros 5 días</strong> por temas de humedad y calidad del helado ⏳.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #4169e1;">¿Qué métodos de pago aceptan?</p>
+                <div class="answer">
+                    <p style="margin: 0;">Aceptamos <strong style="color: #1e90ff;">efectivo 💵</strong>, <strong style="color: #0000cd;">Nequi, Daviplata</strong> y <strong style="color: #4169e1;">transferencias bancarias 💳</strong>. ¡Fácil, rápido y seguro! 🛡️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question-wrapper">
+                <p class="question" style="color: #c71585;">¿Por dónde puedo comunicarme con ustedes?</p>
+                <div class="answer">
+                    <p style="margin: 0;">En nuestra <strong style="color: #ff0080;">página web 🌐</strong> encontrarás los accesos directos a <strong style="color: #008bff;">Instagram</strong> y <strong style="color: #20214f;">WhatsApp 💬</strong>. ¡Estamos a un clic de ti! 🖱️</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section id="productos" tabindex="0" aria-labelledby="productos-titulo">
+    <h2 id="productos-titulo">Productos</h2>
+    <p style="text-align:center; font-style: italic; font-family: 'Sawarabi Mincho', serif; font-size: 1.2rem; margin-bottom: 25px;">
+        Descubre nuestra linea "Gloom" con la magia y el encanto de Japón.
+    </p>
+    <div class="galeria-cartas">
+        <a href="gloom_classic.html" class="carta classic">
+            <img src="gloom_classic.jpg" alt="Gloom Classic" style="width: 100px; height: auto;" />
+            <h4>Gloom Classic</h4>
+        </a>
+        <a href="gloom_mystery.html" class="carta mystery">
+            <img src="gloom_mystery.jpg" alt="Gloom Mystery" style="width: 100px; height: auto;" />
+            <h4>Gloom Mystery</h4>
+        </a>
+        <a href="gloom_sour.html" class="carta sour">
+            <img src="gloom_sour.jpg" alt="Gloom Sour" style="width: 100px; height: auto;" />
+            <h4>Gloom Sour</h4>
+        </a>
+        <a href="gloom_symphony.html" class="carta symphony">
+            <img src="gloom_symphony.jpg" alt="Gloom Symphony" style="width: 100px; height: auto;" />
+            <h4>Gloom Symphony</h4>
+        </a>
+    </div>
+</section>
+
+<section id="carrito" tabindex="0" aria-labelledby="carrito-titulo">
+    <h2 id="carrito-titulo">Carrito</h2>
+    <div class="section-buttons">
+        <button onclick="window.location.href='carrito_sakura.html'">Ir al carrito</button>
+    </div>
+</section>
+
+<section id="layout" tabindex="0" aria-labelledby="layout-titulo">
+    <h2 id="layout-titulo">Tienda Física</h2>
+    <div class="section-buttons" style="margin-top: 30px;">
+        <button onclick="mostrarSub('layout-store', ['layout-store'])">Ver Tienda</button>
+    </div>
+
+    <div id="layout-store" class="subcontenido" aria-hidden="true">
+        <h3 style="color: var(--rojo-intenso);">Diseño de la Tienda 🏬</h3>
+        <img src="layout_store.jpeg" alt="Layout de la tienda física de Moshia" style="max-width: 100%; border-radius: 10px; display: block; margin: 20px auto;" />
+        <p style="font-size: 16px; text-align: center; color: var(--negro-elegante); margin-top: 15px;">¡Un espacio diseñado para que disfrutes de una experiencia única!</p>
+    </div>
+</section>
+
+<section id="contacto" tabindex="0" aria-labelledby="contacto-titulo">
+    <h2 id="contacto-titulo">Contáctanos</h2>
+    <form style="text-align: center;">
+        <input type="text" placeholder="Tu nombre" required aria-label="Tu nombre" /><br /><br />
+        <input type="email" placeholder="Tu correo" required aria-label="Tu correo electrónico" /><br /><br />
+        <textarea placeholder="Escribe tu mensaje" required aria-label="Mensaje"></textarea><br /><br />
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+
+<div id="sakurai-img-container" style="text-align:center; margin-bottom: 30px;">
+    <img id="sakurai-img" src="sakurai.png" alt="Sakurai, la mascota de Sakura Sweets" style="max-width: 220px; transition: opacity 0.5s ease;" />
+</div>
+
+<footer>
+    <p>&copy; 2025 Sakura Sweets - Todos los derechos reservados</p>
+</footer>
+
+<div class="botones-flotantes">
+    <a href="https://www.instagram.com/sakura_sweets.2?igsh=a2ducXY1enN6eHcw" target="_blank" title="Instagram">
+        <img src="instagram.jpeg" alt="Instagram" />
+    </a>
+    <a href="https://wa.me/573053577410" target="_blank" title="WhatsApp">
+        <img src="whatsapp.jpeg" alt="WhatsApp" />
+    </a>
+
+    <a href="#top" title="Volver arriba">
+        <img src="top.jpeg" alt="Volver arriba" />
+    </a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sakuraiImg = document.getElementById("sakurai-img");
+
+        if (!sakuraiImg) {
+            console.error("Error: El elemento con ID 'sakurai-img' no se encontró en el DOM. Revisa tu HTML.");
+            return;
+        }
+
+        const sakuraiSources = {
+            'default': "sakurai.png",
+            'nosotros': "sobre.png",
+            'plan': "plan.png",
+            'logistica': "procesos.png",
+            'productos': "productos.png",
+            'carrito': "carrito.png",
+            'layout': "layout.png",
+            'contacto': "contactanos.png",
+            'linea-tiempo': "historia.png",
+            'razon-nombre': "razon.png",
+            'mision-plan': "mision.png",
+            'vision-plan': "vision.png",
+            'objetivo-plan': "objetivo.png",
+            'objetivos-plan': "objetivos.png",
+            'envios-log': "tipos.png",
+            'tiempos-log': "tiempo.png",
+            'politicas-log': "devoluciones.png",
+            'faq-log': "faq.png",
+            'punto-equilibrio': "punto.png",
+            'layout-store': "layout_store.png"
+        };
+
+        const subs = document.querySelectorAll(".subcontenido");
+        subs.forEach(s => {
+            s.classList.remove("activo");
+            s.setAttribute("aria-hidden", "true");
+        });
+
+        sakuraiImg.style.opacity = 1;
+
+        const secciones = document.querySelectorAll("section");
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    const activeSubcontent = entry.target.querySelector('.subcontenido.activo');
+
+                    if (sakuraiSources[id] && !activeSubcontent) {
+                        sakuraiImg.style.opacity = 0;
+                        setTimeout(() => {
+                            sakuraiImg.src = sakuraiSources[id];
+                            sakuraiImg.style.opacity = 1;
+                        }, 300);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        secciones.forEach(sec => observer.observe(sec));
+    });
+
+    function mostrarSub(idMostrar, todos) {
+        const sakuraiImg = document.getElementById("sakurai-img");
+        const sakuraiSources = {
+            'default': "sakurai.png",
+            'nosotros': "sobre.png",
+            'plan': "plan.png",
+            'logistica': "procesos.png",
+            'productos': "productos.png",
+            'carrito': "carrito.png",
+            'layout': "layout.png",
+            'contacto': "contactanos.png",
+            'linea-tiempo': "historia.png",
+            'razon-nombre': "razon.png",
+            'mision-plan': "mision.png",
+            'vision-plan': "vision.png",
+            'objetivo-plan': "objetivo.png",
+            'objetivos-plan': "objetivos.png",
+            'envios-log': "tipos.png",
+            'tiempos-log': "tiempo.png",
+            'politicas-log': "devoluciones.png",
+            'faq-log': "faq.png",
+            'punto-equilibrio': "punto.png",
+            'layout-store': "layout_store.png"
+        };
+
+        todos.forEach(id => {
+            const seccion = document.getElementById(id);
+            if (!seccion) {
+                console.warn(`Advertencia: Elemento con ID '${id}' no encontrado para ocultar/mostrar. Revisa tus IDs.`);
+                return;
+            }
+
+            if (id === idMostrar) {
+                seccion.classList.add("activo");
+                seccion.setAttribute("aria-hidden", "false");
+                const h3 = seccion.querySelector('h3');
+                if (h3 && h3.style.color) {
+                    const h3Color = h3.style.color;
+                    seccion.style.border = `1px solid ${h3Color}`;
+                    seccion.style.boxShadow = `0 0 8px ${h3Color}, 0 0 12px ${h3Color} inset`;
+                }
+
+                if (sakuraiSources[idMostrar] && sakuraiImg) {
+                    sakuraiImg.style.opacity = 0;
+                    setTimeout(() => {
+                        sakuraiImg.src = sakuraiSources[idMostrar];
+                        sakuraiImg.style.opacity = 1;
+                    }, 300);
+                }
+
+            } else {
+                seccion.classList.remove("activo");
+                seccion.setAttribute("aria-hidden", "true");
+                seccion.style.border = `1px solid transparent`;
+                seccion.style.boxShadow = `none`;
+            }
+        });
+    }
+
+    document.querySelectorAll('.faq-item').forEach(item => {
+        const questionWrapper = item.querySelector('.question-wrapper');
+        questionWrapper.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Cierra todas las respuestas
+            document.querySelectorAll('.faq-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Si la pregunta no estaba activa, la activa
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>

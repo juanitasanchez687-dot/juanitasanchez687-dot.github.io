@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carrito de Compras - Sakura Sweets</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
+
+    <style>
+        /* Variables de colores de Sakura Sweets */
+        :root {
+            --rojo-intenso: #d91e18;
+            --blanco-puro: #ffffff;
+            --negro-elegante: #222222;
+            --azul-pastel: #7ec8e3;
+            --azul-fuerte: #176ea6;
+            --fondo-sakura: #fff0f5;
+        }
+
+        /* Reset básico */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif; /* Fuente de Sakura Sweets */
+            background: linear-gradient(to bottom right, #fb7070, #70b4fb); /* Fondo de Sakura Sweets */
+            color: var(--negro-elegante);
+            padding: 20px; /* Mantener padding general */
+        }
+        h1, h2 {
+            font-family: 'Sawarabi Mincho', serif; /* Fuente de títulos de Sakura Sweets */
+            text-align: center;
+            color: var(--rojo-intenso); /* Color de títulos de Sakura Sweets */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Sombra más sutil */
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        h1{
+            margin-top: 50px;
+        }
+
+        .contenedor-principal {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 50px auto 20px auto;
+            gap: 20px;
+        }
+
+        /* Estilos para la sección del carrito */
+        #carrito-section {
+            background: var(--blanco-puro); /* Fondo blanco */
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 550px; /* Ajustar ancho máximo */
+            width: 100%;
+            box-shadow: 0 6px 18px rgba(217,30,24,0.1); /* Sombra de Sakura Sweets */
+            border: 2px solid #ff00ff; /* Borde neón rosado */
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff inset;
+        }
+        #items-carrito {
+            margin-bottom: 20px;
+        }
+        .item-carrito {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0; /* Borde más suave */
+            padding: 12px 0;
+        }
+        .item-carrito:last-child {
+            border-bottom: none; /* Elimina el borde del último ítem */
+        }
+        .item-carrito img {
+            width: 70px; /* Tamaño de imagen en carrito */
+            height: 70px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 8px; /* Bordes suaves para imagen */
+        }
+        .item-info {
+            flex-grow: 1;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--negro-elegante);
+        }
+        .item-info p {
+            margin: 2px 0;
+        }
+        .item-info strong {
+            font-size: 1.1rem;
+        }
+        .btn-eliminar {
+            background-color: var(--rojo-intenso); /* Color de botón de Sakura Sweets */
+            color: var(--blanco-puro);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-eliminar:hover {
+            background-color: #a71d2a; /* Rojo un poco más oscuro al hover */
+            transform: scale(1.05);
+        }
+        #total {
+            font-family: 'Sawarabi Mincho', serif; /* Fuente para el total */
+            font-weight: 700;
+            text-align: right;
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: var(--rojo-intenso); /* Color rojo para el total */
+        }
+        .acciones {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            gap: 15px; /* Espacio entre botones de acción */
+        }
+
+        /* Estilos para la sección de productos disponibles */
+        #productos-disponibles-section {
+            background: var(--blanco-puro); /* Fondo blanco */
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 550px; /* Ajustar ancho máximo */
+            width: 100%;
+            box-shadow: 0 6px 18px rgba(217,30,24,0.1);
+            border: 2px solid #9400d3; /* Borde neón morado */
+            box-shadow: 0 0 10px #9400d3, 0 0 20px #9400d3 inset;
+        }
+        .productos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem; /* Espacio entre productos */
+            justify-content: center;
+        }
+        .producto-card {
+            background: #ffe5ec; /* Fondo rosado */
+            border-radius: 15px; /* Bordes más suaves */
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(217,30,24,0.15); /* Sombra de Sakura Sweets */
+            width: 180px; /* Tamaño de producto ajustado para que quepan 4 */
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex; /* Para organizar contenido verticalmente */
+            flex-direction: column;
+            justify-content: space-between; /* Espacio entre imagen, texto y botón */
+        }
+        .producto-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 7px 20px rgba(217,30,24,0.3);
+        }
+        .producto-card img {
+            width: 100%;
+            height: 130px; /* Altura de imagen para consistencia */
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 10px; /* Bordes suaves para imagen */
+        }
+        .producto-card h3 {
+            font-family: 'Sawarabi Mincho', serif; /* Fuente de Sakura Sweets */
+            color: var(--negro-elegante); /* Color de texto consistente */
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+        .producto-card p {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--negro-elegante);
+            margin: 5px 0 15px 0; /* Espacio debajo del precio */
+            font-weight: 600;
+        }
+
+        /* Estilos generales para botones */
+        button {
+            font-family: 'Sawarabi Mincho', serif; /* Fuente de Sakura Sweets */
+            font-weight: 700;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px; /* Bordes más redondeados */
+            cursor: pointer;
+            font-size: 1rem;
+            background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel)); /* Degradado de Sakura Sweets */
+            color: var(--blanco-puro);
+            box-shadow: 0 5px 15px rgba(217,30,24,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            user-select: none;
+        }
+        button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 7px 20px rgba(217,30,24,0.6);
+        }
+        .acciones button { /* Estilos específicos para los botones de la sección de acciones del carrito */
+            flex: 1; /* Para que ocupen el espacio disponible */
+            min-width: 150px; /* Asegurar un tamaño mínimo */
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .contenedor-principal {
+                flex-direction: column; /* Volver a apilar verticalmente */
+                align-items: center;
+            }
+            #carrito-section,
+            #productos-disponibles-section {
+                max-width: 90%; /* Ocupar más ancho en pantallas pequeñas */
+            }
+            .productos-grid {
+                gap: 1rem;
+            }
+            .producto-card {
+                width: 160px;
+                padding: 12px;
+            }
+            .producto-card img {
+                height: 120px;
+            }
+        }
+        @media (max-width: 768px) {
+            #carrito-section {
+                padding: 20px;
+                margin: 20px auto;
+            }
+            .item-carrito img {
+                width: 50px;
+                height: 50px;
+            }
+            #total {
+                font-size: 1.5rem;
+            }
+            .acciones button, .producto-card button {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+            h1, h2{
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1, h2 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            #carrito-section,
+            #productos-disponibles-section {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            .item-carrito {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 0;
+            }
+            .item-carrito img {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            .btn-eliminar {
+                align-self: flex-end;
+                margin-top: -30px; /* Ajuste para superponerlo */
+            }
+            #total {
+                font-size: 1.3rem;
+            }
+            .acciones {
+                flex-direction: column;
+            }
+            .acciones button {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .productos-grid {
+                gap: 0.8rem;
+                margin-top: 10px;
+            }
+            .producto-card {
+                width: 140px;
+                padding: 10px;
+                border-radius: 12px;
+            }
+            .producto-card img {
+                height: 100px;
+            }
+            .producto-card h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        <section id="carrito-section">
+            <h2>Tu Carrito de Compras</h2>
+            <div id="items-carrito">
+                <p>El carrito está vacío.</p>
+            </div>
+            <div id="total">Total: $0.00</div>
+            <div class="acciones">
+                <button id="vaciar">Vaciar</button>
+                <button id="pagar">Pagar</button>
+                <button id="inicio" onclick="window.location.href='sakura_sweets.html'">Inicio</button>
+            </div>
+        </section>
+
+        <section id="productos-disponibles-section">
+            <h1>Productos Disponibles</h1>
+            <div class="productos-grid" id="productos"></div>
+        </section>
+    </div>
+
+
+    <footer style="background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte)); color: var(--blanco-puro); text-align: center; padding: 20px 12px; font-family: 'Sawarabi Mincho', serif; font-weight: 600; margin-top: 50px;">
+        <p>&copy; 2025 Sakura Sweets. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Actualizar productosData con los productos de Sakura Sweets y sus imágenes
+        const productosData = [
+            { id: "classic", nombre: "Gloom Classic", precio: 7500, img: "gloom_classic.jpg", url: "gloom_classic.html" },
+            { id: "mystery", nombre: "Gloom Mystery", precio: 7500, img: "gloom_mystery.jpg", url: "gloom_mystery.html" },
+            { id: "glsour", nombre: "Gloom Sour", precio: 7500, img: "gloom_sour.jpg", url: "gloom_sour.html" },
+            { id: "symphony", nombre: "Gloom Symphony", precio: 7500, img: "gloom_symphony.jpg", url: "gloom_symphony.html" },
+        ];
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        const productosContainer = document.getElementById('productos');
+        const itemsCarrito = document.getElementById('items-carrito');
+        const totalEl = document.getElementById('total');
+        const vaciarBtn = document.getElementById('vaciar');
+        const pagarBtn = document.getElementById('pagar');
+        const inicioBtn = document.getElementById('inicio'); // Referencia al botón "Volver al inicio"
+
+        function mostrarProductos() {
+            productosContainer.innerHTML = ''; // Limpiar productos existentes antes de mostrar
+            productosData.forEach(producto => {
+                const div = document.createElement('div');
+                div.classList.add('producto-card'); // Usar la nueva clase para las tarjetas de producto
+                div.innerHTML = `
+                    <img src="${producto.img}" alt="${producto.nombre}">
+                    <h3>${producto.nombre}</h3>
+                    <p>$${producto.precio.toFixed(2)}</p>
+                    <button class="agregar-carrito-btn" data-id="${producto.id}">Agregar al Carrito</button>
+                `;
+                // Añadir el evento de click al botón "Agregar al Carrito"
+                div.querySelector('.agregar-carrito-btn').addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que se dispare el evento del div padre
+                    agregarAlCarrito(producto.id);
+                });
+                productosContainer.appendChild(div);
+            });
+        }
+
+        function agregarAlCarrito(productoId) {
+            const productoAAgregar = productosData.find(p => p.id === productoId);
+            if (productoAAgregar) {
+                carrito.push({ ...productoAAgregar }); // Agrega una copia del producto
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                actualizarCarrito();
+                alert(`${productoAAgregar.nombre} añadido al carrito.`);
+            }
+        }
+
+        function actualizarCarrito() {
+            itemsCarrito.innerHTML = "";
+
+            if (carrito.length === 0) {
+                itemsCarrito.innerHTML = "<p>El carrito está vacío.</p>";
+                totalEl.textContent = "Total: $0.00";
+                return;
+            }
+
+            carrito.forEach((producto, index) => {
+                const div = document.createElement('div');
+                div.classList.add('item-carrito');
+                div.innerHTML = `
+                    <img src="${producto.img}" alt="${producto.nombre}">
+                    <div class="item-info">
+                        <p><strong>${producto.nombre}</strong></p>
+                        <p>$${producto.precio.toFixed(2)}</p>
+                    </div>
+                    <button class="btn-eliminar" data-index="${index}">Eliminar</button>
+                `;
+                itemsCarrito.appendChild(div);
+            });
+
+            const total = carrito.reduce((sum, p) => sum + p.precio, 0);
+            totalEl.textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        function eliminarProducto(index) {
+            carrito.splice(index, 1);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            actualizarCarrito();
+        }
+
+        function vaciarCarrito() {
+            if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
+                carrito = [];
+                localStorage.removeItem('carrito');
+                actualizarCarrito();
+                alert("El carrito ha sido vaciado.");
+            }
+        }
+
+        itemsCarrito.addEventListener('click', e => {
+            if (e.target.classList.contains('btn-eliminar')) {
+                const index = Number(e.target.getAttribute('data-index'));
+                eliminarProducto(index);
+            }
+        });
+
+        vaciarBtn.addEventListener('click', vaciarCarrito);
+
+        pagarBtn.addEventListener('click', () => {
+            if (carrito.length === 0) {
+                alert("El carrito está vacío. Por favor, añade productos antes de pagar.");
+                return;
+            }
+            alert("Redirigiendo a la página de pago. (Esta es una simulación)");
+            // Aquí puedes redirigir a tu página de pago real, por ejemplo:
+            // window.location.href = "pago_sakura.html";
+        });
+
+        mostrarProductos();
+        actualizarCarrito();
+    </script>
+
+</body>
+</html>
