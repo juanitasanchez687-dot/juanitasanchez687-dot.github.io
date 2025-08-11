@@ -110,30 +110,20 @@
 
     <label for="barrio">Barrio:</label>
     <input type="text" id="barrio" required>
+    
+    <label for="departamento">Departamento:</label>
+    <select id="departamento" required>
+      <option value="" disabled selected>Selecciona un departamento</option>
+    </select>
+
+    <label for="ciudad-municipio">Ciudad/Municipio:</label>
+    <select id="ciudad-municipio" required>
+      <option value="" disabled selected>Selecciona una ciudad/municipio</option>
+    </select>
 
     <label for="localidad">Localidad/Comuna:</label>
     <input type="text" id="localidad" required>
-
-    <label for="ciudad">Ciudad:</label>
-    <select id="ciudad" required>
-      <option value="" disabled selected>Selecciona una ciudad</option>
-      <option value="bogota">Bogotá</option>
-      <option value="medellin">Medellín</option>
-      <option value="cali">Cali</option>
-      <option value="barranquilla">Barranquilla</option>
-      <option value="cartagena">Cartagena</option>
-      <option value="bucaramanga">Bucaramanga</option>
-      <option value="cucuta">Cúcuta</option>
-      <option value="pereira">Pereira</option>
-      <option value="manizales">Manizales</option>
-      <option value="ibague">Ibagué</option>
-      <option value="neiva">Neiva</option>
-      <option value="pasto">Pasto</option>
-      <option value="armenia">Armenia</option>
-      <option value="valledupar">Valledupar</option>
-      <option value="santamarta">Santa Marta</option>
-    </select>
-
+    
     <label for="telefono">Teléfono:</label>
     <input type="text" id="telefono" required>
 
@@ -238,6 +228,9 @@
     const formularioCliente = document.getElementById("formulario-cliente");
     const seccionPagos = document.getElementById("seccion-pagos");
 
+    const departamentoSelect = document.getElementById("departamento");
+    const ciudadMunicipioSelect = document.getElementById("ciudad-municipio");
+
     const formularioPago = document.getElementById("formulario-pago");
     const metodoPago = document.getElementById("metodo-pago");
     const totalPagar = document.getElementById("total-pagar");
@@ -258,6 +251,69 @@
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const total = carrito.reduce((sum, p) => sum + p.precio, 0);
     totalPagar.textContent = `Total a Pagar: $${total.toFixed(2)}`;
+    
+    // Objeto con la estructura de departamentos y municipios
+    const departamentosYMunicipios = {
+      "Amazonas": ["Leticia", "Puerto Nariño"],
+      "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
+      "Arauca": ["Arauca", "Saravena", "Tame"],
+      "Atlántico": ["Barranquilla", "Soledad", "Malambo"],
+      "Bolívar": ["Cartagena de Indias", "Magangué", "El Carmen de Bolívar"],
+      "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
+      "Caldas": ["Manizales", "La Dorada", "Chinchiná"],
+      "Caquetá": ["Florencia", "San Vicente del Caguán"],
+      "Casanare": ["Yopal", "Aguazul", "Tauramena"],
+      "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada"],
+      "Cesar": ["Valledupar", "Aguachica", "Codazzi"],
+      "Chocó": ["Quibdó", "Istmina"],
+      "Córdoba": ["Montería", "Sahagún", "Cereté"],
+      "Cundinamarca": ["Bogotá D.C.", "Soacha", "Chía", "Zipaquirá", "Funza"],
+      "Guainía": ["Inírida"],
+      "Guaviare": ["San José del Guaviare"],
+      "Huila": ["Neiva", "Pitalito", "Garzón"],
+      "La Guajira": ["Riohacha", "Maicao", "Uribia"],
+      "Magdalena": ["Santa Marta", "Ciénaga", "Fundación"],
+      "Meta": ["Villavicencio", "Puerto Gaitán", "Granada"],
+      "Nariño": ["Pasto", "Tumaco", "Ipiales"],
+      "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona"],
+      "Putumayo": ["Mocoa", "Puerto Asís"],
+      "Quindío": ["Armenia", "Calarcá", "Quimbaya"],
+      "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal"],
+      "San Andrés y Providencia": ["San Andrés"],
+      "Santander": ["Bucaramanga", "Floridablanca", "Girón"],
+      "Sucre": ["Sincelejo", "Corozal"],
+      "Tolima": ["Ibagué", "Espinal", "Melgar"],
+      "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá"],
+      "Vaupés": ["Mitú"],
+      "Vichada": ["Puerto Carreño"]
+    };
+
+    // Función para llenar el select de Departamentos
+    function poblarDepartamentos() {
+      for (const departamento in departamentosYMunicipios) {
+        const option = document.createElement("option");
+        option.value = departamento;
+        option.textContent = departamento;
+        departamentoSelect.appendChild(option);
+      }
+    }
+
+    // Evento que escucha el cambio en el select de Departamento
+    departamentoSelect.addEventListener("change", function() {
+      const departamentoSeleccionado = this.value;
+      ciudadMunicipioSelect.innerHTML = '<option value="" disabled selected>Selecciona una ciudad/municipio</option>';
+      if (departamentoSeleccionado) {
+        const ciudades = departamentosYMunicipios[departamentoSeleccionado];
+        ciudades.forEach(ciudad => {
+          const option = document.createElement("option");
+          option.value = ciudad;
+          option.textContent = ciudad;
+          ciudadMunicipioSelect.appendChild(option);
+        });
+      }
+    });
+
+    poblarDepartamentos();
 
     function ocultarTodo() {
       tarjetaForm.classList.add('oculto');
