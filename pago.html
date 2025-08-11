@@ -193,7 +193,7 @@
         <p>Cuando recibamos tu pago, iniciaremos el proceso de producción de tu pedido.</p>
         <div class="pago-botones">
           <button id="btn-subir-comprobante-nequi">Subir Comprobante</button>
-          <button id="btn-pago-realizado-nequi">Pago Realizado</button>
+          <button id="btn-pago-realizado-nequi" class="oculto">Pago Realizado</button>
         </div>
         <div id="comprobante-form-nequi" class="nequi-mensaje oculto">
           <p>Por favor, sube el comprobante de tu transferencia:</p>
@@ -244,6 +244,7 @@
     
     const btnSubirComprobanteNequi = document.getElementById("btn-subir-comprobante-nequi");
     const comprobanteFormNequi = document.getElementById("comprobante-form-nequi");
+    const btnEnviarComprobanteNequi = document.getElementById("btn-enviar-comprobante-nequi");
 
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const total = carrito.reduce((sum, p) => sum + p.precio, 0);
@@ -315,6 +316,7 @@
       contraentregaMensaje.classList.add('oculto');
       confirmacionPedidoMensaje.classList.add('oculto');
       comprobanteFormNequi.classList.add('oculto');
+      btnPagoRealizadoNequi.classList.add('oculto');
     }
 
     function generarCodigoPedido() {
@@ -328,9 +330,7 @@
     
     formularioCliente.addEventListener("submit", function(e) {
       e.preventDefault();
-      // Ocultar formulario de cliente
       formularioCliente.classList.add('oculto');
-      // Mostrar sección de pagos
       seccionPagos.classList.remove('oculto');
     });
 
@@ -363,6 +363,21 @@
       confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     });
 
+    btnSubirComprobanteNequi.addEventListener("click", () => {
+        comprobanteFormNequi.classList.remove('oculto');
+    });
+    
+    btnEnviarComprobanteNequi.addEventListener("click", () => {
+        const fileInput = document.getElementById("comprobante-nequi");
+        if (fileInput.files.length > 0) {
+            alert("Comprobante subido con éxito. Lo verificaremos pronto.");
+            comprobanteFormNequi.classList.add('oculto');
+            btnPagoRealizadoNequi.classList.remove('oculto'); // Muestra el botón de "Pago Realizado"
+        } else {
+            alert("Por favor, selecciona un archivo para subir.");
+        }
+    });
+
     btnPagoRealizadoNequi.addEventListener("click", () => {
       ocultarTodo();
       const codigo = generarCodigoPedido();
@@ -376,20 +391,6 @@
         <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
       `;
       confirmacionPedidoMensaje.innerHTML = mensajeHTML;
-    });
-    
-    btnSubirComprobanteNequi.addEventListener("click", () => {
-        comprobanteFormNequi.classList.remove('oculto');
-    });
-
-    document.getElementById("btn-enviar-comprobante-nequi").addEventListener("click", () => {
-        const fileInput = document.getElementById("comprobante-nequi");
-        if (fileInput.files.length > 0) {
-            alert("Comprobante subido con éxito. Lo verificaremos pronto.");
-            comprobanteFormNequi.classList.add('oculto');
-        } else {
-            alert("Por favor, selecciona un archivo para subir.");
-        }
     });
 
     btnVerProcesoContraentrega.addEventListener("click", () => {
