@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Línea de Pedido</title>
+<link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
+<style>
+    :root {
+        --rojo-intenso: #d91e18;
+        --blanco-puro: #ffffff;
+        --negro-elegante: #222222;
+        --azul-pastel: #7ec8e3;
+    }
+    body {
+        font-family: 'Montserrat', sans-serif;
+        padding: 30px;
+        background: linear-gradient(to bottom right, #fb7070, #70b4fb);
+        color: var(--negro-elegante);
+    }
+    h2, h3 {
+        font-family: 'Sawarabi Mincho', serif;
+        text-align: center;
+        color: var(--rojo-intenso);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .pedido-info {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .timeline {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin: 40px auto;
+        max-width: 900px;
+    }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background-color: rgba(255,255,255,0.5);
+        border-radius: 3px;
+    }
+    .etapa {
+        position: relative;
+        text-align: center;
+        width: 20%;
+    }
+    .circulo {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255,255,255,0.6);
+        border: 3px solid var(--rojo-intenso);
+        border-radius: 50%;
+        margin: auto;
+        line-height: 34px;
+        font-weight: bold;
+        color: var(--negro-elegante);
+        z-index: 1;
+        position: relative;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .activo .circulo {
+        background-color: var(--rojo-intenso);
+        color: var(--blanco-puro);
+    }
+    .etapa p {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .tiempo-restante {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 1.2rem;
+    }
+</style>
+</head>
+<body>
+
+<h2>Seguimiento de tu Pedido</h2>
+<div class="pedido-info">
+    <h3 id="codigo-pedido"></h3>
+    <p>Método de pago: <span id="metodo-pago"></span></p>
+</div>
+
+<div class="timeline" id="linea-tiempo">
+    <div class="etapa" id="etapa1">
+        <div class="circulo">1</div>
+        <p>Verificar Pago</p>
+    </div>
+    <div class="etapa" id="etapa2">
+        <div class="circulo">2</div>
+        <p>Producción</p>
+    </div>
+    <div class="etapa" id="etapa3">
+        <div class="circulo">3</div>
+        <p>Empacado</p>
+    </div>
+    <div class="etapa" id="etapa4">
+        <div class="circulo">4</div>
+        <p>Envío</p>
+    </div>
+    <div class="etapa" id="etapa5">
+        <div class="circulo">5</div>
+        <p>Entregado</p>
+    </div>
+</div>
+
+<div class="tiempo-restante" id="tiempo-restante"></div>
+
+<script>
+    // Leer datos desde localStorage
+    const codigo = localStorage.getItem("pedidoCodigo");
+    const horaInicio = parseInt(localStorage.getItem("pedidoHora"), 10);
+    const metodo = localStorage.getItem("pedidoMetodo");
+
+    document.getElementById("codigo-pedido").textContent = codigo ? `Código: ${codigo}` : "No se encontró el pedido";
+    document.getElementById("metodo-pago").textContent = metodo || "N/A";
+
+    // Tiempos predeterminados en segundos
+    const tiemposEtapas = [
+        300,    // 5 min verificar pago
+        1500,   // 25 min producción
+        600,    // 10 min empacado
+        600,    // 10 min envío (puedes ajustar según distancia)
+        0       // Entregado
+    ];
+
+    let tiempoTotal = tiemposEtapas.reduce((a,b) => a+b, 0);
+    let tiempoPasado = Math.floor((Date.now() - horaInicio) / 1000);
+
+    function actualizarLineaTiempo() {
+        let acumulado = 0;
+        let etapaActiva = 0;
+
+        for (let i = 0; i < tiemposEtapas.length; i++) {
+            acumulado += tiemposEtapas[i];
+            if (tiempoPasado >= acumulado) {
+                etapaActiva = i + 1;
+            }
+        }
+
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById(`etapa${i}`).classList.remove("activo");
+        }
+        if (etapaActiva < 5) {
+            document.getElementById(`etapa${etapaActiva + 1}`).classList.add("activo");
+        } else {
+            document.getElementById("etapa5").classList.add("activo");
+        }
+
+        let tiempoRestante = tiempoTotal - tiempoPasado;
+        if (tiempoRestante < 0) tiempoRestante = 0;
+        document.getElementById("tiempo-restante").textContent =
+            `Tiempo estimado restante: ${Math.floor(tiempoRestante / 60)} min ${tiempoRestante % 60} s`;
+    }
+
+    actualizarLineaTiempo();
+    setInterval(() => {
+        tiempoPasado++;
+        actualizarLineaTiempo();
+    }, 1000);
+</script>
+
+</body>
+</html>
