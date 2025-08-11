@@ -120,9 +120,6 @@
     <select id="ciudad-municipio" required>
       <option value="" disabled selected>Selecciona una ciudad/municipio</option>
     </select>
-
-    <label for="localidad">Localidad/Comuna:</label>
-    <input type="text" id="localidad" required>
     
     <label for="telefono">Teléfono:</label>
     <input type="text" id="telefono" required>
@@ -252,7 +249,6 @@
     const total = carrito.reduce((sum, p) => sum + p.precio, 0);
     totalPagar.textContent = `Total a Pagar: $${total.toFixed(2)}`;
     
-    // Objeto con la estructura de departamentos y municipios
     const departamentosYMunicipios = {
       "Amazonas": ["Leticia", "Puerto Nariño"],
       "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
@@ -288,7 +284,6 @@
       "Vichada": ["Puerto Carreño"]
     };
 
-    // Función para llenar el select de Departamentos
     function poblarDepartamentos() {
       for (const departamento in departamentosYMunicipios) {
         const option = document.createElement("option");
@@ -298,7 +293,6 @@
       }
     }
 
-    // Evento que escucha el cambio en el select de Departamento
     departamentoSelect.addEventListener("change", function() {
       const departamentoSeleccionado = this.value;
       ciudadMunicipioSelect.innerHTML = '<option value="" disabled selected>Selecciona una ciudad/municipio</option>';
