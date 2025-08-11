@@ -4,53 +4,98 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Página de Pago</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      background-color: #fdf6f9;
-      color: #333;
+    /* Variables de colores de Sakura Sweets */
+    :root {
+        --rojo-intenso: #d91e18;
+        --blanco-puro: #ffffff;
+        --negro-elegante: #222222;
+        --azul-pastel: #7ec8e3;
+        --azul-fuerte: #176ea6;
+        --fondo-sakura: #fff0f5;
     }
-    form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 400px;
+    body {
+      font-family: 'Montserrat', sans-serif;
+      padding: 30px;
+      background: linear-gradient(to bottom right, #fb7070, #70b4fb);
+      color: var(--negro-elegante);
+    }
+    h2 {
+      font-family: 'Sawarabi Mincho', serif;
+      text-align: center;
+      color: var(--rojo-intenso);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+    }
+    form, .tarjeta-form, .nequi-mensaje, .contraentrega-mensaje, .confirmacion-pedido-mensaje {
+      background: var(--blanco-puro);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 550px;
       margin: auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #ff00ff;
+      box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff inset;
+      margin-top: 20px;
     }
-    label, select, button {
+    label {
       display: block;
-      width: 100%;
-      margin-bottom: 15px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--negro-elegante);
+    }
+    input[type="text"], input[type="number"], input[type="date"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
     }
     button {
-      background-color: #ff85b3;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 5px;
-      cursor: pointer;
+        font-family: 'Sawarabi Mincho', serif;
+        font-weight: 700;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
+        color: var(--blanco-puro);
+        box-shadow: 0 5px 15px rgba(217,30,24,0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        user-select: none;
+        width: 100%;
     }
-    #mensaje-pago {
+    button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 7px 20px rgba(217,30,24,0.6);
+    }
+    #total-pagar {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--rojo-intenso);
+        text-align: right;
+    }
+    .oculto {
       display: none;
-      background: #d6f0ff;
-      padding: 15px;
-      border-radius: 5px;
+    }
+    .pago-botones {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
       margin-top: 15px;
     }
-    #qr-nequi {
-      margin-top: 15px;
+    .pago-botones button {
+      width: 48%;
+      padding: 10px;
+      border-radius: 15px;
     }
-    button {
-  margin-top: 20px; 
-  padding: 10px 20px; 
-  background-color: #dda0dd; 
-  color: white;
-  border: none;
-  border-radius: 5px;
-   cursor: pointer;
-}
+    .confirmacion-pedido-mensaje {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -61,49 +106,175 @@
     <label for="metodo-pago">Método de pago:</label>
     <select id="metodo-pago" required>
       <option value="" disabled selected>Selecciona una opción</option>
-      <option value="tarjeta">Tarjeta (Stripe)</option>
-      <option value="transferencia">Transferencia (Nequi)</option>
+      <option value="tarjeta">Tarjeta de crédito/débito</option>
+      <option value="nequi">Transferencia Nequi</option>
       <option value="contraentrega">Contraentrega</option>
     </select>
-    <button style="color: black; type="submit">Pagar</button>
+    <div id="total-pagar"></div>
+    <button type="submit">Continuar</button>
   </form>
 
-  <div id="mensaje-pago"></div>
-  <canvas id="qr-nequi" style="display: none; margin: auto;"></canvas>
+  <div id="contenedor-dinamico">
+    <div id="tarjeta-form" class="tarjeta-form oculto">
+      <h3>Detalles de la tarjeta</h3>
+      <label for="tarjeta-numero">Número de tarjeta:</label>
+      <input type="text" id="tarjeta-numero" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+      <label for="tarjeta-nombre">Nombre en la tarjeta:</label>
+      <input type="text" id="tarjeta-nombre" required>
+      <label for="tarjeta-expiracion">Fecha de expiración:</label>
+      <input type="text" id="tarjeta-expiracion" placeholder="MM/AA" required>
+      <label for="tarjeta-cvc">CVC:</label>
+      <input type="text" id="tarjeta-cvc" placeholder="xxx" required>
+      <button id="btn-procesar-pago-tarjeta" type="submit">Pagar con Tarjeta</button>
+    </div>
+
+    <div id="nequi-mensaje" class="nequi-mensaje oculto">
+      <h3>Transferencia a Nequi</h3>
+      <p>Número de Nequi: <strong>3053577410</strong></p>
+      <p>Cuando recibamos tu pago, iniciaremos el proceso de producción de tu pedido.</p>
+      <div class="pago-botones">
+        <button id="btn-subir-comprobante-nequi">Subir Comprobante</button>
+        <button id="btn-pago-realizado-nequi">Pago Realizado</button>
+      </div>
+      <div id="comprobante-form-nequi" class="nequi-mensaje oculto">
+        <p>Por favor, sube el comprobante de tu transferencia:</p>
+        <input type="file" id="comprobante-nequi" accept="image/*,.pdf">
+        <button id="btn-enviar-comprobante-nequi">Enviar Comprobante</button>
+      </div>
+    </div>
+
+    <div id="contraentrega-mensaje" class="contraentrega-mensaje oculto">
+      <h3>Pago Contraentrega</h3>
+      <p>Tu pedido ha sido registrado para pago en efectivo al momento de la entrega.</p>
+      <div class="pago-botones">
+        <button id="btn-ver-proceso-contraentrega">Registrar Pedido y ver Proceso</button>
+      </div>
+    </div>
+
+    <div id="confirmacion-pedido-mensaje" class="confirmacion-pedido-mensaje oculto">
+      <h3>¡Pedido Confirmado!</h3>
+      <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+      <h4 id="codigo-pedido" style="color: var(--rojo-intenso); font-size: 1.5rem;"></h4>
+      <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+      <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     const formulario = document.getElementById("formulario-pago");
     const metodoPago = document.getElementById("metodo-pago");
-    const mensajePago = document.getElementById("mensaje-pago");
-    const qrCanvas = document.getElementById("qr-nequi");
+    const totalPagar = document.getElementById("total-pagar");
+
+    const tarjetaForm = document.getElementById("tarjeta-form");
+    const nequiMensaje = document.getElementById("nequi-mensaje");
+    const contraentregaMensaje = document.getElementById("contraentrega-mensaje");
+    const confirmacionPedidoMensaje = document.getElementById("confirmacion-pedido-mensaje");
+
+    const btnProcesarPagoTarjeta = document.getElementById("btn-procesar-pago-tarjeta");
+    const btnPagoRealizadoNequi = document.getElementById("btn-pago-realizado-nequi");
+    const btnVerProcesoContraentrega = document.getElementById("btn-ver-proceso-contraentrega");
+    const codigoPedidoElement = document.getElementById("codigo-pedido");
+    
+    const btnSubirComprobanteNequi = document.getElementById("btn-subir-comprobante-nequi");
+    const comprobanteFormNequi = document.getElementById("comprobante-form-nequi");
+
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const total = carrito.reduce((sum, p) => sum + p.precio, 0);
+    totalPagar.textContent = `Total a Pagar: $${total.toFixed(2)}`;
+
+    function ocultarTodo() {
+      tarjetaForm.classList.add('oculto');
+      nequiMensaje.classList.add('oculto');
+      contraentregaMensaje.classList.add('oculto');
+      confirmacionPedidoMensaje.classList.add('oculto');
+      comprobanteFormNequi.classList.add('oculto');
+    }
+
+    function generarCodigoPedido() {
+      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let codigo = '';
+      for (let i = 0; i < 6; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+      return codigo;
+    }
 
     formulario.addEventListener("submit", function(e) {
       e.preventDefault();
       const metodo = metodoPago.value;
+      ocultarTodo();
 
       if (metodo === "tarjeta") {
-        // Redirigir a Stripe
-        window.location.href = "https://buy.stripe.com/test_6oU4gBb2d42u63R2le1wY00";
-      } 
-      else if (metodo === "transferencia") {
-        mensajePago.style.display = "block";
-        mensajePago.innerHTML = `
-          <strong>Transferencia vía Nequi</strong><br>
-          Número: <strong>3053577410<br>
-          Nombre: <strong>Empresa Moshia</strong><br>
-          Escanea el siguiente código QR para pagar:
-          <img src="mi_codigo_qr.jpg" alt="Código QR" width="200" height="200">
-        `;
-        qrCanvas.style.display = "block";
-        const textoQR = "Pago a Nequi: Empresa Moshia - 3053577410";
-        QRCode.toCanvas(qrCanvas, textoQR, function (error) {
-          if (error) console.error(error);
-        });
+        tarjetaForm.classList.remove('oculto');
+      } else if (metodo === "nequi") {
+        nequiMensaje.classList.remove('oculto');
+      } else if (metodo === "contraentrega") {
+        contraentregaMensaje.classList.remove('oculto');
       }
-      else if (metodo === "contraentrega") {
-        // Mostrar mensaje
-        mensajePago.style.display = "block";
-        mensajePago.innerHTML = "<strong>Tu pedido ha sido registrado.</strong><br>Pagarás en efectivo al recibir el producto.";
-      }
+    });
+
+    btnProcesarPagoTarjeta.addEventListener("click", function(e) {
+      e.preventDefault();
+      ocultarTodo();
+      
+      const codigo = generarCodigoPedido();
+      codigoPedidoElement.textContent = codigo;
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pago con Tarjeta Exitoso!</h3>
+        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+    });
+
+    btnPagoRealizadoNequi.addEventListener("click", () => {
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      codigoPedidoElement.textContent = codigo;
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pago en Proceso!</h3>
+        <p>Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.</p>
+        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+    });
+    
+    btnSubirComprobanteNequi.addEventListener("click", () => {
+        comprobanteFormNequi.classList.remove('oculto');
+    });
+
+    document.getElementById("btn-enviar-comprobante-nequi").addEventListener("click", () => {
+        const fileInput = document.getElementById("comprobante-nequi");
+        if (fileInput.files.length > 0) {
+            alert("Comprobante subido con éxito. Lo verificaremos pronto.");
+            comprobanteFormNequi.classList.add('oculto');
+        } else {
+            alert("Por favor, selecciona un archivo para subir.");
+        }
+    });
+
+    btnVerProcesoContraentrega.addEventListener("click", () => {
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      codigoPedidoElement.textContent = codigo;
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pedido Registrado!</h3>
+        <p>Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.</p>
+        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     });
   </script>
 </body>
