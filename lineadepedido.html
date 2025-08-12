@@ -149,7 +149,7 @@
             width: 60px;
             height: 60px;
             transform: translate(-50%, -50%);
-            transition: left 1s linear;
+            transition: left linear;
             z-index: 3;
         }
 
@@ -203,7 +203,6 @@
         <p id="tiempo-restante" style="margin-top: 40px; font-weight: bold;"></p>
     </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const codigoGuardado = localStorage.getItem("codigoPedido");
@@ -213,8 +212,7 @@
         if (codigoGuardado && tipoEnvioGuardado && startTimeGuardado) {
             document.getElementById('tracking-form').style.display = 'none';
             document.getElementById('tracking-info').style.display = 'block';
-            
-            // Calculamos el tiempo transcurrido desde que se pidió el código
+
             const tiempoTranscurrido = Date.now() - parseInt(startTimeGuardado);
             iniciarSeguimiento(codigoGuardado, tipoEnvioGuardado, tiempoTranscurrido);
         }
@@ -224,17 +222,15 @@
         event.preventDefault();
         const codigo = document.getElementById('codigo-input').value;
 
-        // Limpiamos el localStorage cuando se inicia un nuevo seguimiento
         localStorage.removeItem("codigoPedido");
         localStorage.removeItem("tipoEnvio");
         localStorage.removeItem("startTime");
 
         const tipoEnvio = codigo.toUpperCase().includes('CHIA') || codigo.toUpperCase().includes('CAJICA') ? 'lejos' : 'cerca';
-        
+
         document.getElementById('tracking-form').style.display = 'none';
         document.getElementById('tracking-info').style.display = 'block';
 
-        // Si se ingresa el código manualmente, se considera un nuevo inicio
         iniciarSeguimiento(codigo, tipoEnvio, 0);
     });
 
@@ -242,7 +238,7 @@
         const mascot = document.getElementById("mascot");
         const progress = document.getElementById("progress");
         const stages = document.querySelectorAll('.stage');
-        
+
         document.getElementById("codigo").textContent = codigo;
         document.getElementById("mensajeEnvio").textContent = tipoEnvio === "cerca" ?
             "Envío cercano (5-10 minutos en la etapa final)" :
@@ -259,21 +255,19 @@
         ];
 
         const totalTiempo = etapas.reduce((acc, e) => acc + e.duracion, 0);
-        let anchoLinea = 90; // porcentaje
-        
-        let tiempoTranscurridoTotal = tiempoInicial / 1000; // Convertir de ms a segundos
+        let anchoLinea = 90;
+        let tiempoTranscurridoTotal = tiempoInicial / 1000;
         let progresoAcumulado = 0;
         let etapaActualIndex = 0;
 
-        // Calcular la etapa actual y el progreso inicial basado en el tiempo transcurrido
         let tiempoTotalPasadoEtapas = 0;
         let porcentajeAcumuladoEtapas = 0;
         const distanciaEntreEtapas = anchoLinea / (etapas.length - 1);
-        
+
         for (let i = 0; i < etapas.length; i++) {
             const etapa = etapas[i];
             const duracionEtapa = etapa.duracion;
-            
+
             if (tiempoTranscurridoTotal >= tiempoTotalPasadoEtapas + duracionEtapa && duracionEtapa > 0) {
                 tiempoTotalPasadoEtapas += duracionEtapa;
                 stages[i].classList.add('completed');
@@ -283,20 +277,17 @@
                 break;
             }
         }
-        
-        // Calcular el progreso dentro de la etapa actual
+
         if (etapaActualIndex < etapas.length) {
             const etapaActual = etapas[etapaActualIndex];
             const tiempoEnEtapa = tiempoTranscurridoTotal - tiempoTotalPasadoEtapas;
             const progresoEnEtapa = (etapaActual.duracion > 0) ? (tiempoEnEtapa / etapaActual.duracion) : 1;
             progresoAcumulado = porcentajeAcumuladoEtapas + (distanciaEntreEtapas * progresoEnEtapa);
         } else {
-            // El pedido ya ha sido entregado
             progresoAcumulado = 100;
             stages[etapas.length - 1].classList.add('completed');
         }
 
-        // Colocamos la mascota y la barra de progreso en su posición inicial calculada
         progress.style.width = progresoAcumulado + "%";
         mascot.style.left = `calc(${5 + progresoAcumulado}% - 30px)`;
 
@@ -304,7 +295,7 @@
             const tiempoRestanteTotal = totalTiempo - tiempoTranscurridoTotal;
             const minutosRestantes = Math.floor(tiempoRestanteTotal / 60);
             const segundosRestantes = Math.floor(tiempoRestanteTotal % 60);
-            
+
             const etapaActual = etapas[etapaActualIndex] ? etapas[etapaActualIndex].titulo : "Entregado";
 
             if (tiempoRestanteTotal > 0) {
@@ -312,7 +303,6 @@
                     `Etapa actual: ${etapaActual} | Tiempo restante: ${minutosRestantes}m ${segundosRestantes}s`;
             } else {
                 document.getElementById('tiempo-restante').textContent = "¡Tu pedido ha sido entregado!";
-                // Opcional: limpiar localStorage para que la próxima vez que el usuario entre, vea el formulario
                 localStorage.removeItem("codigoPedido");
                 localStorage.removeItem("tipoEnvio");
                 localStorage.removeItem("startTime");
@@ -322,7 +312,6 @@
         let interval = setInterval(() => {
             if (tiempoTranscurridoTotal >= totalTiempo) {
                 clearInterval(interval);
-                // Aseguramos que la última etapa se marque como completada
                 stages[etapas.length - 1].classList.add('completed');
                 progress.style.width = "100%";
                 mascot.style.left = `calc(${5 + 100}% - 30px)`;
@@ -332,7 +321,6 @@
 
             tiempoTranscurridoTotal++;
 
-            // Mueve el progreso y la mascota
             const tiempoEnEtapa = tiempoTranscurridoTotal - tiempoTotalPasadoEtapas;
             const etapaActual = etapas[etapaActualIndex];
             if (tiempoEnEtapa >= etapaActual.duracion && etapaActual.duracion > 0) {
@@ -340,26 +328,23 @@
                 tiempoTotalPasadoEtapas += etapaActual.duracion;
                 etapaActualIndex++;
                 if(etapaActualIndex < etapas.length){
-                    // Resetear el progreso dentro de la nueva etapa
                     progresoAcumulado = porcentajeAcumuladoEtapas + (distanciaEntreEtapas * etapaActualIndex);
                 }
             }
-            
+
             if(etapaActualIndex < etapas.length){
                 const progresoEnEtapa = (etapas[etapaActualIndex].duracion > 0) ? (tiempoTranscurridoTotal - tiempoTotalPasadoEtapas) / etapas[etapaActualIndex].duracion : 1;
                 progresoAcumulado = porcentajeAcumuladoEtapas + (distanciaEntreEtapas * (etapaActualIndex + progresoEnEtapa));
             } else {
                  progresoAcumulado = 100;
             }
-            
+
             progress.style.width = progresoAcumulado + "%";
             mascot.style.left = `calc(${5 + progresoAcumulado}% - 30px)`;
-            
-            actualizarTiempoRestante();
 
+            actualizarTiempoRestante();
         }, 1000);
 
-        // Llamada inicial para establecer el estado
         actualizarTiempoRestante();
     }
 </script>
