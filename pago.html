@@ -1,465 +1,411 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Página de Pago</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
-  <style>
-    /* Variables de colores de Sakura Sweets */
-    :root {
-        --rojo-intenso: #d91e18;
-        --blanco-puro: #ffffff;
-        --negro-elegante: #222222;
-        --azul-pastel: #7ec8e3;
-        --azul-fuerte: #176ea6;
-        --fondo-sakura: #fff0f5;
-    }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      padding: 30px;
-      background: linear-gradient(to bottom right, #fb7070, #70b4fb);
-      color: var(--negro-elegante);
-    }
-    h2 {
-      font-family: 'Sawarabi Mincho', serif;
-      text-align: center;
-      color: var(--rojo-intenso);
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-      margin-bottom: 30px;
-    }
-    form, .tarjeta-form, .nequi-mensaje, .contraentrega-mensaje, .confirmacion-pedido-mensaje {
-      background: var(--blanco-puro);
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 550px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border: 2px solid #ff00ff;
-      box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff inset;
-      margin-top: 20px;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--negro-elegante);
-    }
-    input[type="text"], input[type="number"], input[type="email"], select, textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-    }
-    button {
-        font-family: 'Sawarabi Mincho', serif;
-        font-weight: 700;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 1rem;
-        background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
-        color: var(--blanco-puro);
-        box-shadow: 0 5px 15px rgba(217,30,24,0.3);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        user-select: none;
-        width: 100%;
-    }
-    button:hover {
-        transform: scale(1.02);
-        box-shadow: 0 7px 20px rgba(217,30,24,0.6);
-    }
-    #total-pagar {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: var(--rojo-intenso);
-        text-align: right;
-    }
-    .oculto {
-      display: none;
-    }
-    .pago-botones {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .pago-botones button {
-      width: 48%;
-      padding: 10px;
-      border-radius: 15px;
-    }
-    .confirmacion-pedido-mensaje {
-      text-align: center;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página de Pago</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
+  <style>
+    /* Variables de colores de Sakura Sweets */
+    :root {
+        --rojo-intenso: #d91e18;
+        --blanco-puro: #ffffff;
+        --negro-elegante: #222222;
+        --azul-pastel: #7ec8e3;
+        --azul-fuerte: #176ea6;
+        --fondo-sakura: #fff0f5;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      padding: 30px;
+      background: linear-gradient(to bottom right, #fb7070, #70b4fb);
+      color: var(--negro-elegante);
+    }
+    h2 {
+      font-family: 'Sawarabi Mincho', serif;
+      text-align: center;
+      color: var(--rojo-intenso);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+    }
+    form, .tarjeta-form, .nequi-mensaje, .contraentrega-mensaje, .confirmacion-pedido-mensaje {
+      background: var(--blanco-puro);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 550px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #ff00ff;
+      box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff inset;
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--negro-elegante);
+    }
+    input[type="text"], input[type="number"], input[type="email"], select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    button {
+        font-family: 'Sawarabi Mincho', serif;
+        font-weight: 700;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
+        color: var(--blanco-puro);
+        box-shadow: 0 5px 15px rgba(217,30,24,0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        user-select: none;
+        width: 100%;
+    }
+    button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 7px 20px rgba(217,30,24,0.6);
+    }
+    #total-pagar {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--rojo-intenso);
+        text-align: right;
+    }
+    .oculto {
+      display: none;
+    }
+    .pago-botones {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .pago-botones button {
+      width: 48%;
+      padding: 10px;
+      border-radius: 15px;
+    }
+    .confirmacion-pedido-mensaje {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
-  <form id="formulario-cliente" class="formulario-cliente">
-    <h2>Datos del Cliente</h2>
-    <label for="nombre-completo">Nombre Completo:</label>
-    <input type="text" id="nombre-completo" required>
+  <form id="formulario-cliente" class="formulario-cliente">
+    <h2>Datos del Cliente</h2>
+    <label for="nombre-completo">Nombre Completo:</label>
+    <input type="text" id="nombre-completo" required>
 
-    <label for="direccion">Dirección:</label>
-    <input type="text" id="direccion" required>
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" required>
 
-    <label for="barrio">Barrio:</label>
-    <input type="text" id="barrio" required>
-    
-    <label for="departamento">Departamento:</label>
-    <select id="departamento" required>
-      <option value="" disabled selected>Selecciona un departamento</option>
-    </select>
+    <label for="barrio">Barrio:</label>
+    <input type="text" id="barrio" required>
+    
+    <label for="departamento">Departamento:</label>
+    <select id="departamento" required>
+      <option value="" disabled selected>Selecciona un departamento</option>
+    </select>
 
-    <label for="ciudad-municipio">Ciudad/Municipio:</label>
-    <select id="ciudad-municipio" required>
-      <option value="" disabled selected>Selecciona una ciudad/municipio</option>
-    </select>
-    
-    <label for="telefono">Teléfono:</label>
-    <input type="text" id="telefono" required>
+    <label for="ciudad-municipio">Ciudad/Municipio:</label>
+    <select id="ciudad-municipio" required>
+      <option value="" disabled selected>Selecciona una ciudad/municipio</option>
+    </select>
+    
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
 
-    <label for="instrucciones-adicionales">Instrucciones Adicionales:</label>
-    <textarea id="instrucciones-adicionales" rows="4"></textarea>
+    <label for="instrucciones-adicionales">Instrucciones Adicionales:</label>
+    <textarea id="instrucciones-adicionales" rows="4"></textarea>
 
-    <button type="submit">Elegir Modo de Pago</button>
-  </form>
+    <button type="submit">Elegir Modo de Pago</button>
+  </form>
 
-  <div id="seccion-pagos" class="oculto">
-    <h2>Selecciona método de pago</h2>
+  <div id="seccion-pagos" class="oculto">
+    <h2>Selecciona método de pago</h2>
 
-    <form id="formulario-pago">
-      <label for="metodo-pago">Método de pago:</label>
-      <select id="metodo-pago" required>
-        <option value="" disabled selected>Selecciona una opción</option>
-        <option value="tarjeta">Tarjeta de crédito/débito</option>
-        <option value="nequi">Transferencia Nequi</option>
-        <option value="contraentrega">Contraentrega</option>
-      </select>
-      <div id="total-pagar"></div>
-      <button type="submit">Continuar</button>
-    </form>
+    <form id="formulario-pago">
+      <label for="metodo-pago">Método de pago:</label>
+      <select id="metodo-pago" required>
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option value="tarjeta">Tarjeta de crédito/débito</option>
+        <option value="nequi">Transferencia Nequi</option>
+        <option value="contraentrega">Contraentrega</option>
+      </select>
+      <div id="total-pagar"></div>
+      <button type="submit">Continuar</button>
+    </form>
 
-    <div id="contenedor-dinamico">
-      <div id="tarjeta-form" class="tarjeta-form oculto">
-        <h3>Detalles de la tarjeta</h3>
-        <label for="tipo-tarjeta">Tipo de tarjeta:</label>
-        <select id="tipo-tarjeta" required>
-          <option value="" disabled selected>Selecciona una opción</option>
-          <option value="credito">Crédito</option>
-          <option value="debito">Débito</option>
-        </select>
+    <div id="contenedor-dinamico">
+      <div id="tarjeta-form" class="tarjeta-form oculto">
+        <h3>Detalles de la tarjeta</h3>
+        <label for="tipo-tarjeta">Tipo de tarjeta:</label>
+        <select id="tipo-tarjeta" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="credito">Crédito</option>
+          <option value="debito">Débito</option>
+        </select>
 
-        <label for="banco-emisor">Banco Emisor:</label>
-        <select id="banco-emisor" required>
-          <option value="" disabled selected>Selecciona tu banco</option>
-          <option value="bancolombia">Bancolombia</option>
-          <option value="davivienda">Davivienda</option>
-          <option value="bbva">BBVA</option>
-          <option value="banco-bogota">Banco de Bogotá</option>
-          <option value="av-villas">Banco AV Villas</option>
-          <option value="scotiabank">Scotiabank Colpatria</option>
-          <option value="itau">Itaú</option>
-          <option value="caja-social">Caja Social</option>
-          <option value="otro">Otro</option>
-        </select>
+        <label for="banco-emisor">Banco Emisor:</label>
+        <select id="banco-emisor" required>
+          <option value="" disabled selected>Selecciona tu banco</option>
+          <option value="bancolombia">Bancolombia</option>
+          <option value="davivienda">Davivienda</option>
+          <option value="bbva">BBVA</option>
+          <option value="banco-bogota">Banco de Bogotá</option>
+          <option value="av-villas">Banco AV Villas</option>
+          <option value="scotiabank">Scotiabank Colpatria</option>
+          <option value="itau">Itaú</option>
+          <option value="caja-social">Caja Social</option>
+          <option value="otro">Otro</option>
+        </select>
 
-        <label for="tarjeta-nombre">Nombre del titular:</label>
-        <input type="text" id="tarjeta-nombre" required>
+        <label for="tarjeta-nombre">Nombre del titular:</label>
+        <input type="text" id="tarjeta-nombre" required>
 
-        <label for="tarjeta-numero">Número de tarjeta:</label>
-        <input type="text" id="tarjeta-numero" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+        <label for="tarjeta-numero">Número de tarjeta:</label>
+        <input type="text" id="tarjeta-numero" placeholder="xxxx-xxxx-xxxx-xxxx" required>
 
-        <label for="tarjeta-expiracion">Fecha de expiración:</label>
-        <input type="text" id="tarjeta-expiracion" placeholder="MM/AA" required>
+        <label for="tarjeta-expiracion">Fecha de expiración:</label>
+        <input type="text" id="tarjeta-expiracion" placeholder="MM/AA" required>
 
-        <label for="tarjeta-cvc">Código de seguridad (CVC):</label>
-        <input type="text" id="tarjeta-cvc" placeholder="xxx" required>
+        <label for="tarjeta-cvc">Código de seguridad (CVC):</label>
+        <input type="text" id="tarjeta-cvc" placeholder="xxx" required>
 
-        <button id="btn-procesar-pago-tarjeta" type="submit">Pagar con Tarjeta</button>
-      </div>
+        <button id="btn-procesar-pago-tarjeta" type="submit">Pagar con Tarjeta</button>
+      </div>
 
-      <div id="nequi-mensaje" class="nequi-mensaje oculto">
-        <h3>Transferencia a Nequi</h3>
-        <p>Número de Nequi: <strong>3053577410</strong></p>
-        <p>Cuando recibamos tu pago, iniciaremos el proceso de producción de tu pedido.</p>
-        <div class="pago-botones">
-          <button id="btn-subir-comprobante-nequi">Subir Comprobante</button>
-          <button id="btn-pago-realizado-nequi" class="oculto">Pago Realizado</button>
-        </div>
-        <div id="comprobante-form-nequi" class="nequi-mensaje oculto">
-          <p>Por favor, sube el comprobante de tu transferencia:</p>
-          <input type="file" id="comprobante-nequi" accept="image/*,.pdf">
-          <button id="btn-enviar-comprobante-nequi">Enviar Comprobante</button>
-        </div>
-      </div>
+      <div id="nequi-mensaje" class="nequi-mensaje oculto">
+        <h3>Transferencia a Nequi</h3>
+        <p>Número de Nequi: <strong>3053577410</strong></p>
+        <p>Cuando recibamos tu pago, iniciaremos el proceso de producción de tu pedido.</p>
+        <div class="pago-botones">
+          <button id="btn-subir-comprobante-nequi">Subir Comprobante</button>
+          <button id="btn-pago-realizado-nequi" class="oculto">Pago Realizado</button>
+        </div>
+        <div id="comprobante-form-nequi" class="nequi-mensaje oculto">
+          <p>Por favor, sube el comprobante de tu transferencia:</p>
+          <input type="file" id="comprobante-nequi" accept="image/*,.pdf">
+          <button id="btn-enviar-comprobante-nequi">Enviar Comprobante</button>
+        </div>
+      </div>
 
-      <div id="contraentrega-mensaje" class="contraentrega-mensaje oculto">
-        <h3>Pago Contraentrega</h3>
-        <p>Tu pedido ha sido registrado para pago en efectivo al momento de la entrega.</p>
-        <div class="pago-botones">
-          <button id="btn-ver-proceso-contraentrega">Registrar Pedido y ver Proceso</button>
-        </div>
-      </div>
+      <div id="contraentrega-mensaje" class="contraentrega-mensaje oculto">
+        <h3>Pago Contraentrega</h3>
+        <p>Tu pedido ha sido registrado para pago en efectivo al momento de la entrega.</p>
+        <div class="pago-botones">
+          <button id="btn-ver-proceso-contraentrega">Registrar Pedido y ver Proceso</button>
+        </div>
+      </div>
 
-      <div id="confirmacion-pedido-mensaje" class="confirmacion-pedido-mensaje oculto">
-        <h3>¡Pedido Confirmado!</h3>
-        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 id="codigo-pedido" style="color: var(--rojo-intenso); font-size: 1.5rem;"></h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      </div>
-    </div>
-  </div>
+      <div id="confirmacion-pedido-mensaje" class="confirmacion-pedido-mensaje oculto">
+        <h3>¡Pedido Confirmado!</h3>
+        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 id="codigo-pedido" style="color: var(--rojo-intenso); font-size: 1.5rem;"></h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      </div>
+    </div>
+  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script>
-    const formularioCliente = document.getElementById("formulario-cliente");
-    const seccionPagos = document.getElementById("seccion-pagos");
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const formularioCliente = document.getElementById("formulario-cliente");
+    const seccionPagos = document.getElementById("seccion-pagos");
 
-    const departamentoSelect = document.getElementById("departamento");
-    const ciudadMunicipioSelect = document.getElementById("ciudad-municipio");
+    const departamentoSelect = document.getElementById("departamento");
+    const ciudadMunicipioSelect = document.getElementById("ciudad-municipio");
 
-    const formularioPago = document.getElementById("formulario-pago");
-    const metodoPago = document.getElementById("metodo-pago");
-    const totalPagar = document.getElementById("total-pagar");
+    const formularioPago = document.getElementById("formulario-pago");
+    const metodoPago = document.getElementById("metodo-pago");
+    const totalPagar = document.getElementById("total-pagar");
 
-    const tarjetaForm = document.getElementById("tarjeta-form");
-    const nequiMensaje = document.getElementById("nequi-mensaje");
-    const contraentregaMensaje = document.getElementById("contraentrega-mensaje");
-    const confirmacionPedidoMensaje = document.getElementById("confirmacion-pedido-mensaje");
+    const tarjetaForm = document.getElementById("tarjeta-form");
+    const nequiMensaje = document.getElementById("nequi-mensaje");
+    const contraentregaMensaje = document.getElementById("contraentrega-mensaje");
+    const confirmacionPedidoMensaje = document.getElementById("confirmacion-pedido-mensaje");
 
-    const btnProcesarPagoTarjeta = document.getElementById("btn-procesar-pago-tarjeta");
-    const btnPagoRealizadoNequi = document.getElementById("btn-pago-realizado-nequi");
-    const btnVerProcesoContraentrega = document.getElementById("btn-ver-proceso-contraentrega");
-    const codigoPedidoElement = document.getElementById("codigo-pedido");
-    
-    const btnSubirComprobanteNequi = document.getElementById("btn-subir-comprobante-nequi");
-    const comprobanteFormNequi = document.getElementById("comprobante-form-nequi");
-    const btnEnviarComprobanteNequi = document.getElementById("btn-enviar-comprobante-nequi");
+    const btnProcesarPagoTarjeta = document.getElementById("btn-procesar-pago-tarjeta");
+    const btnPagoRealizadoNequi = document.getElementById("btn-pago-realizado-nequi");
+    const btnVerProcesoContraentrega = document.getElementById("btn-ver-proceso-contraentrega");
+    const codigoPedidoElement = document.getElementById("codigo-pedido");
+    
+    const btnSubirComprobanteNequi = document.getElementById("btn-subir-comprobante-nequi");
+    const comprobanteFormNequi = document.getElementById("comprobante-form-nequi");
+    const btnEnviarComprobanteNequi = document.getElementById("btn-enviar-comprobante-nequi");
 
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const total = carrito.reduce((sum, p) => sum + p.precio, 0);
-    totalPagar.textContent = `Total a Pagar: $${total.toFixed(2)}`;
-    
-    const departamentosYMunicipios = {
-      "Amazonas": ["Leticia", "Puerto Nariño"],
-      "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
-      "Arauca": ["Arauca", "Saravena", "Tame"],
-      "Atlántico": ["Barranquilla", "Soledad", "Malambo"],
-      "Bolívar": ["Cartagena de Indias", "Magangué", "El Carmen de Bolívar"],
-      "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
-      "Caldas": ["Manizales", "La Dorada", "Chinchiná"],
-      "Caquetá": ["Florencia", "San Vicente del Caguán"],
-      "Casanare": ["Yopal", "Aguazul", "Tauramena"],
-      "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada"],
-      "Cesar": ["Valledupar", "Aguachica", "Codazzi"],
-      "Chocó": ["Quibdó", "Istmina"],
-      "Córdoba": ["Montería", "Sahagún", "Cereté"],
-      "Cundinamarca": ["Bogotá D.C.", "Soacha", "Chía", "Zipaquirá", "Funza"],
-      "Guainía": ["Inírida"],
-      "Guaviare": ["San José del Guaviare"],
-      "Huila": ["Neiva", "Pitalito", "Garzón"],
-      "La Guajira": ["Riohacha", "Maicao", "Uribia"],
-      "Magdalena": ["Santa Marta", "Ciénaga", "Fundación"],
-      "Meta": ["Villavicencio", "Puerto Gaitán", "Granada"],
-      "Nariño": ["Pasto", "Tumaco", "Ipiales"],
-      "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona"],
-      "Putumayo": ["Mocoa", "Puerto Asís"],
-      "Quindío": ["Armenia", "Calarcá", "Quimbaya"],
-      "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal"],
-      "San Andrés y Providencia": ["San Andrés"],
-      "Santander": ["Bucaramanga", "Floridablanca", "Girón"],
-      "Sucre": ["Sincelejo", "Corozal"],
-      "Tolima": ["Ibagué", "Espinal", "Melgar"],
-      "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá"],
-      "Vaupés": ["Mitú"],
-      "Vichada": ["Puerto Carreño"]
-    };
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const total = carrito.reduce((sum, p) => sum + p.precio, 0);
+    totalPagar.textContent = `Total a Pagar: $${total.toFixed(2)}`;
+    
+    const departamentosYMunicipios = {
+      "Amazonas": ["Leticia", "Puerto Nariño"],
+      "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
+      "Arauca": ["Arauca", "Saravena", "Tame"],
+      "Atlántico": ["Barranquilla", "Soledad", "Malambo"],
+      "Bolívar": ["Cartagena de Indias", "Magangué", "El Carmen de Bolívar"],
+      "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
+      "Caldas": ["Manizales", "La Dorada", "Chinchiná"],
+      "Caquetá": ["Florencia", "San Vicente del Caguán"],
+      "Casanare": ["Yopal", "Aguazul", "Tauramena"],
+      "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada"],
+      "Cesar": ["Valledupar", "Aguachica", "Codazzi"],
+      "Chocó": ["Quibdó", "Istmina"],
+      "Córdoba": ["Montería", "Sahagún", "Cereté"],
+      "Cundinamarca": ["Bogotá D.C.", "Soacha", "Chía", "Zipaquirá", "Funza", "Cajicá"],
+      "Guainía": ["Inírida"],
+      "Guaviare": ["San José del Guaviare"],
+      "Huila": ["Neiva", "Pitalito", "Garzón"],
+      "La Guajira": ["Riohacha", "Maicao", "Uribia"],
+      "Magdalena": ["Santa Marta", "Ciénaga", "Fundación"],
+      "Meta": ["Villavicencio", "Puerto Gaitán", "Granada"],
+      "Nariño": ["Pasto", "Tumaco", "Ipiales"],
+      "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona"],
+      "Putumayo": ["Mocoa", "Puerto Asís"],
+      "Quindío": ["Armenia", "Calarcá", "Quimbaya"],
+      "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal"],
+      "San Andrés y Providencia": ["San Andrés"],
+      "Santander": ["Bucaramanga", "Floridablanca", "Girón"],
+      "Sucre": ["Sincelejo", "Corozal"],
+      "Tolima": ["Ibagué", "Espinal", "Melgar"],
+      "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá"],
+      "Vaupés": ["Mitú"],
+      "Vichada": ["Puerto Carreño"]
+    };
 
-    function poblarDepartamentos() {
-      for (const departamento in departamentosYMunicipios) {
-        const option = document.createElement("option");
-        option.value = departamento;
-        option.textContent = departamento;
-        departamentoSelect.appendChild(option);
-      }
+    function poblarDepartamentos() {
+      for (const departamento in departamentosYMunicipios) {
+        const option = document.createElement("option");
+        option.value = departamento;
+        option.textContent = departamento;
+        departamentoSelect.appendChild(option);
+      }
+    }
+
+    departamentoSelect.addEventListener("change", function() {
+      const departamentoSeleccionado = this.value;
+      ciudadMunicipioSelect.innerHTML = '<option value="" disabled selected>Selecciona una ciudad/municipio</option>';
+      if (departamentoSeleccionado) {
+        const ciudades = departamentosYMunicipios[departamentoSeleccionado];
+        ciudades.forEach(ciudad => {
+          const option = document.createElement("option");
+          option.value = ciudad;
+          option.textContent = ciudad;
+          ciudadMunicipioSelect.appendChild(option);
+        });
+      }
+    });
+
+    poblarDepartamentos();
+
+    function ocultarTodo() {
+      tarjetaForm.classList.add('oculto');
+      nequiMensaje.classList.add('oculto');
+      contraentregaMensaje.classList.add('oculto');
+      confirmacionPedidoMensaje.classList.add('oculto');
+      comprobanteFormNequi.classList.add('oculto');
+      btnPagoRealizadoNequi.classList.add('oculto');
+    }
+
+    function generarCodigoPedido() {
+      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let codigo = '';
+      for (let i = 0; i < 6; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+      return codigo;
+    }
+    
+    formularioCliente.addEventListener("submit", function(e) {
+      e.preventDefault();
+      formularioCliente.classList.add('oculto');
+      seccionPagos.classList.remove('oculto');
+    });
+
+    formularioPago.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const metodo = metodoPago.value;
+      ocultarTodo();
+
+      if (metodo === "tarjeta") {
+        tarjetaForm.classList.remove('oculto');
+      } else if (metodo === "nequi") {
+        nequiMensaje.classList.remove('oculto');
+      } else if (metodo === "contraentrega") {
+        contraentregaMensaje.classList.remove('oculto');
+      }
+    });
+
+    function guardarDatosPedido() {
+        const departamento = departamentoSelect.value;
+        const municipio = ciudadMunicipioSelect.value;
+        const codigo = generarCodigoPedido();
+
+        const tipoEnvio = (departamento === "Cundinamarca" && (municipio === "Chía" || municipio === "Cajicá")) ? 'lejos' : 'cerca';
+        
+        // Guarda los datos en localStorage para que lineadepedido.html pueda usarlos
+        localStorage.setItem("codigoPedido", codigo);
+        localStorage.setItem("tipoEnvio", tipoEnvio);
+        localStorage.setItem("startTime", Date.now());
+
+        return { codigo, tipoEnvio };
     }
 
-    departamentoSelect.addEventListener("change", function() {
-      const departamentoSeleccionado = this.value;
-      ciudadMunicipioSelect.innerHTML = '<option value="" disabled selected>Selecciona una ciudad/municipio</option>';
-      if (departamentoSeleccionado) {
-        const ciudades = departamentosYMunicipios[departamentoSeleccionado];
-        ciudades.forEach(ciudad => {
-          const option = document.createElement("option");
-          option.value = ciudad;
-          option.textContent = ciudad;
-          ciudadMunicipioSelect.appendChild(option);
-        });
-      }
-    });
-
-    poblarDepartamentos();
-
-    function ocultarTodo() {
-      tarjetaForm.classList.add('oculto');
-      nequiMensaje.classList.add('oculto');
-      contraentregaMensaje.classList.add('oculto');
-      confirmacionPedidoMensaje.classList.add('oculto');
-      comprobanteFormNequi.classList.add('oculto');
-      btnPagoRealizadoNequi.classList.add('oculto');
-    }
-
-    function generarCodigoPedido() {
-      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let codigo = '';
-      for (let i = 0; i < 6; i++) {
-        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-      }
-      return codigo;
-    }
-    
-    formularioCliente.addEventListener("submit", function(e) {
-      e.preventDefault();
-      formularioCliente.classList.add('oculto');
-      seccionPagos.classList.remove('oculto');
-    });
-
-    formularioPago.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const metodo = metodoPago.value;
-      ocultarTodo();
-
-      if (metodo === "tarjeta") {
-        tarjetaForm.classList.remove('oculto');
-      } else if (metodo === "nequi") {
-        nequiMensaje.classList.remove('oculto');
-      } else if (metodo === "contraentrega") {
-        contraentregaMensaje.classList.remove('oculto');
-      }
-    });
-
-    btnProcesarPagoTarjeta.addEventListener("click", function(e) {
-      e.preventDefault();
-      ocultarTodo();
-      const codigo = generarCodigoPedido();
-      confirmacionPedidoMensaje.classList.remove('oculto');
-      const mensajeHTML = `
-        <h3>¡Pago con Tarjeta Exitoso!</h3>
-        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      `;
-      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
-    });
-
-    btnSubirComprobanteNequi.addEventListener("click", () => {
-        comprobanteFormNequi.classList.remove('oculto');
-    });
-    
-    btnEnviarComprobanteNequi.addEventListener("click", () => {
-        const fileInput = document.getElementById("comprobante-nequi");
-        if (fileInput.files.length > 0) {
-            alert("Comprobante subido con éxito. Lo verificaremos pronto.");
-            comprobanteFormNequi.classList.add('oculto');
-            btnPagoRealizadoNequi.classList.remove('oculto'); // Muestra el botón de "Pago Realizado"
-        } else {
-            alert("Por favor, selecciona un archivo para subir.");
-        }
-    });
-
-    btnPagoRealizadoNequi.addEventListener("click", () => {
-      ocultarTodo();
-      const codigo = generarCodigoPedido();
-      confirmacionPedidoMensaje.classList.remove('oculto');
-      const mensajeHTML = `
-        <h3>¡Pago en Proceso!</h3>
-        <p>Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.</p>
-        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      `;
-      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
-    });
-
-    btnVerProcesoContraentrega.addEventListener("click", () => {
-      ocultarTodo();
-      const codigo = generarCodigoPedido();
-      confirmacionPedidoMensaje.classList.remove('oculto');
-      const mensajeHTML = `
-        <h3>¡Pedido Registrado!</h3>
-        <p>Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.</p>
-        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      `;
-      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
-    });
-    function guardarPedido(codigo, metodo) {
-      const horaInicio = Date.now();
-      localStorage.setItem("pedidoCodigo", codigo);
-      localStorage.setItem("pedidoHora", horaInicio);
-      localStorage.setItem("pedidoMetodo", metodo);
+    function mostrarConfirmacion(codigo, titulo, mensaje) {
+        ocultarTodo();
+        confirmacionPedidoMensaje.classList.remove('oculto');
+        const mensajeHTML = `
+            <h3>¡${titulo}!</h3>
+            <p>${mensaje}</p>
+            <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+            <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+            <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+            <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+        `;
+        confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     }
 
     btnProcesarPagoTarjeta.addEventListener("click", function(e) {
-      e.preventDefault();
-      ocultarTodo();
-      const codigo = generarCodigoPedido();
-      guardarPedido(codigo, "tarjeta"); // <<--- NUEVO
-      confirmacionPedidoMensaje.classList.remove('oculto');
-      const mensajeHTML = `
-        <h3>¡Pago con Tarjeta Exitoso!</h3>
-        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      `;
-      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+        e.preventDefault();
+        const { codigo } = guardarDatosPedido();
+        mostrarConfirmacion(codigo, "Pago con Tarjeta Exitoso", "Tu pedido ha sido registrado con éxito.");
     });
+    
+    btnSubirComprobanteNequi.addEventListener("click", () => {
+        comprobanteFormNequi.classList.remove('oculto');
+    });
+    
+    btnEnviarComprobanteNequi.addEventListener("click", () => {
+        const fileInput = document.getElementById("comprobante-nequi");
+        if (fileInput.files.length > 0) {
+            alert("Comprobante subido con éxito. Lo verificaremos pronto.");
+            comprobanteFormNequi.classList.add('oculto');
+            btnPagoRealizadoNequi.classList.remove('oculto');
+        } else {
+            alert("Por favor, selecciona un archivo para subir.");
+        }
+    });
 
     btnPagoRealizadoNequi.addEventListener("click", () => {
-      ocultarTodo();
-      const codigo = generarCodigoPedido();
-      guardarPedido(codigo, "nequi"); // <<--- NUEVO
-      confirmacionPedidoMensaje.classList.remove('oculto');
-      const mensajeHTML = `
-        <h3>¡Pago en Proceso!</h3>
-        <p>Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.</p>
-        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      `;
-      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+        const { codigo } = guardarDatosPedido();
+        mostrarConfirmacion(codigo, "Pago en Proceso", "Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.");
     });
 
     btnVerProcesoContraentrega.addEventListener("click", () => {
-      ocultarTodo();
-      const codigo = generarCodigoPedido();
-      guardarPedido(codigo, "contraentrega"); // <<--- NUEVO
-      confirmacionPedidoMensaje.classList.remove('oculto');
-      const mensajeHTML = `
-        <h3>¡Pedido Registrado!</h3>
-        <p>Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.</p>
-        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-      `;
-      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
+        const { codigo } = guardarDatosPedido();
+        mostrarConfirmacion(codigo, "Pedido Registrado", "Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.");
     });
 </script>
 </body>
