@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seguimiento de Pedido</title>
+    <title>MOSHIA - Seguimiento de Pedido</title>
     <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
     <style>
         :root {
@@ -35,6 +35,10 @@
             border: 2px solid #ff00ff;
             box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff inset;
         }
+        
+        .oculto {
+            display: none;
+        }
 
         h2 {
             font-family: 'Sawarabi Mincho', serif;
@@ -44,12 +48,6 @@
             margin-bottom: 20px;
         }
         
-        h3 {
-            text-align: center;
-            color: var(--negro-elegante);
-            margin-bottom: 30px;
-        }
-
         .info-pedido {
             text-align: center;
             margin-bottom: 30px;
@@ -67,6 +65,7 @@
             color: var(--rojo-intenso);
         }
 
+        /* Estilos de la línea de tiempo */
         .linea-de-tiempo {
             display: flex;
             justify-content: space-between;
@@ -154,93 +153,91 @@
 <body>
     <div class="contenedor-principal">
         <h2>Estado de tu Pedido</h2>
-        <div class="info-pedido">
-            <p><strong>Código de Pedido:</strong> <span id="codigo-pedido">...</span></p>
-            <p><strong>Tipo de Envío:</strong> <span id="tipo-envio">...</span></p>
-            <p><strong>Hora de Confirmación:</strong> <span id="hora-confirmacion">...</span></p>
-            <p><strong>Tiempo Estimado de Entrega:</strong> <span id="tiempo-estimado">...</span></p>
-        </div>
+        
+        <div id="estado-seguimiento" class="oculto">
+            <div class="info-pedido">
+                <p><strong>Código de Pedido:</strong> <span id="codigo-pedido">...</span></p>
+                <p id="tipo-envio-info"><strong>Tipo de Envío:</strong> <span id="tipo-envio">...</span></p>
+                <p id="hora-confirmacion-info"><strong>Hora de Confirmación:</strong> <span id="hora-confirmacion">...</span></p>
+                <p id="tiempo-estimado-info"><strong>Tiempo Estimado de Entrega:</strong> <span id="tiempo-estimado">...</span></p>
+            </div>
 
-        <div class="linea-de-tiempo">
-            <div class="punto-progreso" id="pedido-recibido">
-                <span>📦</span>
-                <small>Pedido Recibido</small>
+            <div class="linea-de-tiempo" id="linea-de-tiempo-contenedor">
+                <div class="progreso-barra"></div>
+                <div class="punto-progreso" id="pedido-recibido">
+                    <span>📦</span>
+                    <small>Pedido Recibido</small>
+                </div>
+                <div class="punto-progreso" id="en-preparacion">
+                    <span>🔪</span>
+                    <small>En Preparación</small>
+                </div>
+                <div class="punto-progreso" id="en-camino">
+                    <span>🛵</span>
+                    <small>En Camino</small>
+                </div>
+                <div class="punto-progreso" id="entregado">
+                    <span>✅</span>
+                    <small>Entregado</small>
+                </div>
             </div>
-            <div class="punto-progreso" id="en-preparacion">
-                <span>🔪</span>
-                <small>En Preparación</small>
-            </div>
-            <div class="punto-progreso" id="en-camino">
-                <span>🛵</span>
-                <small>En Camino</small>
-            </div>
-            <div class="punto-progreso" id="entregado">
-                <span>✅</span>
-                <small>Entregado</small>
-            </div>
+            <p id="mensaje-estado" class="oculto" style="text-align: center; font-weight: bold; font-size: 1.2rem;"></p>
         </div>
     </div>
 
     <script>
+        const estadoSeguimiento = document.getElementById('estado-seguimiento');
         const codigoPedidoElement = document.getElementById('codigo-pedido');
         const tipoEnvioElement = document.getElementById('tipo-envio');
         const horaConfirmacionElement = document.getElementById('hora-confirmacion');
         const tiempoEstimadoElement = document.getElementById('tiempo-estimado');
-        const progressBar = document.querySelector('.progreso-barra');
-        const puntosProgreso = document.querySelectorAll('.punto-progreso');
+        const progressBar = document.querySelector('#estado-seguimiento .progreso-barra');
+        const puntosProgreso = document.querySelectorAll('#estado-seguimiento .punto-progreso');
 
-        const codigoPedido = localStorage.getItem('codigoPedido');
-        const tipoEnvio = localStorage.getItem('tipoEnvio');
-        const startTime = localStorage.getItem('startTime');
+        // Esta es la "base de datos" simulada de pedidos
+        const pedidosSimulados = {
+            'ABC123': { tipoEnvio: 'cerca', startTime: Date.now() - (15 * 60 * 1000) }, // Pedido de hace 15 minutos
+            'DEF456': { tipoEnvio: 'lejos', startTime: Date.now() - (45 * 60 * 1000) }, // Pedido de hace 45 minutos
+            'GHI789': { tipoEnvio: 'cerca', startTime: Date.now() - (90 * 60 * 1000) }  // Pedido de hace 90 minutos (ya debería estar entregado)
+        };
 
-        if (codigoPedido && startTime) {
-            codigoPedidoElement.textContent = codigoPedido;
+        // Función para renderizar el seguimiento dinámico
+        function renderizarSeguimientoDinamico(codigo, tipoEnvio, startTime) {
+            estadoSeguimiento.classList.remove('oculto');
+            
+            codigoPedidoElement.textContent = codigo;
             tipoEnvioElement.textContent = tipoEnvio === 'lejos' ? 'Zona Extensa' : 'Zona Cercana';
-            horaConfirmacionElement.textContent = new Date(parseInt(startTime)).toLocaleTimeString();
-
-            // Tiempos en milisegundos
-            const tiempoTotalPreparacion = 10 * 60 * 1000; // 10 minutos
-            const tiempoTotalCerca = 30 * 60 * 1000; // 30 minutos
-            const tiempoTotalLejos = 60 * 60 * 1000; // 60 minutos
-
+            horaConfirmacionElement.textContent = new Date(startTime).toLocaleTimeString();
+            
+            const tiempoTotalPreparacion = 10 * 60 * 1000;
+            const tiempoTotalCerca = 30 * 60 * 1000;
+            const tiempoTotalLejos = 60 * 60 * 1000;
             const tiempoEstimadoEntrega = tipoEnvio === 'lejos' ? tiempoTotalLejos : tiempoTotalCerca;
-            tiempoEstimadoElement.textContent = new Date(parseInt(startTime) + tiempoEstimadoEntrega).toLocaleTimeString();
+            tiempoEstimadoElement.textContent = new Date(startTime + tiempoEstimadoEntrega).toLocaleTimeString();
 
             const intervalos = [
                 { id: 'pedido-recibido', duration: 0 },
                 { id: 'en-preparacion', duration: tiempoTotalPreparacion },
-                { id: 'en-camino', duration: tiempoTotalPreparacion + (tipoEnvio === 'lejos' ? tiempoTotalLejos : tiempoTotalCerca) - (10 * 60 * 1000) },
-                { id: 'entregado', duration: tiempoTotalPreparacion + (tipoEnvio === 'lejos' ? tiempoTotalLejos : tiempoTotalCerca) }
+                { id: 'en-camino', duration: tiempoTotalPreparacion + (tiempoEstimadoEntrega - 10 * 60 * 1000) },
+                { id: 'entregado', duration: tiempoTotalPreparacion + tiempoEstimadoEntrega }
             ];
 
             function actualizarProgreso() {
                 const now = Date.now();
-                const elapsedTime = now - parseInt(startTime);
-
+                const elapsedTime = now - startTime;
                 puntosProgreso.forEach(punto => punto.classList.remove('activo', 'completado'));
 
                 let progreso = 0;
                 let etapaActual = '';
 
-                if (elapsedTime >= intervalos[0].duration && elapsedTime < intervalos[1].duration) {
-                    etapaActual = 'pedido-recibido';
-                    progreso = 0;
-                } else if (elapsedTime >= intervalos[1].duration && elapsedTime < intervalos[2].duration) {
-                    etapaActual = 'en-preparacion';
-                    progreso = 33;
-                } else if (elapsedTime >= intervalos[2].duration && elapsedTime < intervalos[3].duration) {
-                    etapaActual = 'en-camino';
-                    progreso = 66;
-                } else if (elapsedTime >= intervalos[3].duration) {
-                    etapaActual = 'entregado';
-                    progreso = 100;
-                }
+                if (elapsedTime >= intervalos[0].duration && elapsedTime < intervalos[1].duration) { etapaActual = 'pedido-recibido'; progreso = 0; }
+                else if (elapsedTime >= intervalos[1].duration && elapsedTime < intervalos[2].duration) { etapaActual = 'en-preparacion'; progreso = 33; }
+                else if (elapsedTime >= intervalos[2].duration && elapsedTime < intervalos[3].duration) { etapaActual = 'en-camino'; progreso = 66; }
+                else if (elapsedTime >= intervalos[3].duration) { etapaActual = 'entregado'; progreso = 100; }
 
                 if (etapaActual) {
                     const currentStep = document.getElementById(etapaActual);
-                    if (currentStep) {
-                        currentStep.classList.add('activo');
-                    }
+                    if (currentStep) { currentStep.classList.add('activo'); }
                 }
                 
                 const steps = ['pedido-recibido', 'en-preparacion', 'en-camino', 'entregado'];
@@ -253,24 +250,37 @@
                     document.getElementById(steps[i]).classList.add('completado');
                 }
 
-                if (elapsedTime >= intervalos[1].duration) {
-                    document.getElementById('en-preparacion').classList.add('activo');
-                }
-                if (elapsedTime >= intervalos[2].duration) {
-                    document.getElementById('en-camino').classList.add('activo');
-                }
-                if (elapsedTime >= intervalos[3].duration) {
-                    document.getElementById('entregado').classList.add('activo');
-                }
-
                 progressBar.style.width = progreso + '%';
             }
 
             actualizarProgreso();
             setInterval(actualizarProgreso, 5000);
+        }
 
+        // Lógica principal: decide qué mostrar al cargar la página
+        const codigoPedido = localStorage.getItem('codigoPedido');
+        let startTime = localStorage.getItem('startTime');
+
+        if (codigoPedido && startTime) {
+            // Caso 1: Se llega desde pago.html (con tiempo de inicio)
+            renderizarSeguimientoDinamico(codigoPedido, localStorage.getItem('tipoEnvio'), parseInt(startTime));
+        } else if (codigoPedido) {
+            // Caso 2: Se llega desde index.html (solo con código)
+            const pedidoEncontrado = pedidosSimulados[codigoPedido];
+            if (pedidoEncontrado) {
+                renderizarSeguimientoDinamico(codigoPedido, pedidoEncontrado.tipoEnvio, pedidoEncontrado.startTime);
+            } else {
+                estadoSeguimiento.classList.remove('oculto');
+                document.getElementById('linea-de-tiempo-contenedor').classList.add('oculto');
+                document.getElementById('mensaje-estado').classList.remove('oculto');
+                document.getElementById('mensaje-estado').textContent = "Código de pedido no encontrado o inválido. Por favor, verifica el código e inténtalo de nuevo.";
+            }
         } else {
-            document.body.innerHTML = '<h2>No se encontró información del pedido.</h2><p style="text-align: center;">Por favor, realiza un pedido primero.</p>';
+            // Caso 3: No hay datos en localStorage
+            estadoSeguimiento.classList.remove('oculto');
+            document.getElementById('linea-de-tiempo-contenedor').classList.add('oculto');
+            document.getElementById('mensaje-estado').classList.remove('oculto');
+            document.getElementById('mensaje-estado').textContent = "No se encontró información del pedido. Por favor, rastréalo desde la página de inicio.";
         }
     </script>
 </body>
