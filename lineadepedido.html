@@ -2,218 +2,244 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Seguimiento de Pedido</title>
 <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --rojo-intenso: #d91e18;
-    --blanco-puro: #ffffff;
-    --negro-elegante: #222222;
-    --azul-pastel: #7ec8e3;
-    --azul-fuerte: #176ea6;
-  }
-  body {
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(to bottom right, #fb7070, #70b4fb);
-    color: var(--negro-elegante);
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-  }
-  header button {
-    font-family: 'Sawarabi Mincho', serif;
-    background: var(--blanco-puro);
-    border: 2px solid var(--azul-fuerte);
-    border-radius: 12px;
-    padding: 8px 15px;
-    cursor: pointer;
-    font-weight: bold;
-    color: var(--azul-fuerte);
-    box-shadow: 0 0 8px rgba(0,0,0,0.3);
-  }
-  h1 {
-    text-align: center;
-    font-family: 'Sawarabi Mincho', serif;
-    color: var(--blanco-puro);
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-  }
-  .tracking-container {
-    background: rgba(255,255,255,0.85);
-    border-radius: 25px;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    position: relative;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  }
-  .progress-line {
-    position: relative;
-    height: 8px;
-    background: #ddd;
-    border-radius: 5px;
-    margin: 50px 0;
-  }
-  .progress-fill {
-    position: absolute;
-    height: 8px;
-    background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
-    border-radius: 5px;
-    width: 0%;
-    transition: width 1s linear;
-  }
-  .stage-icons {
-    display: flex;
-    justify-content: space-between;
-    position: absolute;
-    top: -40px;
-    width: 100%;
-  }
-  .stage-icons img {
-    width: 50px;
-    height: auto;
-  }
-  .moving-icon {
-    position: absolute;
-    top: -55px;
-    width: 60px;
-    height: auto;
-    transition: left linear;
-  }
-  .order-info {
-    text-align: center;
-    margin-top: 30px;
-  }
-  .order-info p {
-    font-size: 1.2rem;
-  }
-  .tracking-form {
-    margin-top: 30px;
-    text-align: center;
-  }
-  .tracking-form input {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  .tracking-form button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    background: var(--azul-fuerte);
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  .time-estimate {
-    margin-top: 40px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-  }
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(to bottom right, #fb7070, #70b4fb);
+        margin: 0;
+        padding: 0;
+        color: #222;
+    }
+
+    h1 {
+        font-family: 'Sawarabi Mincho', serif;
+        text-align: center;
+        font-size: 2rem;
+        color: #d91e18;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        margin-top: 20px;
+    }
+
+    .pedido-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .codigo-pedido {
+        font-size: 1.2rem;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .rastreo-form {
+        max-width: 400px;
+        margin: 20px auto;
+        background: rgba(255,255,255,0.85);
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .rastreo-form label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .rastreo-form input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
+    .rastreo-form button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 25px;
+        border: none;
+        background: linear-gradient(45deg, #d91e18, #7ec8e3);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .timeline-container {
+        background: rgba(255,255,255,0.85);
+        border-radius: 20px;
+        padding: 20px;
+        max-width: 800px;
+        margin: 20px auto;
+        position: relative;
+    }
+
+    .timeline {
+        position: relative;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .timeline-stage {
+        text-align: center;
+        flex: 1;
+        position: relative;
+        z-index: 2;
+    }
+
+    .progress-line {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        height: 8px;
+        width: 100%;
+        background: white;
+        z-index: 1;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #d91e18, #7ec8e3);
+        transition: width linear;
+    }
+
+    .icon-mover {
+        position: absolute;
+        top: -30px;
+        width: 60px;
+        height: auto;
+        transition: left linear;
+        z-index: 3;
+    }
+
+    .tiempo-estimado {
+        text-align: center;
+        font-weight: bold;
+        margin-top: 20px;
+        font-size: 1.1rem;
+    }
+
+    .btn-inicio {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: linear-gradient(45deg, #d91e18, #7ec8e3);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+    }
 </style>
 </head>
 <body>
 
-<header>
-  <button onclick="window.location.href='index.html'">← Volver al Inicio</button>
-</header>
+<a href="index.html" class="btn-inicio">Inicio</a>
 
-<h1>Seguimiento de tu Pedido</h1>
+<h1>Seguimiento de Pedido</h1>
 
-<div class="tracking-container">
-  <div class="order-info">
-    <p><strong>Código de Pedido:</strong> <span id="codigoPedido">-</span></p>
-  </div>
-
-  <div class="progress-line" id="progressLine">
-    <div class="progress-fill" id="progressFill"></div>
-    <div class="stage-icons">
-      <img src="cliente.png" alt="Pago" id="iconPago">
-      <img src="chef.png" alt="Preparación" id="iconPrep">
-      <img src="empaque.png" alt="Empaque" id="iconEmp">
-      <img src="moto.png" alt="Envío" id="iconEnvio">
-      <img src="entregado.png" alt="Entregado" id="iconEntregado">
-    </div>
-    <img src="cliente.png" class="moving-icon" id="movingIcon" style="left: 0%;">
-  </div>
-
-  <div class="tracking-form" id="trackingForm">
-    <p>¿Quieres rastrear tu pedido?</p>
-    <input type="text" id="nombreCliente" placeholder="Nombre del cliente">
-    <input type="text" id="codigoInput" placeholder="Código del pedido">
-    <button onclick="iniciarSeguimiento()">Rastrear</button>
-  </div>
-
-  <div class="time-estimate" id="timeEstimate"></div>
+<div class="pedido-info" id="pedido-info">
+    <!-- Aquí se mostrará el código o el formulario -->
 </div>
 
+<div class="timeline-container">
+    <div class="timeline">
+        <div class="progress-line">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="timeline-stage" data-icon="cliente.png">Verificación</div>
+        <div class="timeline-stage" data-icon="chef.png">Preparación</div>
+        <div class="timeline-stage" data-icon="empaque.png">Empaque</div>
+        <div class="timeline-stage" data-icon="moto.png">Envío</div>
+        <div class="timeline-stage" data-icon="entregado.png">Entregado</div>
+
+        <img src="cliente.png" id="icon-mover" class="icon-mover" style="left:0%;" />
+    </div>
+</div>
+
+<div class="tiempo-estimado" id="tiempo-estimado"></div>
+
 <script>
-let etapas = [
-  { nombre: "Verificación de pago", icono: "cliente.png", duracion: 5 },
-  { nombre: "Preparación", icono: "chef.png", duracion: 25 },
-  { nombre: "Empaque", icono: "empaque.png", duracion: 10 },
-  { nombre: "Envío", icono: "moto.png", duracion: 10 },
-  { nombre: "Entregado", icono: "entregado.png", duracion: 0 }
-];
+    const pedidoInfo = document.getElementById("pedido-info");
+    const codigoPedido = localStorage.getItem("codigoPedido") || "";
+    const iconMover = document.getElementById("icon-mover");
+    const progressFill = document.getElementById("progress-fill");
+    const etapas = document.querySelectorAll(".timeline-stage");
+    const tiempoEstimadoDiv = document.getElementById("tiempo-estimado");
 
-let indiceEtapa = 0;
-let codigoPedido = localStorage.getItem("codigoPedido") || null;
-let movingIcon = document.getElementById("movingIcon");
-let progressFill = document.getElementById("progressFill");
-let codigoDisplay = document.getElementById("codigoPedido");
-
-if (codigoPedido) {
-  codigoDisplay.textContent = codigoPedido;
-  document.getElementById("trackingForm").style.display = "none";
-  iniciarAnimacion();
-}
-
-function iniciarSeguimiento() {
-  codigoPedido = document.getElementById("codigoInput").value.trim();
-  if (codigoPedido) {
-    localStorage.setItem("codigoPedido", codigoPedido);
-    codigoDisplay.textContent = codigoPedido;
-    document.getElementById("trackingForm").style.display = "none";
-    iniciarAnimacion();
-  }
-}
-
-function iniciarAnimacion() {
-  moverEtapa();
-}
-
-function moverEtapa() {
-  if (indiceEtapa >= etapas.length) return;
-  
-  movingIcon.src = etapas[indiceEtapa].icono;
-  let porcentajeInicio = (indiceEtapa / (etapas.length - 1)) * 100;
-  let porcentajeFin = ((indiceEtapa + 1) / (etapas.length - 1)) * 100;
-  let duracionMs = etapas[indiceEtapa].duracion * 1000; // Cambiar a *60000 para minutos reales
-  
-  movingIcon.style.left = porcentajeInicio + "%";
-  let start = null;
-  
-  function step(timestamp) {
-    if (!start) start = timestamp;
-    let progreso = (timestamp - start) / duracionMs;
-    if (progreso > 1) progreso = 1;
-    let pos = porcentajeInicio + (porcentajeFin - porcentajeInicio) * progreso;
-    movingIcon.style.left = pos + "%";
-    progressFill.style.width = pos + "%";
-    if (progreso < 1) {
-      requestAnimationFrame(step);
+    if (codigoPedido) {
+        pedidoInfo.innerHTML = `<p class="codigo-pedido">Código de Pedido: ${codigoPedido}</p>`;
+        iniciarAnimacion();
     } else {
-      indiceEtapa++;
-      moverEtapa();
+        pedidoInfo.innerHTML = `
+            <form class="rastreo-form" onsubmit="buscarPedido(event)">
+                <label>Nombre del Cliente:</label>
+                <input type="text" id="nombreCliente" required>
+                <label>Código del Pedido:</label>
+                <input type="text" id="codigoPedidoInput" required>
+                <button type="submit">Rastrear</button>
+            </form>
+        `;
     }
-  }
-  requestAnimationFrame(step);
-}
+
+    function buscarPedido(e) {
+        e.preventDefault();
+        const codigo = document.getElementById("codigoPedidoInput").value;
+        localStorage.setItem("codigoPedido", codigo);
+        location.reload();
+    }
+
+    function iniciarAnimacion() {
+        let tiempos = [
+            5, // Verificación -> Preparación
+            25, // Preparación -> Empaque
+            8, // Empaque -> Envío
+            8  // Envío -> Entregado (cerca)
+        ];
+
+        const ciudad = localStorage.getItem("ciudadEntrega") || "";
+        if (ciudad.toLowerCase() !== "chía" && ciudad.toLowerCase() !== "chia" && ciudad.toLowerCase() !== "cajicá" && ciudad.toLowerCase() !== "cajica") {
+            tiempos[3] = 30; // Lejos
+        }
+
+        let totalTiempo = tiempos.reduce((a,b) => a + b, 0);
+        let acumulado = 0;
+
+        etapas.forEach((etapa, index) => {
+            if (index < etapas.length - 1) {
+                let duracion = tiempos[index] * 1000; // ms
+                setTimeout(() => {
+                    iconMover.src = etapa.dataset.icon;
+                    let leftPos = (index / (etapas.length - 1)) * 100;
+                    iconMover.style.left = leftPos + "%";
+                    progressFill.style.width = leftPos + "%";
+                }, acumulado);
+
+                acumulado += duracion;
+            }
+        });
+
+        // última etapa
+        setTimeout(() => {
+            iconMover.src = etapas[etapas.length - 1].dataset.icon;
+            iconMover.style.left = "100%";
+            progressFill.style.width = "100%";
+        }, acumulado);
+
+        // Tiempo estimado
+        let minutos = totalTiempo / 1; // porque cada valor está en segundos simulados
+        tiempoEstimadoDiv.textContent = `Tiempo estimado de entrega: ${minutos} minutos`;
+    }
 </script>
 
 </body>
