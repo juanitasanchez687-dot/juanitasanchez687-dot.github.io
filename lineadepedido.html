@@ -47,7 +47,6 @@
     border-radius: 5px;
     width: 0;
     z-index: 2;
-    transition: width linear;
   }
   .stage {
     position: relative;
@@ -65,8 +64,9 @@
     justify-content: center;
     align-items: center;
     font-size: 32px;
-    transition: background 0.4s ease;
+    transition: background 0.4s ease, color 0.4s ease;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    user-select: none;
   }
   .circle.active {
     background: linear-gradient(90deg, #ff00ff, #00ffff);
@@ -81,7 +81,6 @@
     font-size: 40px;
     user-select: none;
     z-index: 5;
-    transition: left linear;
     pointer-events: none;
   }
   .btn-volver {
@@ -159,12 +158,11 @@
   // Total duración en segundos
   const totalDuracion = etapas.reduce((acc, e) => acc + e.duracion, 0);
 
-  // Tamaño timeline para calcular posiciones
-  const timeline = document.querySelector(".timeline");
-  const timelineLeftPercent = 5;   // 5% left padding
-  const timelineWidthPercent = 90; // 90% width used
+  // Porcentaje para posicionar la barra y estrellas
+  const timelineLeftPercent = 5;   // left padding in %
+  const timelineWidthPercent = 90; // width in %
 
-  // Posiciones de cada etapa en porcentaje sobre la barra (0 a 1)
+  // Posiciones relativas (0 a 1) para cada etapa
   const posiciones = etapas.map((_, i) => i / (etapas.length - 1));
 
   let tiempoAcumulado = 0;
@@ -172,46 +170,38 @@
   function animar() {
     let tiempoActual = 0;
     let etapaIndex = 0;
-    let progresoAncho = 0;
-    let animando = true;
 
     function avanzarFrame() {
-      if (!animando) return;
+      tiempoActual += 0.05; // 50ms (20fps approx)
 
-      tiempoActual += 0.05; // 50ms por frame (20fps aprox)
       if (etapaIndex < etapas.length) {
         const etapa = etapas[etapaIndex];
-        const tiempoInicio = tiempoAcumulado;
-        const tiempoFin = tiempoAcumulado + etapa.duracion;
+        const inicioEtapa = tiempoAcumulado;
+        const finEtapa = tiempoAcumulado + etapa.duracion;
 
-        if (tiempoActual >= tiempoFin) {
-          // Activar etapa completa
+        if (tiempoActual >= finEtapa) {
           activarEtapa(etapaIndex);
           tiempoAcumulado += etapa.duracion;
           etapaIndex++;
           if (etapaIndex >= etapas.length) {
-            // Finalizar
-            progresoAncho = timelineWidthPercent;
-            star.style.left = `calc(${timelineLeftPercent + progresoAncho}% - 20px)`;
-            progress.style.width = progresoAncho + "%";
-            return; // Termina animación
+            progress.style.width = timelineWidthPercent + "%";
+            star.style.left = `calc(${timelineLeftPercent + timelineWidthPercent}% - 20px)`;
+            return;
           }
         }
 
-        // Calcular progreso entre esta etapa
-        const progresoEtapa = Math.min((tiempoActual - tiempoInicio) / etapa.duracion, 1);
-        // Calcular ancho total basado en progreso y posiciones
-        progresoAncho = timelineWidthPercent * (posiciones[etapaIndex - 1] ? posiciones[etapaIndex - 1] : 0) + 
-                        timelineWidthPercent * (posiciones[etapaIndex] - (posiciones[etapaIndex - 1] || 0)) * progresoEtapa;
-        
-        // Posición estrella (5% left + progresoAncho)
-        let leftPos = timelineLeftPercent + progresoAncho;
-        star.style.left = `calc(${leftPos}% - 20px)`;
-        progress.style.width = progresoAncho + "%";
+        let progresoEtapa = Math.min((tiempoActual - inicioEtapa) / etapa.duracion, 1);
+        if (isNaN(progresoEtapa)) progresoEtapa = 1; // para etapa final sin duración
 
-        // Activar etapa si la estrella pasó
-        for (let i = 0; i < etapas.length; i++) {
-          if (progresoAncho >= timelineWidthPercent * posiciones[i]) {
+        let progresoTotal = timelineWidthPercent * (posiciones[etapaIndex - 1] || 0) +
+          timelineWidthPercent * (posiciones[etapaIndex] - (posiciones[etapaIndex - 1] || 0)) * progresoEtapa;
+
+        progress.style.width = progresoTotal + "%";
+        star.style.left = `calc(${timelineLeftPercent + progresoTotal}% - 20px)`;
+
+        // Activar etapas que se han pasado
+        for(let i=0; i < etapas.length; i++) {
+          if(progresoTotal >= timelineWidthPercent * posiciones[i]){
             activarEtapa(i);
           }
         }
@@ -219,11 +209,9 @@
         requestAnimationFrame(avanzarFrame);
       }
     }
-
     requestAnimationFrame(avanzarFrame);
   }
 
-  // Marca la etapa como activa (cambia fondo y texto)
   function activarEtapa(i) {
     if (!circles[i].classList.contains("active")) {
       circles[i].classList.add("active");
@@ -235,4 +223,3 @@
 
 </body>
 </html>
-
