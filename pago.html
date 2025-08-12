@@ -221,7 +221,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script>
+  <script>
     const formularioCliente = document.getElementById("formulario-cliente");
     const seccionPagos = document.getElementById("seccion-pagos");
 
@@ -251,139 +251,118 @@
     totalPagar.textContent = `Total a Pagar: $${total.toFixed(2)}`;
     
     const departamentosYMunicipios = {
-        "Amazonas": ["Leticia", "Puerto Nariño"],
-        "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
-        "Arauca": ["Arauca", "Saravena", "Tame"],
-        "Atlántico": ["Barranquilla", "Soledad", "Malambo"],
-        "Bolívar": ["Cartagena de Indias", "Magangué", "El Carmen de Bolívar"],
-        "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
-        "Caldas": ["Manizales", "La Dorada", "Chinchiná"],
-        "Caquetá": ["Florencia", "San Vicente del Caguán"],
-        "Casanare": ["Yopal", "Aguazul", "Tauramena"],
-        "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada"],
-        "Cesar": ["Valledupar", "Aguachica", "Codazzi"],
-        "Chocó": ["Quibdó", "Istmina"],
-        "Córdoba": ["Montería", "Sahagún", "Cereté"],
-        "Cundinamarca": ["Bogotá D.C.", "Soacha", "Chía", "Zipaquirá", "Funza", "Cajicá"],
-        "Guainía": ["Inírida"],
-        "Guaviare": ["San José del Guaviare"],
-        "Huila": ["Neiva", "Pitalito", "Garzón"],
-        "La Guajira": ["Riohacha", "Maicao", "Uribia"],
-        "Magdalena": ["Santa Marta", "Ciénaga", "Fundación"],
-        "Meta": ["Villavicencio", "Puerto Gaitán", "Granada"],
-        "Nariño": ["Pasto", "Tumaco", "Ipiales"],
-        "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona"],
-        "Putumayo": ["Mocoa", "Puerto Asís"],
-        "Quindío": ["Armenia", "Calarcá", "Quimbaya"],
-        "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal"],
-        "San Andrés y Providencia": ["San Andrés"],
-        "Santander": ["Bucaramanga", "Floridablanca", "Girón"],
-        "Sucre": ["Sincelejo", "Corozal"],
-        "Tolima": ["Ibagué", "Espinal", "Melgar"],
-        "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá"],
-        "Vaupés": ["Mitú"],
-        "Vichada": ["Puerto Carreño"]
+      "Amazonas": ["Leticia", "Puerto Nariño"],
+      "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Rionegro"],
+      "Arauca": ["Arauca", "Saravena", "Tame"],
+      "Atlántico": ["Barranquilla", "Soledad", "Malambo"],
+      "Bolívar": ["Cartagena de Indias", "Magangué", "El Carmen de Bolívar"],
+      "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá"],
+      "Caldas": ["Manizales", "La Dorada", "Chinchiná"],
+      "Caquetá": ["Florencia", "San Vicente del Caguán"],
+      "Casanare": ["Yopal", "Aguazul", "Tauramena"],
+      "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada"],
+      "Cesar": ["Valledupar", "Aguachica", "Codazzi"],
+      "Chocó": ["Quibdó", "Istmina"],
+      "Córdoba": ["Montería", "Sahagún", "Cereté"],
+      "Cundinamarca": ["Bogotá D.C.", "Soacha", "Chía", "Zipaquirá", "Funza", "Cájica"],
+      "Guainía": ["Inírida"],
+      "Guaviare": ["San José del Guaviare"],
+      "Huila": ["Neiva", "Pitalito", "Garzón"],
+      "La Guajira": ["Riohacha", "Maicao", "Uribia"],
+      "Magdalena": ["Santa Marta", "Ciénaga", "Fundación"],
+      "Meta": ["Villavicencio", "Puerto Gaitán", "Granada"],
+      "Nariño": ["Pasto", "Tumaco", "Ipiales"],
+      "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona"],
+      "Putumayo": ["Mocoa", "Puerto Asís"],
+      "Quindío": ["Armenia", "Calarcá", "Quimbaya"],
+      "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal"],
+      "San Andrés y Providencia": ["San Andrés"],
+      "Santander": ["Bucaramanga", "Floridablanca", "Girón"],
+      "Sucre": ["Sincelejo", "Corozal"],
+      "Tolima": ["Ibagué", "Espinal", "Melgar"],
+      "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá"],
+      "Vaupés": ["Mitú"],
+      "Vichada": ["Puerto Carreño"]
     };
 
     function poblarDepartamentos() {
-        for (const departamento in departamentosYMunicipios) {
-            const option = document.createElement("option");
-            option.value = departamento;
-            option.textContent = departamento;
-            departamentoSelect.appendChild(option);
-        }
+      for (const departamento in departamentosYMunicipios) {
+        const option = document.createElement("option");
+        option.value = departamento;
+        option.textContent = departamento;
+        departamentoSelect.appendChild(option);
+      }
     }
 
     departamentoSelect.addEventListener("change", function() {
-        const departamentoSeleccionado = this.value;
-        ciudadMunicipioSelect.innerHTML = '<option value="" disabled selected>Selecciona una ciudad/municipio</option>';
-        if (departamentoSeleccionado) {
-            const ciudades = departamentosYMunicipios[departamentoSeleccionado];
-            ciudades.forEach(ciudad => {
-                const option = document.createElement("option");
-                option.value = ciudad;
-                option.textContent = ciudad;
-                ciudadMunicipioSelect.appendChild(option);
-            });
-        }
+      const departamentoSeleccionado = this.value;
+      ciudadMunicipioSelect.innerHTML = '<option value="" disabled selected>Selecciona una ciudad/municipio</option>';
+      if (departamentoSeleccionado) {
+        const ciudades = departamentosYMunicipios[departamentoSeleccionado];
+        ciudades.forEach(ciudad => {
+          const option = document.createElement("option");
+          option.value = ciudad;
+          option.textContent = ciudad;
+          ciudadMunicipioSelect.appendChild(option);
+        });
+      }
     });
 
     poblarDepartamentos();
 
     function ocultarTodo() {
-        tarjetaForm.classList.add('oculto');
-        nequiMensaje.classList.add('oculto');
-        contraentregaMensaje.classList.add('oculto');
-        confirmacionPedidoMensaje.classList.add('oculto');
-        comprobanteFormNequi.classList.add('oculto');
-        btnPagoRealizadoNequi.classList.add('oculto');
+      tarjetaForm.classList.add('oculto');
+      nequiMensaje.classList.add('oculto');
+      contraentregaMensaje.classList.add('oculto');
+      confirmacionPedidoMensaje.classList.add('oculto');
+      comprobanteFormNequi.classList.add('oculto');
+      btnPagoRealizadoNequi.classList.add('oculto');
     }
 
     function generarCodigoPedido() {
-        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let codigo = '';
-        for (let i = 0; i < 6; i++) {
-            codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-        }
-        return codigo;
+      const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let codigo = '';
+      for (let i = 0; i < 6; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      }
+      return codigo;
     }
     
     formularioCliente.addEventListener("submit", function(e) {
-        e.preventDefault();
-        formularioCliente.classList.add('oculto');
-        seccionPagos.classList.remove('oculto');
+      e.preventDefault();
+      formularioCliente.classList.add('oculto');
+      seccionPagos.classList.remove('oculto');
     });
 
     formularioPago.addEventListener("submit", function(e) {
-        e.preventDefault();
-        const metodo = metodoPago.value;
-        ocultarTodo();
+      e.preventDefault();
+      const metodo = metodoPago.value;
+      ocultarTodo();
 
-        if (metodo === "tarjeta") {
-            tarjetaForm.classList.remove('oculto');
-        } else if (metodo === "nequi") {
-            nequiMensaje.classList.remove('oculto');
-        } else if (metodo === "contraentrega") {
-            contraentregaMensaje.classList.remove('oculto');
-        }
+      if (metodo === "tarjeta") {
+        tarjetaForm.classList.remove('oculto');
+      } else if (metodo === "nequi") {
+        nequiMensaje.classList.remove('oculto');
+      } else if (metodo === "contraentrega") {
+        contraentregaMensaje.classList.remove('oculto');
+      }
     });
-
-    function guardarDatosPedido() {
-        const departamento = departamentoSelect.value;
-        const municipio = ciudadMunicipioSelect.value;
-        const codigo = generarCodigoPedido();
-
-        const tipoEnvio = (departamento === "Cundinamarca" && (municipio === "Chía" || municipio === "Cajicá")) ? 'lejos' : 'cerca';
-        
-        // Guarda los datos en localStorage para que lineadepedido.html pueda usarlos
-        localStorage.setItem("codigoPedido", codigo);
-        localStorage.setItem("tipoEnvio", tipoEnvio);
-        localStorage.setItem("startTime", Date.now());
-
-        return { codigo, tipoEnvio };
-    }
-
-    function mostrarConfirmacion(codigo, titulo, mensaje) {
-        ocultarTodo();
-        seccionPagos.classList.add('oculto'); // Ocultar también la sección de pagos
-        confirmacionPedidoMensaje.classList.remove('oculto');
-        const mensajeHTML = `
-            <h3>¡${titulo}!</h3>
-            <p>${mensaje}</p>
-            <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
-            <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
-            <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
-            <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
-        `;
-        confirmacionPedidoMensaje.innerHTML = mensajeHTML;
-    }
 
     btnProcesarPagoTarjeta.addEventListener("click", function(e) {
-        e.preventDefault();
-        const { codigo } = guardarDatosPedido();
-        mostrarConfirmacion(codigo, "Pago con Tarjeta Exitoso", "Tu pedido ha sido registrado con éxito.");
+      e.preventDefault();
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pago con Tarjeta Exitoso!</h3>
+        <p>Tu pedido ha sido registrado con éxito. Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     });
-    
+
     btnSubirComprobanteNequi.addEventListener("click", () => {
         comprobanteFormNequi.classList.remove('oculto');
     });
@@ -393,21 +372,41 @@
         if (fileInput.files.length > 0) {
             alert("Comprobante subido con éxito. Lo verificaremos pronto.");
             comprobanteFormNequi.classList.add('oculto');
-            btnPagoRealizadoNequi.classList.remove('oculto');
+            btnPagoRealizadoNequi.classList.remove('oculto'); // Muestra el botón de "Pago Realizado"
         } else {
             alert("Por favor, selecciona un archivo para subir.");
         }
     });
 
     btnPagoRealizadoNequi.addEventListener("click", () => {
-        const { codigo } = guardarDatosPedido();
-        mostrarConfirmacion(codigo, "Pago en Proceso", "Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.");
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pago en Proceso!</h3>
+        <p>Hemos recibido la notificación de tu pago. Cuando se confirme, iniciaremos la producción de tu pedido.</p>
+        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     });
 
     btnVerProcesoContraentrega.addEventListener("click", () => {
-        const { codigo } = guardarDatosPedido();
-        mostrarConfirmacion(codigo, "Pedido Registrado", "Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.");
+      ocultarTodo();
+      const codigo = generarCodigoPedido();
+      confirmacionPedidoMensaje.classList.remove('oculto');
+      const mensajeHTML = `
+        <h3>¡Pedido Registrado!</h3>
+        <p>Tu pedido ha sido registrado para pago contraentrega. Te enviaremos una notificación cuando esté en camino.</p>
+        <p>Ten en cuenta el siguiente código para llevar el proceso de tu pedido:</p>
+        <h4 style="color: var(--rojo-intenso); font-size: 1.5rem;">${codigo}</h4>
+        <p>Puedes verificar el estado de tu pedido en cualquier momento con este código.</p>
+        <button onclick="window.location.href='lineadepedido.html'">Ver Proceso de Pedido</button>
+      `;
+      confirmacionPedidoMensaje.innerHTML = mensajeHTML;
     });
-</script>
+  </script>
 </body>
 </html>
