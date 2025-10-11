@@ -7,614 +7,420 @@
     <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Montserrat&display=swap" rel="stylesheet" />
 
     <style>
-        /* Variables de colores */
-        :root {
-            --rojo-intenso: #d91e18;
-            --blanco-puro: #ffffff;
-            --negro-elegante: #222222;
-            --azul-pastel: #7ec8e3;
-            --azul-fuerte: #176ea6;
-            --fondo-sakura: #fff0f5;
-        }
+/* 🌈 Variables de color */
+:root {
+    --rojo-intenso: #d91e18;
+    --blanco-puro: #ffffff;
+    --negro-elegante: #222222;
+    --azul-pastel: #7ec8e3;
+    --azul-fuerte: #176ea6;
+    --fondo-sakura: #fff0f5;
+}
 
-        /* Reset básico */
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(to bottom right, #fb7070, #70b4fb);
-            color: var(--negro-elegante);
-            overflow-x: hidden;
-        }
+/* 🔹 Reset básico */
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to bottom right, #fb7070, #70b4fb);
+    color: var(--negro-elegante);
+    overflow-x: hidden;
+}
+html {
+    scroll-behavior: smooth;
+}
 
-        /* Scroll suave */
-        html {
-            scroll-behavior: smooth;
-        }
+/* 🔹 Cabecera */
+header {
+    background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+header img {
+    height: 90px;
+    cursor: pointer;
+}
+nav a {
+    font-family: 'Sawarabi Mincho', serif;
+    color: var(--blanco-puro);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin: 0 14px;
+    padding: 6px 12px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+}
+nav a:hover, nav a:focus {
+    background: var(--azul-pastel);
+    color: var(--rojo-intenso);
+}
 
-        /* Cabecera */
-        header {
-            background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        header img {
-            height: 90px;
-            cursor: pointer;
-        }
-        nav a {
-            font-family: 'Sawarabi Mincho', serif;
-            color: var(--blanco-puro);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin: 0 14px;
-            padding: 6px 12px;
-            border-radius: 15px;
-            transition: background-color 0.3s ease;
-        }
-        nav a:hover, nav a:focus {
-            background: var(--azul-pastel);
-            color: var(--rojo-intenso);
-            outline: none;
-        }
+/* 🔹 Menú desplegable */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
+    font-family: 'Sawarabi Mincho', serif;
+    color: var(--blanco-puro);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin: 0 14px;
+    padding: 6px 12px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--blanco-puro);
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    top: 100%;
+    left: 0;
+}
+.dropdown-content a {
+    color: var(--negro-elegante);
+    padding: 10px 14px;
+    display: block;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    border-radius: 8px;
+}
+.dropdown-content a:hover {
+    background: var(--azul-pastel);
+    color: var(--rojo-intenso);
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover .dropbtn {
+    background: var(--azul-pastel);
+    color: var(--rojo-intenso);
+}
 
-        /* Banner principal con animación sakura */
-        .banner {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
+/* 🔹 Banner */
+.banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 470px;
+}
+.banner-title {
+    position: absolute;
+    top: -25px;
+    left: 350px;
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 6rem;
+    background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.8px black;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    z-index: 60;
+}
+.banner-phrase {
+    position: absolute;
+    top: 160px;
+    left: 245px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    max-width: 50%;
+    line-height: 1.3;
+}
 
-        .banner-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            max-height: 470px; /* ajusta según necesites */
-        }
+/* 🔹 Mascota Sakurai */
+#sakurai-img {
+    position: fixed;
+    bottom: 0;
+    left: 20px;
+    width: 300px;
+    height: 350px;
+    cursor: pointer;
+    z-index: 1000;
+    user-select: none;
+    transition: opacity 0.4s ease, transform 0.3s ease;
+}
 
-        .banner-title {
-            position: absolute;
-            top: -25px;
-            left: 350px;
-            transform: none;
+/* 🔹 Secciones */
+section {
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 50px auto;
+    background: var(--blanco-puro);
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(217,30,24,0.1);
+    position: relative;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    /* OCULTAR POR DEFECTO */
+    display: none;
+}
 
-            font-family: 'Sawarabi Mincho', serif;
-            font-size: 6rem;
-            background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 0.8px black;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            text-align: left;
-            z-index: 60;
-        }
+/* 💫 Clase para mostrar la sección activa */
+.seccion-activa {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    display: block !important;
+}
 
-        /* NUEVOS ESTILOS PARA LA FRASE */
-        .banner-phrase {
-            position: absolute;
-            top: 160px;
-            left: 245px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #000000;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-            text-align: left;
-            z-index: 50;
-            max-width: 50%;
-            line-height: 1.3;
-        }
+/* 💫 Animación para ocultar/mostrar secciones */
+.oculto {
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+}
 
-        /* Mascota simplificada */
-        #sakurai-img {
-            position: fixed;
-            bottom: 0px;
-            left: 20px;
-            width: 300px;
-            height: 350px;
-            cursor: pointer;
-            z-index: 1000;
-            user-select: none;
-            transition: transform 0.3s ease;
-        }
+/* 🔹 Títulos */
+section h2 {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 3rem;
+    color: var(--rojo-intenso); /* Color base, puede ser sobrescrito con estilo inline */
+    margin-bottom: 30px;
+    text-align: center;
+}
 
-        #volver-arriba:hover {
-            opacity: 1;
-        }
+/* 🔹 Subcontenidos */
+.subcontenido {
+    display: none;
+    background: #fff0f5cc;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--negro-elegante);
+    line-height: 1.5;
+    transition: box-shadow 0.5s ease, border-color 0.5s ease, opacity 0.4s ease;
+    opacity: 0;
+}
+.subcontenido.activo {
+    display: block;
+    opacity: 1;
+}
 
-        /* Secciones */
-        section {
-            padding: 60px 20px;
-            max-width: 900px;
-            margin: 50px auto; /* Ajuste margen superior/inferior para espaciado */
-            background: var(--blanco-puro);
-            border-radius: 20px;
-            box-shadow: 0 6px 18px rgba(217,30,24,0.1);
-            position: relative;
-        }
+/* 🔹 Botones generales */
+button {
+    font-family: 'Sawarabi Mincho', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 25px;
+    padding: 12px 26px;
+    margin: 0 8px 12px 8px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
+    color: var(--blanco-puro);
+    box-shadow: 0 5px 15px rgba(217,30,24,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 7px 20px rgba(217,30,24,0.6);
+}
 
-        section h2 {
-            font-family: 'Sawarabi Mincho', serif;
-            font-size: 3rem;
-            color: var(--rojo-intenso);
-            margin-bottom: 30px;
-            text-align: center; /* Centrado de títulos */
-        }
+/* 🔹 Botones flotantes (WhatsApp, Instagram, subir) */
+/* 🔹 Botones flotantes con imagen de fondo */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 2000;
+}
 
-        /* Contenedor de botones para centrar */
-        .section-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* Centra los botones horizontalmente */
-            align-items: center; /* Centra los botones verticalmente si ocupan varias líneas */
-            margin-bottom: 20px; /* Espacio debajo de los botones */
-        }
+.floating-buttons a {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blanco-puro);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    text-decoration: none;
+}
+
+/* 🔹 Fondos específicos */
+.btn-instagram {
+    background-image: url('instagram.jpeg');
+}
+.btn-whatsapp {
+    background-image: url('whatsapp.jpeg');
+}
+.btn-top {
+    background-image: url('top.jpeg');
+}
+
+/* 🔹 Hover */
+.floating-buttons a:hover {
+    transform: scale(1.1);
+    background-color: var(--azul-pastel); /* se puede mantener o quitar */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
 
 
-        /* Subcontenidos ocultos */
-        .subcontenido {
-            display: none;
-            background: #fff0f5cc;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-            font-size: 0.8rem;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--negro-elegante);
-            line-height: 1.5;
-            transition: box-shadow 0.5s ease-in-out, border-color 0.5s ease-in-out;
-            border: 1px solid transparent; /* Base para el efecto neón */
-            box-shadow: none;
-        }
-        .subcontenido.activo {
-            display: block;
-        }
+/* 🔹 Footer */
+footer {
+    background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
+    color: var(--blanco-puro);
+    text-align: center;
+    padding: 20px 12px;
+    font-family: 'Sawarabi Mincho', serif;
+    font-weight: 600;
+}
 
-        /* Botones kawaii */
-        button {
-            font-family: 'Sawarabi Mincho', serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            border-radius: 25px;
-            padding: 12px 26px;
-            margin: 0 8px 12px 8px; /* Mantiene un margen para separarlos */
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
-            color: var(--blanco-puro);
-            box-shadow: 0 5px 15px rgba(217,30,24,0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            user-select: none;
-        }
-        button:hover, button:focus {
-            transform: scale(1.08);
-            box-shadow: 0 7px 20px rgba(217,30,24,0.6);
-            outline: none;
-        }
+/* 🔹 FAQ */
+.faq-container {
+    padding: 10px;
+    max-width: 800px;
+    margin: auto;
+}
+.faq-item {
+    margin: 0 0 15px;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+.faq-item.active .answer {
+    display: block;
+}
+.faq-item .question {
+    font-weight: bold;
+    font-size: 16px;
+}
+.faq-item .answer {
+    display: none;
+    margin-top: 10px;
+}
 
-        /* Contenido de botones del plan estratégico */
-        .plan-texto p {
-            margin-top: 0;
-        }
-
-        /* Grid para productos con botones */
-        .productos-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-        .producto-btn {
-            background: linear-gradient(45deg, var(--rojo-intenso), var(--azul-pastel));
-            border: none;
-            border-radius: 20px;
-            color: var(--blanco-puro);
-            padding: 1rem 2rem;
-            font-family: 'Sawarabi Mincho', serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(217,30,24,0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            user-select: none;
-            min-width: 150px;
-            display: flex; /* Asegura que la imagen y el texto estén en columna */
-            flex-direction: column; /* Organiza la imagen y el texto en columna */
-            align-items: center; /* Centra el contenido (imagen y texto) */
-            text-align: center; /* Centra el texto */
-        }
-        .producto-btn:hover,
-        .producto-btn:focus {
-            transform: scale(1.1);
-            box-shadow: 0 7px 20px rgba(217,30,24,0.5);
-            outline: none;
-        }
-        .producto-btn img {
-            margin-bottom: 10px; /* Espacio entre la imagen y el texto del botón */
-        }
-
-        /* Galería cartas kawaii (con neón) */
-        .galeria-cartas {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            justify-items: center;
-        }
-        .carta {
-            width: 100%;
-            aspect-ratio: 1 / 1.4;
-            border-radius: 18px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            font-family: 'Sawarabi Mincho', serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            text-decoration: none; /* Asegura que el enlace no tenga subrayado */
-        }
-        .carta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(217,30,24,0.4);
-        }
-        .carta img {
-            max-width: 80%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        .carta h4 {
-            margin: 0;
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 0 5px;
-            text-decoration: none; /* Quita el subrayado del texto */
-        }
-        /* Definición de colores de neón para cada carta */
-        .carta.classic {
-            background: #fff0f5; /* Un fondo suave para el contraste */
-            border: 2px solid #ff007f; /* Rosa */
-            box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f inset;
-        }
-        .carta.classic h4 {
-            color: #ff007f;
-        }
-        .carta.mystery {
-            background: #f6d1e4;
-            border: 2px solid #800080; /* Morado */
-            box-shadow: 0 0 10px #800080, 0 0 20px #800080 inset;
-        }
-        .carta.mystery h4 {
-            color: #800080;
-        }
-        .carta.sour {
-            background: #ffe5f0;
-            border: 2px solid #0000ff; /* Azul */
-            box-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff inset;
-        }
-        .carta.sour h4 {
-            color: #0000ff;
-        }
-        .carta.symphony {
-            background: #f6d1e4;
-            border: 2px solid #ff7f50; /* Salmón */
-            box-shadow: 0 0 10px #ff7f50, 0 0 20px #ff7f50 inset;
-        }
-        .carta.symphony h4 {
-            color: #ff7f50;
-        }
-
-        /* Popup carta detalle */
-        #popup-carta {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0; top: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6);
-            justify-content: center;
-            align-items: center;
-        }
-        #popup-carta.active {
-            display: flex;
-        }
-        #popup-content {
-            background: var(--blanco-puro);
-            border-radius: 20px;
-            max-width: 400px;
-            padding: 25px 30px;
-            box-shadow: 0 10px 30px rgba(217,30,24,0.3);
-            position: relative;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--negro-elegante);
-        }
-        #popup-content h3 {
-            margin-top: 0;
-            color: var(--rojo-intenso);
-            font-family: 'Sawarabi Mincho', serif;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        #popup-close {
-            position: absolute;
-            top: 12px;
-            right: 15px;
-            cursor: pointer;
-            font-size: 1.6rem;
-            color: var(--rojo-intenso);
-            font-weight: 700;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(90deg, var(--rojo-intenso), var(--azul-fuerte));
-            color: var(--blanco-puro);
-            text-align: center;
-            padding: 20px 12px;
-            font-family: 'Sawarabi Mincho', serif;
-            font-weight: 600;
-        }
-
-        /* Redes sociales kawaii */
-        .botones-flotantes {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            z-index: 9999;
-        }
-
-        .botones-flotantes img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .botones-flotantes img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Responsive */
-        @media (max-width: 850px) {
-            nav a {
-                font-size: 0.8rem; /* Un poco más pequeño para tabletas */
-                margin: 0 6px;
-                padding: 5px 10px;
-            }
-            header {
-                padding: 10px 15px;
-            }
-            header img {
-                height: 70px; /* Logo un poco más pequeño */
-            }
-            section {
-                margin: 40px 15px; /* Ajuste margen */
-                padding: 30px 15px; /* Ajuste padding */
-            }
-            section h2 {
-                font-size: 2.5rem; /* Títulos de sección más pequeños */
-            }
-            .banner-title {
-                font-size: 3.5rem; /* Tamaño del título principal en pantallas medianas */
-                top: 20px;
-                left: 50px;
-                -webkit-text-stroke: 0.6px black;
-            }
-            .banner-phrase {
-                font-size: 1.2rem; /* Tamaño de la frase en pantallas medianas */
-                top: 120px; /* Ajuste para que sea visible */
-                left: 50px;
-                max-width: 60%;
-            }
-            button {
-                font-size: 0.8rem;
-                padding: 10px 20px;
-                margin: 0 6px 10px 6px;
-            }
-            .producto-btn {
-                min-width: 100px;
-                padding: 0.8rem 1.2rem;
-                font-size: 1rem;
-            }
-            #sakurai-img {
-                width: 200px;
-                height: 250px;
-                left: 10px;
-            }
-        }
-
-        @media (max-width: 450px) {
-            header {
-                flex-direction: column;
-                gap: 10px;
-                padding: 10px;
-            }
-            header img {
-                height: 60px;
-            }
-            nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 5px; /* Espacio entre los elementos de navegación */
-            }
-            nav a {
-                font-size: 0.75rem; /* Fuentes más pequeñas */
-                margin: 0 4px;
-                padding: 4px 8px;
-            }
-            section {
-                margin: 30px 10px;
-                padding: 20px 10px;
-            }
-            section h2 {
-                font-size: 2rem; /* Títulos de sección aún más pequeños */
-            }
-            .banner-title {
-                font-size: 2.5rem; /* Tamaño del título principal en pantallas pequeñas */
-                top: 15px;
-                left: 20px;
-                -webkit-text-stroke: 0.4px black;
-            }
-            .banner-phrase {
-                font-size: 1rem; /* Tamaño de la frase en pantallas pequeñas */
-                top: 80px;
-                left: 20px;
-                max-width: 85%;
-            }
-            button {
-                font-size: 0.75rem;
-                padding: 8px 18px;
-                margin: 0 5px 8px 5px;
-            }
-            .producto-btn {
-                min-width: 90px;
-                padding: 0.7rem 1rem;
-                font-size: 0.9rem;
-            }
-            .galeria-cartas {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Cartas un poco más pequeñas */
-                gap: 15px;
-            }
-            .carta img {
-                max-width: 70%; /* Imagen más pequeña en la carta */
-            }
-            #sakurai-img {
-                width: 150px;
-                height: 180px;
-                left: 5px;
-                bottom: 5px;
-            }
-            .botones-flotantes {
-                bottom: 10px;
-                right: 10px;
-                gap: 8px;
-            }
-            .botones-flotantes img {
-                width: 40px;
-                height: 40px;
-            }
-            #popup-content {
-                max-width: 90%; /* Ajuste el ancho máximo del popup */
-                padding: 20px;
-            }
-            #popup-content h3 {
-                font-size: 1.5rem;
-            }
-            #popup-content p {
-                font-size: 0.9rem;
-            }
-        }
-        .subcontenido {
-            display: none;
-        }
-        .subcontenido.activo {
-            display: block;
-        }
-
-        /* Estilos del acordeón para Preguntas Frecuentes */
-        .faq-container {
-            padding: 10px;
-            max-width: 800px;
-            margin: auto;
-        }
-
-        .faq-container h3 {
-            color: #ff00ff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .faq-item {
-            margin: 0 0 15px 0;
-            padding: 12px;
-            background: #ffffff;
-            border-radius: 10px;
-            transition: box-shadow 0.3s ease, border-color 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .faq-item .question-wrapper {
-            border-left: 3px solid transparent;
-            padding-left: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item .question-wrapper:hover {
-            opacity: 0.8;
-        }
-
-        .faq-item .question {
-            font-size: 16px;
-            color: #333;
-            font-weight: bold;
-            display: block;
-        }
-
-        .faq-item .answer {
-            font-size: 16px;
-            color: #333;
-            font-family: Arial, sans-serif;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Definición de colores para cada pregunta */
-        .faq-item:nth-child(1) { --color-pregunta: #ff00ff; }
-        .faq-item:nth-child(2) { --color-pregunta: #ff1493; }
-        .faq-item:nth-child(3) { --color-pregunta: #008bff; }
-        .faq-item:nth-child(4) { --color-pregunta: #0000cd; }
-        .faq-item:nth-child(5) { --color-pregunta: #800080; }
-        .faq-item:nth-child(6) { --color-pregunta: #008b8b; }
-        .faq-item:nth-child(7) { --color-pregunta: #b81466; }
-        .faq-item:nth-child(8) { --color-pregunta: #4169e1; }
-        .faq-item:nth-child(9) { --color-pregunta: #c71585; }
-
-        /* Estilos de neón SIEMPRE para el recuadro de la pregunta */
-        .faq-item {
-            box-shadow: 0 0 15px var(--color-pregunta), 0 0 25px var(--color-pregunta) inset, 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-        /* Color de la pregunta se mantiene normal */
-        .faq-item .question {
-            color: var(--negro-elegante) !important;
-        }
-        /* Estilos para la respuesta, solo visible cuando está activa */
-        .faq-item.active .answer {
-            display: block;
-        }
-    </style>
+/* 🔹 Galería de cartas */
+.galeria-cartas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+.carta {
+    width: 100%;
+    aspect-ratio: 1 / 1.4;
+    border-radius: 18px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    font-family: 'Sawarabi Mincho', serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.carta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(217,30,24,0.4);
+}
+.carta img {
+    max-width: 80%;
+    margin-bottom: 10px;
+}
+.carta h4 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.carta.classic {
+    background: #fff0f5;
+    border: 2px solid #ff007f;
+    box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f inset;
+    color: #ff007f;
+}
+.carta.mystery {
+    background: #f6d1e4;
+    border: 2px solid #800080;
+    box-shadow: 0 0 10px #800080, 0 0 20px #800080 inset;
+    color: #800080;
+}
+.carta.sour {
+    background: #ffe5f0;
+    border: 2px solid #0000ff;
+    box-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff inset;
+    color: #0000ff;
+}
+.carta.symphony {
+    background: #f6d1e4;
+    border: 2px solid #ff7f50;
+    box-shadow: 0 0 10px #ff7f50, 0 0 20px #ff7f50 inset;
+    color: #ff7f50;
+}
+</style>
 </head>
 <body>
 
 <header>
     <img src="logo.jpg" alt="Logo Sakura Sweets" title="Sakura Sweets - Logo" />
     <nav>
-        <a href="#nosotros">Sobre Nosotros</a>
-        <a href="#plan">Plan Estratégico</a>
-        <a href="#logistica">Procesos Logísticos</a>
+        <a href="#galeria-multimedia" class="dropbtn">Inicio</a> <div class="dropdown">
+            <a href="#nosotros" class="dropbtn">Sobre Nosotros ▾</a>
+            <div class="dropdown-content">
+                <a href="#linea-tiempo">Nuestra Historia</a>
+                <a href="#razon-nombre">Razón del Nombre</a>
+                <a href="#socios">Socios</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#plan" class="dropbtn">Plan Estratégico ▾</a>
+            <div class="dropdown-content">
+                <a href="#mision-plan">Misión</a>
+                <a href="#vision-plan">Visión</a>
+                <a href="#objetivo-plan">Objetivo Principal</a>
+                <a href="#objetivos-plan">Objetivos Específicos</a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <a href="#logistica" class="dropbtn">Procesos Logísticos ▾</a>
+            <div class="dropdown-content">
+                <a href="#envios-log">Tipos de Envío</a>
+                <a href="#tiempos-log">Tiempos de Entrega</a>
+                <a href="#politicas-log">Política de Devoluciones</a>
+                <a href="#punto-equilibrio">Punto de Equilibrio</a>
+                <a href="#faq-log">Preguntas Frecuentes</a>
+            </div>
+        </div>
+
         <a href="#productos">Productos</a>
         <a href="#carrito">Carrito</a>
         <a href="#layout">Tienda Física</a>
@@ -632,11 +438,46 @@
 
 <div id="volver-arriba" tabindex="0" role="button" aria-label="Volver arriba"></div>
 
+<section id="galeria-multimedia" class="seccion-activa">
+    <h2 style="color: var(--azul-fuerte);">Acompáñanos en el proceso: Galería Multimedia</h2>
+    <div style="text-align: center; padding: 20px; border: 2px solid var(--azul-fuerte); border-radius: 10px; background: var(--fondo-sakura); box-shadow: 0 0 8px var(--azul-fuerte), 0 0 12px var(--azul-fuerte) inset;">
+        <p style="font-size: 1.1em; color: var(--rojo-intenso); font-weight: 600;">¡Conocenos!</p>
+        <div style="display: flex; justify-content: space-around; gap: 20px; margin-top: 15px;">
+            
+            <div style="width: 45%; border: 2px solid var(--rojo-intenso); padding: 10px; border-radius: 8px; box-shadow: 0 0 8px var(--rojo-intenso), 0 0 12px var(--rojo-intenso) inset;">
+                <h3 style="margin-top: 0; color: var(--rojo-intenso);">Fotos</h3>
+                
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 10px;">
+                    <img src="masa.jfif" alt="Fotos 1" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="mochi.jpg" alt="Fotos 2" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="masa.jfif" alt="Fotos 3" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="mochi.jfif" alt="Fotos 4" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="masa.jfif" alt="Fotos 5" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="mochi.jfif" alt="Fotos 6" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="masa.jfif" alt="Fotos 7" style="max-width: 60%; height: auto; border-radius: 5px;">
+                    <img src="mochi.jfif" alt="Fotos 8" style="max-width: 60%; height: auto; border-radius: 5px;">
+                </div>
+            </div>
+            
+            <div style="width: 45%; border: 2px solid #ff00ff; padding: 10px; border-radius: 8px; box-shadow: 0 0 8px #ff00ff, 0 0 12px #ff00ff inset;">
+                <h3 style="margin-top: 0; color: #ff00ff;">Video</h3>
+    
+                <video controls poster="portada-video.jpg" style="max-width: 100%; height: auto; border-radius: 5px;">
+                    <source src="video-moshia.mp4" type="video/mp4">
+                    <source src="video-moshia.webm" type="video/webm">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+        </div>
+    </div>
+</section>
 <section id="nosotros">
     <h2>Sobre Nosotros</h2>
     <div class="section-buttons">
-        <button onclick="mostrarSub('linea-tiempo', ['linea-tiempo', 'razon-nombre'])">Nuestra Historia</button>
-        <button onclick="mostrarSub('razon-nombre', ['linea-tiempo', 'razon-nombre'])">Razón del Nombre</button>
+        <button onclick="mostrarSub('linea-tiempo', ['linea-tiempo', 'razon-nombre', 'socios'])">Nuestra Historia</button>
+        <button onclick="mostrarSub('razon-nombre', ['linea-tiempo', 'razon-nombre', 'socios'])">Razón del Nombre</button>
+        <button onclick="mostrarSub('socios', ['linea-tiempo', 'razon-nombre', 'socios'])">Socios</button>
+
     </div>
 
     <div id="linea-tiempo" class="subcontenido" aria-hidden="true">
@@ -646,7 +487,7 @@
     <h4 style="color: #ff1493;">🗓️ 2024: Nacimiento de Moshia</h4>
     <ul style="font-size: 16px; color: #333;">
       <li>
-        <strong style="color: #ff0080;">🎓 Proyecto de Grado:</strong> El emprendimiento inicia como <strong style="color: #b81466;">Moshia</strong>, un <em>proyecto académico</em> enfocado en <strong style="color: #e30052;">postres japoneses </strong>.
+        <strong style="color: #ff0080;">🎓 Proyecto de Grado:</strong> El emprendimiento inicia como <strong style="color: #b81466;">Moshia</strong>, un <em>proyecto académico</em> enfocado en <strong style="color: #e30052;">postres japoneses 🍡</strong>.
       </li>
       <li>
         <strong style="color: #ec53a0;">🌱 Fundación Inicial:</strong> Se constituye con <strong style="color: #ff00ff;">tres socios fundadores 🤝</strong>.
@@ -658,7 +499,7 @@
   </div>
 
   <div style="margin-bottom: 25px; border-left: 3px solid #1e90ff; padding-left: 15px;">
-    <h4 style="color: #1e90ff;">Enero - Junio 2025: Reestructuración y Continuidad 🔄</h4>
+    <h4 style="color: #1e90ff;">🗓️ Enero - Junio 2025: Reestructuración y Continuidad 🔄</h4>
     <ul style="font-size: 16px; color: #333;">
       <li>
         <strong style="color: #00008b;">👥 Cambio de Socios:</strong> La mayoría de los <strong style="color: #008bff;">socios iniciales</strong> son reemplazados por <strong style="color: #4169e1;">nuevos integrantes ✨</strong>.
@@ -670,7 +511,7 @@
   </div>
 
   <div style="margin-bottom: 25px; border-left: 3px solid #9400d3; padding-left: 15px;">
-    <h4 style="color: #9400d3;'>🤝 Julio 2025: Fusión Estratégica</h4>
+    <h4 style="color: #9400d3;">🗓️ Julio 2025: Fusión Estratégica 🤝</h4>
     <ul style="font-size: 16px; color: #333;">
       <li>
         <strong style="color: #e30052;">🏢 Fusión con Marca de Cartas:</strong> <strong style="color: #ff0080;">Moshia</strong> se fusiona con una pequeña empresa de <strong style="color: #b81466;">cartas coleccionables 🃏</strong>, buscando una propuesta combinada de <em>postres + coleccionables</em>.
@@ -678,14 +519,26 @@
     </ul>
   </div>
 
-  <div style="margin-bottom: 25px; border-left: 3 de mayo de 2024; padding-left: 15px;">
-    <h4 style="color: #20214f;'>Agosto 2025: Definición de Marca y Nuevo Socio 🎯</h4>
+  <div style="margin-bottom: 25px; border-left: 3px solid #20214f; padding-left: 15px;">
+    <h4 style="color: #20214f;">🗓️ Agosto 2025: Definición de Marca y Nuevo Socio 🎯</h4>
     <ul style="font-size: 16px; color: #333;">
       <li>
         <strong style="color: #ff1493;">🚫 Descontinuación de Cartas:</strong> Se decide cerrar la línea de <strong style="color: #ff00ff;">cartas coleccionables 🗑️</strong> y concentrar todos los esfuerzos en el crecimiento de <strong style="color: #ec53a0;">Moshia 🌱</strong>.
       </li>
       <li>
         <strong style="color: #00008b;">🧑‍🎓 Nuevo Socio Igualitario:</strong> El <strong style="color: #008bff;">fundador de la empresa de cartas 💼</strong> se incorpora como <strong style="color: #4169e1;">socio igualitario 🌟</strong>, aportando su visión y compromiso al equipo.
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 25px; border-left: 3px solid #ff00ff; padding-left: 15px;">
+    <h4 style="color: #ff00ff;">🗓️ Septiembre 2025: Reestructuración Final de Socios 💼</h4>
+    <ul style="font-size: 16px; color: #333;">
+      <li>
+        <strong style="color: #d91e18;">👋 Salida de Socio:</strong> Uno de los <strong style="color: #c71585;">socios igualitarios</strong> decide retirarse de la empresa para seguir nuevos proyectos personales.
+      </li>
+      <li>
+        <strong style="color: #800080;">🏁 Nueva Estructura:</strong> La empresa queda conformada por <strong style="color: #ff0080;">un socio fundador</strong> y <strong style="color: #8b008b;">un socio igualitario</strong>, quienes continúan con la misión original de <strong style="color: #e30052;">Moshia</strong>, manteniendo la pasión y el compromiso que la caracterizan 💖.
       </li>
     </ul>
   </div>
@@ -705,6 +558,31 @@
     <strong style="color: #4169e1;">cultura</strong> que nos representa en cada bocado.
   </p>
 </div>
+
+<div id="socios" class="subcontenido" aria-hidden="true">
+  <h3 style="color: #1e90ff;">Socios 🤝</h3>
+
+  <p style="font-size: 16px; color: #333; font-family: Arial, sans-serif; text-align: center; margin-bottom: 30px;">
+    A lo largo de la historia de <strong style="color:#ff0080;">Moshia</strong>, varios socios han aportado su esfuerzo, visión y creatividad.  
+    Actualmente, la empresa cuenta con <strong style="color:#4169e1;">un socio fundador</strong> y <strong style="color:#b81466;">un socio igualitario</strong>, 
+    quienes lideran el crecimiento de la marca con compromiso, pasión e innovación. 💪✨
+  </p>
+
+  <div class="galeria-cartas">
+    <div class="carta classic">
+      <img src="juanita.jfif" alt="Juanita Sánchez Suárez" style="width:300px; height: auto; border-radius: 5px;">
+      <h4>Juanita Sánchez Suárez</h4>
+      <p style="font-size: 0.9rem; color: #333; margin: 5px 0;">Socio Fundador 🌸</p>
+    </div>
+
+    <div class="carta symphony">
+      <img src="brayan.jpg" alt="Brayan Estiven Yate Urrego" style="width: 100px; height: auto; border-radius: 10px;">
+      <h4>Brayan Estiven Yate Urrego</h4>
+      <p style="font-size: 0.9rem; color: #333; margin: 5px 0;">Socio Igualitario 💫</p>
+    </div>
+  </div>
+</div>
+
 </section>
 
 <section id="plan">
@@ -1024,115 +902,78 @@
     <p>&copy; 2025 Sakura Sweets - Todos los derechos reservados</p>
 </footer>
 
-<div class="botones-flotantes">
-    <a href="https://www.instagram.com/sakura_sweets.2?igsh=a2ducXY1enN6eHcw" target="_blank" title="Instagram">
-        <img src="instagram.jpeg" alt="Instagram" />
-    </a>
-    <a href="https://wa.me/573053577410" target="_blank" title="WhatsApp">
-        <img src="whatsapp.jpeg" alt="WhatsApp" />
-    </a>
-
-    <a href="#top" title="Volver arriba">
-        <img src="top.jpeg" alt="Volver arriba" />
-    </a>
+<div class="floating-buttons">
+    <a href="https://www.instagram.com/moshia_25?igsh=a2ducXY1enN6eHcw" target="_blank" title="Instagram" class="btn-instagram"></a>
+    <a href="https://wa.me/573053577410" target="_blank" title="WhatsApp" class="btn-whatsapp"></a>
+    <a href="#top" title="Volver arriba" id="btn-top" class="btn-top"></a>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const sakuraiImg = document.getElementById("sakurai-img");
+    const sakuraiSources = {
+        'default': "sakurai.png",
+        'galeria-multimedia': "default.png", // Nueva imagen para la sección de inicio/galería
+        'nosotros': "sobre.png",
+        'plan': "plan.png",
+        'logistica': "procesos.png",
+        'productos': "productos.png",
+        'carrito': "carrito.png",
+        'layout': "layout.png",
+        'contacto': "contactanos.png",
+        'linea-tiempo': "historia.png",
+        'razon-nombre': "razon.png",
+        'socios': "socios.png",
+        'mision-plan': "mision.png",
+        'vision-plan': "vision.png",
+        'objetivo-plan': "objetivo.png",
+        'objetivos-plan': "objetivos.png",
+        'envios-log': "tipos.png",
+        'tiempos-log': "tiempo.png",
+        'politicas-log': "devoluciones.png",
+        'faq-log': "faq.png",
+        'punto-equilibrio': "punto.png",
+        'layout-store': "layout_store.png"
+    };
 
-        if (!sakuraiImg) {
-            console.error("Error: El elemento con ID 'sakurai-img' no se encontró en el DOM. Revisa tu HTML.");
-            return;
+    /**
+     * Determina el grupo de subsecciones al que pertenece un ID.
+     * @param {string} targetId - ID de la subsección.
+     * @returns {string[]} - Array de IDs del grupo.
+     */
+    function grupoSub(targetId) {
+        if (['linea-tiempo','razon-nombre','socios'].includes(targetId)) {
+            return ['linea-tiempo','razon-nombre','socios'];
+        } else if (['mision-plan','vision-plan','objetivo-plan','objetivos-plan'].includes(targetId)) {
+            return ['mision-plan','vision-plan','objetivo-plan','objetivos-plan'];
+        } else if (['envios-log','tiempos-log','politicas-log','punto-equilibrio','faq-log'].includes(targetId)) {
+            return ['envios-log','tiempos-log','politicas-log','punto-equilibrio','faq-log'];
+        } else if (['layout-store'].includes(targetId)) {
+            return ['layout-store'];
         }
-
-        const sakuraiSources = {
-            'default': "sakurai.png",
-            'nosotros': "sobre.png",
-            'plan': "plan.png",
-            'logistica': "procesos.png",
-            'productos': "productos.png",
-            'carrito': "carrito.png",
-            'layout': "layout.png",
-            'contacto': "contactanos.png",
-            'linea-tiempo': "historia.png",
-            'razon-nombre': "razon.png",
-            'mision-plan': "mision.png",
-            'vision-plan': "vision.png",
-            'objetivo-plan': "objetivo.png",
-            'objetivos-plan': "objetivos.png",
-            'envios-log': "tipos.png",
-            'tiempos-log': "tiempo.png",
-            'politicas-log': "devoluciones.png",
-            'faq-log': "faq.png",
-            'punto-equilibrio': "punto.png",
-            'layout-store': "layout_store.png"
-        };
-
-        const subs = document.querySelectorAll(".subcontenido");
-        subs.forEach(s => {
-            s.classList.remove("activo");
-            s.setAttribute("aria-hidden", "true");
-        });
-
-        sakuraiImg.style.opacity = 1;
-
-        const secciones = document.querySelectorAll("section");
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    const activeSubcontent = entry.target.querySelector('.subcontenido.activo');
-
-                    if (sakuraiSources[id] && !activeSubcontent) {
-                        sakuraiImg.style.opacity = 0;
-                        setTimeout(() => {
-                            sakuraiImg.src = sakuraiSources[id];
-                            sakuraiImg.style.opacity = 1;
-                        }, 300);
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-
-        secciones.forEach(sec => observer.observe(sec));
-    });
-
-    function mostrarSub(idMostrar, todos) {
+        return [];
+    }
+    
+    /**
+     * Muestra una subsección específica y gestiona la imagen de Sakurai.
+     * Hacemos que esta función sea global para que funcione con los 'onclick' del HTML.
+     * @param {string} idMostrar - ID de la subsección a mostrar (e.g., 'linea-tiempo').
+     * @param {string[]} todos - Array de IDs de las subsecciones del mismo grupo para ocultarlas.
+     */
+    window.mostrarSub = function(idMostrar, todos) {
         const sakuraiImg = document.getElementById("sakurai-img");
-        const sakuraiSources = {
-            'default': "sakurai.png",
-            'nosotros': "sobre.png",
-            'plan': "plan.png",
-            'logistica': "procesos.png",
-            'productos': "productos.png",
-            'carrito': "carrito.png",
-            'layout': "layout.png",
-            'contacto': "contactanos.png",
-            'linea-tiempo': "historia.png",
-            'razon-nombre': "razon.png",
-            'mision-plan': "mision.png",
-            'vision-plan': "vision.png",
-            'objetivo-plan': "objetivo.png",
-            'objetivos-plan': "objetivos.png",
-            'envios-log': "tipos.png",
-            'tiempos-log': "tiempo.png",
-            'politicas-log': "devoluciones.png",
-            'faq-log': "faq.png",
-            'punto-equilibrio': "punto.png",
-            'layout-store': "layout_store.png"
-        };
-
+        
         todos.forEach(id => {
             const seccion = document.getElementById(id);
-            if (!seccion) {
-                console.warn(`Advertencia: Elemento con ID '${id}' no encontrado para ocultar/mostrar. Revisa tus IDs.`);
-                return;
-            }
+            if (!seccion) return;
 
             if (id === idMostrar) {
+                // Mostrar y activar
                 seccion.classList.add("activo");
+                seccion.classList.remove("oculto");
                 seccion.setAttribute("aria-hidden", "false");
+                seccion.style.display = "block";
+                seccion.style.opacity = 1;
+
+                // Aplicar estilos dinámicos (borde y sombra)
                 const h3 = seccion.querySelector('h3');
                 if (h3 && h3.style.color) {
                     const h3Color = h3.style.color;
@@ -1140,7 +981,8 @@
                     seccion.style.boxShadow = `0 0 8px ${h3Color}, 0 0 12px ${h3Color} inset`;
                 }
 
-                if (sakuraiSources[idMostrar] && sakuraiImg) {
+                // Cambiar imagen de Sakurai con transición
+                if (sakuraiSources[idMostrar]) {
                     sakuraiImg.style.opacity = 0;
                     setTimeout(() => {
                         sakuraiImg.src = sakuraiSources[idMostrar];
@@ -1149,30 +991,176 @@
                 }
 
             } else {
+                // Ocultar y desactivar
                 seccion.classList.remove("activo");
+                seccion.classList.add("oculto");
                 seccion.setAttribute("aria-hidden", "true");
                 seccion.style.border = `1px solid transparent`;
                 seccion.style.boxShadow = `none`;
+                seccion.style.opacity = 0;
+                // La propiedad display se controla con el transition end para evitar parpadeo.
+                seccion.addEventListener('transitionend', function handler() {
+                    if (seccion.style.opacity === "0") {
+                        seccion.style.display = "none";
+                    }
+                    seccion.removeEventListener('transitionend', handler);
+                });
             }
         });
     }
 
+    /**
+     * Función para gestionar el mostrar/ocultar de las secciones principales.
+     * @param {string} targetId - ID de la sección principal a mostrar (e.g., 'nosotros').
+     */
+    function gestionarSeccion(targetId) {
+        const sections = document.querySelectorAll('section');
+        const targetSection = document.getElementById(targetId);
+        const sakuraiImg = document.getElementById("sakurai-img");
+
+        // Ocultar todas las secciones
+        sections.forEach(sec => {
+            sec.classList.remove('seccion-activa');
+        });
+
+        if (targetSection) {
+            // Mostrar la sección destino
+            targetSection.classList.add('seccion-activa');
+
+            // Asegurarse de que las subsecciones estén ocultas por defecto al abrir una sección
+            targetSection.querySelectorAll(".subcontenido").forEach(s => {
+                s.classList.remove("activo");
+                s.setAttribute("aria-hidden", "true");
+                s.style.opacity = 0;
+                s.style.display = "none";
+                s.style.border = `1px solid transparent`;
+                s.style.boxShadow = `none`;
+            });
+            
+            // Cambiar imagen de Sakurai
+            if (sakuraiSources[targetId] && sakuraiImg) {
+                sakuraiImg.style.opacity = 0;
+                setTimeout(() => {
+                    sakuraiImg.src = sakuraiSources[targetId];
+                    sakuraiImg.style.opacity = 1;
+                }, 300);
+            }
+        }
+    }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sakuraiImg = document.getElementById("sakurai-img");
+
+    if (!sakuraiImg) {
+        console.error("Error: El elemento con ID 'sakurai-img' no se encontró en el DOM.");
+        return;
+    }
+
+    // 1. Ocultar todas las subsecciones y secciones al inicio
+    document.querySelectorAll(".subcontenido").forEach(s => {
+        s.classList.remove("activo");
+        s.setAttribute("aria-hidden", "true");
+        s.style.opacity = 0;
+        s.style.display = "none";
+        s.style.border = `1px solid transparent`;
+        s.style.boxShadow = `none`;
+    });
+    
+    // 2. Inicializar la primera sección visible (AHORA ES GALERIA MULTIMEDIA)
+    gestionarSeccion('galeria-multimedia');
+    
+    sakuraiImg.style.opacity = 1;
+
+    // --- Manejo de todos los enlaces internos (Menú, Dropdowns, flotantes) ---
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            
+            if (targetId === 'top') {
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                 return;
+            }
+            if (!target) return;
+
+            // La sección de inicio ahora se trata como una sección principal
+            const esSeccionPrincipal = ['galeria-multimedia', 'nosotros', 'plan', 'logistica', 'productos', 'carrito', 'layout', 'contacto'].includes(targetId);
+            const grupo = grupoSub(targetId);
+            const esSubseccion = grupo.length > 0;
+            
+            if (esSeccionPrincipal) {
+                // A. Es enlace a una sección principal (Menú principal)
+                gestionarSeccion(targetId);
+            } else if (esSubseccion) {
+                // B. Es enlace a una subsección (Dropdown)
+                const seccionPadre = target.closest('section');
+                if (seccionPadre) {
+                   gestionarSeccion(seccionPadre.id); // Mostrar la sección padre (si no está visible)
+                   window.mostrarSub(targetId, grupo); // Mostrar la subsección (usa la función global)
+                }
+            }
+            
+            // Si el target existe, hacer scroll suave al inicio de la sección.
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        });
+    });
+
+
+    // --- Observador de scroll (se mantiene la lógica original) ---
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            // Solo actuar si la sección está activa (visible por JS)
+            if (entry.isIntersecting && entry.target.classList.contains('seccion-activa')) {
+                const id = entry.target.id;
+                const activeSub = entry.target.querySelector('.subcontenido.activo');
+                // Solo cambiar la imagen si no hay subsección activa que tome prioridad
+                if (sakuraiSources[id] && !activeSub) {
+                    sakuraiImg.style.opacity = 0;
+                    setTimeout(() => {
+                        sakuraiImg.src = sakuraiSources[id];
+                        sakuraiImg.style.opacity = 1;
+                    }, 300);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+    // --- Manejo FAQs (se mantiene la lógica original) ---
     document.querySelectorAll('.faq-item').forEach(item => {
         const questionWrapper = item.querySelector('.question-wrapper');
         questionWrapper.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
-            
-            // Cierra todas las respuestas
+            // Cierra todos los demás
             document.querySelectorAll('.faq-item').forEach(el => {
-                el.classList.remove('active');
+                 if (el !== item) {
+                    el.classList.remove('active');
+                 }
             });
-            
-            // Si la pregunta no estaba activa, la activa
-            if (!isActive) {
-                item.classList.add('active');
-            }
+            // Alterna el estado del actual
+            if (!isActive) item.classList.add('active');
+            else item.classList.remove('active');
         });
     });
+
+    // --- Botones flotantes (se mantiene la lógica original) ---
+    const floatingButtons = document.querySelectorAll('.floating-buttons a');
+    floatingButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+            const href = btn.getAttribute('href');
+            if (href.startsWith("#") && href !== "#top") {
+                // Evita que el enlace de menú #top se active dos veces
+                e.preventDefault(); 
+                document.querySelector(href).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } 
+            // Si es #top o un enlace externo (whatsapp/instagram), se mantiene el comportamiento por defecto/navegación.
+        });
+    });
+});
 </script>
+
 </body>
 </html>
