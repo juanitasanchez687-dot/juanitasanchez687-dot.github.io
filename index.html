@@ -299,6 +299,43 @@ footer {
     font-weight: 600;
 }
 
+/* ESTILOS AÑADIDOS AL FOOTER */
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+}
+.footer-card {
+    background-color: var(--blanco-puro);
+    color: var(--negro-elegante);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    width: 28%; /* Ancho de las tarjetas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.footer-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.footer-center-text {
+    width: 40%;
+    font-size: 0.9rem;
+    font-weight: normal;
+    line-height: 1.6;
+    color: var(--blanco-puro);
+    padding: 10px;
+}
+/* FIN ESTILOS AÑADIDOS AL FOOTER */
+
+
 /* 🔹 FAQ */
 .faq-container {
     padding: 10px;
@@ -384,6 +421,21 @@ footer {
     box-shadow: 0 0 10px #ff7f50, 0 0 20px #ff7f50 inset;
     color: #ff7f50;
 }
+
+/* Estilos para el mapa de Google */
+.map-container {
+    padding: 10px;
+    border-radius: 15px;
+    background: #fff0f5cc;
+    border: 1px solid #d91e18;
+    box-shadow: 0 0 8px #d91e18;
+}
+.map-container iframe {
+    width: 100%;
+    height: 450px; /* Altura fija para el mapa */
+    border: none;
+    border-radius: 10px;
+}
 </style>
 </head>
 <body>
@@ -442,33 +494,21 @@ footer {
     <h2 style="color: var(--azul-fuerte);">Acompáñanos en el proceso: Galería Multimedia</h2>
     <div style="text-align: center; padding: 20px; border: 2px solid var(--azul-fuerte); border-radius: 10px; background: var(--fondo-sakura); box-shadow: 0 0 8px var(--azul-fuerte), 0 0 12px var(--azul-fuerte) inset;">
         <p style="font-size: 1.1em; color: var(--rojo-intenso); font-weight: 600;">¡Conocenos!</p>
-        <div style="display: flex; justify-content: space-around; gap: 20px; margin-top: 15px;">
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
             
-            <div style="width: 45%; border: 2px solid var(--rojo-intenso); padding: 10px; border-radius: 8px; box-shadow: 0 0 8px var(--rojo-intenso), 0 0 12px var(--rojo-intenso) inset;">
+            <div style="width: 100%; max-width: 700px; border: 2px solid var(--rojo-intenso); padding: 10px; border-radius: 8px; box-shadow: 0 0 8px var(--rojo-intenso), 0 0 12px var(--rojo-intenso) inset;">
                 <h3 style="margin-top: 0; color: var(--rojo-intenso);">Fotos</h3>
                 
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 10px;">
-                    <img src="masa.jfif" alt="Fotos 1" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="mochi.jpg" alt="Fotos 2" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="masa.jfif" alt="Fotos 3" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="mochi.jfif" alt="Fotos 4" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="masa.jfif" alt="Fotos 5" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="mochi.jfif" alt="Fotos 6" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="masa.jfif" alt="Fotos 7" style="max-width: 60%; height: auto; border-radius: 5px;">
-                    <img src="mochi.jfif" alt="Fotos 8" style="max-width: 60%; height: auto; border-radius: 5px;">
-                </div>
+                    <img src="masa.jfif" alt="Fotos 1" style="max-width: 40%; height: auto; border-radius: 5px;">
+                    <img src="mochi.jpg" alt="Fotos 2" style="max-width: 40%; height: auto; border-radius: 5px;">
+                    <img src="mango.jfif" alt="Fotos 3" style="max-width: 40%; height: auto; border-radius: 5px;">
+                    <img src="relleno.jfif" alt="Fotos 4" style="max-width: 40%; height: auto; border-radius: 5px;">
+                    <img src="empaquetado.jfif" alt="Fotos 5" style="max-width: 40%; height: auto; border-radius: 5px;">
+                    </div>
             </div>
             
-            <div style="width: 45%; border: 2px solid #ff00ff; padding: 10px; border-radius: 8px; box-shadow: 0 0 8px #ff00ff, 0 0 12px #ff00ff inset;">
-                <h3 style="margin-top: 0; color: #ff00ff;">Video</h3>
-    
-                <video controls poster="portada-video.jpg" style="max-width: 100%; height: auto; border-radius: 5px;">
-                    <source src="video-moshia.mp4" type="video/mp4">
-                    <source src="video-moshia.webm" type="video/webm">
-                    Tu navegador no soporta la reproducción de video.
-                </video>
             </div>
-        </div>
     </div>
 </section>
 <section id="nosotros">
@@ -576,7 +616,7 @@ footer {
     </div>
 
     <div class="carta symphony">
-      <img src="brayan.jpg" alt="Brayan Estiven Yate Urrego" style="width: 100px; height: auto; border-radius: 10px;">
+      <img src="brayan.jfif" alt="Brayan Estiven Yate Urrego" style="width: 100px; height: auto; border-radius: 10px;">
       <h4>Brayan Estiven Yate Urrego</h4>
       <p style="font-size: 0.9rem; color: #333; margin: 5px 0;">Socio Igualitario 💫</p>
     </div>
@@ -874,13 +914,21 @@ footer {
 <section id="layout" tabindex="0" aria-labelledby="layout-titulo">
     <h2 id="layout-titulo">Tienda Física</h2>
     <div class="section-buttons" style="margin-top: 30px;">
-        <button onclick="mostrarSub('layout-store', ['layout-store'])">Ver Tienda</button>
+        <button onclick="mostrarSub('layout-store', ['layout-store'])">Tienda Física</button>
     </div>
 
     <div id="layout-store" class="subcontenido" aria-hidden="true">
-        <h3 style="color: var(--rojo-intenso);">Diseño de la Tienda 🏬</h3>
-        <img src="layout_store.jpeg" alt="Layout de la tienda física de Moshia" style="max-width: 100%; border-radius: 10px; display: block; margin: 20px auto;" />
-        <p style="font-size: 16px; text-align: center; color: var(--negro-elegante); margin-top: 15px;">¡Un espacio diseñado para que disfrutes de una experiencia única!</p>
+        <h3 style="color: var(--rojo-intenso);">Geolocalización 📍</h3>
+        <div class="map-container">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1587.733703567784!2d-74.05364175376043!3d4.858444264627447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f87b8d46779d7%3A0xc66517a22a31f01c!2sMiaceanea%20Mil%20variedades!5e0!3m2!1ses-419!2sco!4v1700000000000!5m2!1ses-419!2sco"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación de la Tienda Física Moshia en Chía"
+            ></iframe>
+            </div>
+        <p style="font-size: 16px; text-align: center; color: var(--negro-elegante); margin-top: 15px;">Encuéntranos en Chía. ¡Visítanos y vive la experiencia Moshia!</p>
     </div>
 </section>
 
@@ -899,6 +947,24 @@ footer {
 </div>
 
 <footer>
+    <div class="footer-content">
+        <div class="footer-card">
+            <img src="jjc.jfif" alt="Logo Institución Educativa Oficial Técnica José Joaquín Casas" />
+            <p style="margin:0; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 600;">Institución Educativa Oficial Técnica José Joaquín Casas</p>
+        </div>
+        
+        <div class="footer-center-text">
+            <p style="margin: 0;">Tecnico en Integracion de operaciones logisticas</p>
+            <p style="margin: 5px 0;">Tecnico en administracion de empresas con especialidad en logistica</p>
+            <p style="margin: 5px 0;"><strong>Moshia S.A.S</strong></p>
+            <p style="margin: 0;">2025</p>
+        </div>
+        
+        <div class="footer-card">
+            <img src="sena.png" alt="Logo Centro de Desarrollo Agroempresarial Chía" />
+            <p style="margin:0; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 600;">Centro de Desarrollo Agroempresarial Chía</p>
+        </div>
+    </div>
     <p>&copy; 2025 Sakura Sweets - Todos los derechos reservados</p>
 </footer>
 
@@ -910,8 +976,8 @@ footer {
 
 <script>
     const sakuraiSources = {
-        'default': "sakurai.png",
-        'galeria-multimedia': "default.png", // Nueva imagen para la sección de inicio/galería
+        'default': "sakurai.png", // CAMBIADO a sakurai.png
+        'galeria-multimedia': "galeria.png", // CAMBIADO a galeria.png
         'nosotros': "sobre.png",
         'plan': "plan.png",
         'logistica': "procesos.png",
@@ -980,8 +1046,8 @@ footer {
                     seccion.style.border = `1px solid ${h3Color}`;
                     seccion.style.boxShadow = `0 0 8px ${h3Color}, 0 0 12px ${h3Color} inset`;
                 }
-
-                // Cambiar imagen de Sakurai con transición
+                
+                // Si la subseccion activada tiene una imagen de mascota específica (e.g., layout-store), usarla
                 if (sakuraiSources[idMostrar]) {
                     sakuraiImg.style.opacity = 0;
                     setTimeout(() => {
@@ -989,6 +1055,7 @@ footer {
                         sakuraiImg.style.opacity = 1;
                     }, 300);
                 }
+
 
             } else {
                 // Ocultar y desactivar
@@ -1017,6 +1084,7 @@ footer {
         const sections = document.querySelectorAll('section');
         const targetSection = document.getElementById(targetId);
         const sakuraiImg = document.getElementById("sakurai-img");
+        let newSakuraiSrc = sakuraiSources[targetId] || sakuraiSources['default']; // Obtener la fuente de la sección principal o default
 
         // Ocultar todas las secciones
         sections.forEach(sec => {
@@ -1038,10 +1106,10 @@ footer {
             });
             
             // Cambiar imagen de Sakurai
-            if (sakuraiSources[targetId] && sakuraiImg) {
+            if (sakuraiImg) {
                 sakuraiImg.style.opacity = 0;
                 setTimeout(() => {
-                    sakuraiImg.src = sakuraiSources[targetId];
+                    sakuraiImg.src = newSakuraiSrc;
                     sakuraiImg.style.opacity = 1;
                 }, 300);
             }
@@ -1068,7 +1136,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     // 2. Inicializar la primera sección visible (AHORA ES GALERIA MULTIMEDIA)
-    gestionarSeccion('galeria-multimedia');
+    // Cambiamos la imagen inicial al cargar la página a sakurai.png y luego a galeria.png al abrir la sección
+    sakuraiImg.src = sakuraiSources['default']; // Asegura la imagen inicial
+    gestionarSeccion('galeria-multimedia'); // Esto cambiará la imagen a galeria.png
     
     sakuraiImg.style.opacity = 1;
 
