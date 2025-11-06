@@ -436,6 +436,7 @@ footer {
     border: none;
     border-radius: 10px;
 }
+
 </style>
 </head>
 <body>
@@ -914,9 +915,11 @@ footer {
 <section id="layout" tabindex="0" aria-labelledby="layout-titulo">
     <h2 id="layout-titulo">Tienda Física</h2>
     <div class="section-buttons" style="margin-top: 30px;">
-        <button onclick="mostrarSub('layout-store', ['layout-store'])">Tienda Física</button>
+        <button onclick="mostrarSub('layout-store', ['layout-store','layout-layout'])">Geolocalización</button>
+        <button onclick="mostrarSub('layout-layout', ['layout-store','layout-layout'])">Layout</button>
     </div>
 
+    <!-- Subsección Geolocalización -->
     <div id="layout-store" class="subcontenido" aria-hidden="true">
         <h3 style="color: var(--rojo-intenso);">Geolocalización 📍</h3>
         <div class="map-container">
@@ -927,8 +930,19 @@ footer {
                 referrerpolicy="no-referrer-when-downgrade"
                 title="Ubicación de la Tienda Física Moshia en Chía"
             ></iframe>
-            </div>
-        <p style="font-size: 16px; text-align: center; color: var(--negro-elegante); margin-top: 15px;">Encuéntranos en Chía. ¡Visítanos y vive la experiencia Moshia!</p>
+        </div>
+        <p style="font-size: 16px; text-align: center; color: var(--negro-elegante); margin-top: 15px;">
+            Encuéntranos en Chía. ¡Visítanos y vive la experiencia Moshia!
+        </p>
+    </div>
+
+    <!-- Nueva subsección Layout -->
+    <div id="layout-layout" class="subcontenido" aria-hidden="true">
+        <h3 style="color: var(--azul-fuerte);">Layout 🏗️</h3>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:25px; margin-top:15px;">
+            <img src="planotecho.png" alt="Plano de techo de la tienda" style="max-width:90%; border-radius:10px; box-shadow:0 0 10px var(--azul-pastel);">
+            <img src="plano2d.png" alt="Plano 2D de la tienda" style="max-width:90%; border-radius:10px; box-shadow:0 0 10px var(--azul-pastel);">
+        </div>
     </div>
 </section>
 
